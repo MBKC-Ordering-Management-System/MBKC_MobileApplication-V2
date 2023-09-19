@@ -7,7 +7,7 @@ import '../../features/auth/presentation/change_password/change_password_screen.
 import '../../features/auth/presentation/enter_email/enter_email_screen.dart';
 import '../../features/auth/presentation/otp_verification/otp_verification_screen.dart';
 import '../../features/auth/presentation/sign_in/sign_in_screen.dart';
-import '../../features/home_screen.dart';
+import '../../features/home/presentation/home_screen.dart';
 import '../../splash_screen.dart';
 import '../../utils/enums/verification_type_enum.dart';
 
@@ -27,13 +27,16 @@ class AppRouter extends _$AppRouter {
         // auth
         AutoRoute(
           page: SplashScreenRoute.page,
-          initial: true,
+          // initial: true,
         ),
         AutoRoute(page: SignInScreenRoute.page),
         AutoRoute(page: EnterEmailScreenRoute.page),
         AutoRoute(page: OTPVerificationScreenRoute.page),
         AutoRoute(page: ChangePasswordScreenRoute.page),
-        AutoRoute(page: HomeScreenRoute.page),
+        AutoRoute(
+          page: HomeScreenRoute.page,
+          initial: true,
+        ),
         // order
         // product
         // profile

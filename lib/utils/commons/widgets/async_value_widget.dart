@@ -7,16 +7,18 @@ class AsyncValueWidget<T> extends StatelessWidget {
     super.key,
     required this.value,
     required this.data,
+    required this.widgetLoading,
   });
   final AsyncValue<T> value;
   final Widget Function(T) data;
+  final Widget widgetLoading;
 
   @override
   Widget build(BuildContext context) {
     return value.when(
       data: data,
       error: (e, st) => Center(child: ErrorMessageWidget(e.toString())),
-      loading: () => const Center(child: CircularProgressIndicator()),
+      loading: () => Center(child: widgetLoading),
     );
   }
 }

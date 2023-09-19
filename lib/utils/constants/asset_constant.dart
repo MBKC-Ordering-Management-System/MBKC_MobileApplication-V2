@@ -15,6 +15,9 @@ class AssetsConstants {
   static const linearColor = Color(0xffD2D8E0);
   static const skipText = Color(0xff5B6169);
   static const cancelIconColor = Color(0xff7F858D);
+  static const revenueBackground = Color(0xffFCE4EC);
+  static const totalOrderBackground = Color(0xffC8FAD6);
+  static const totalOrderContent = Color(0xff08660D);
   static const transparentColor = Colors.transparent;
 
   // Assets
