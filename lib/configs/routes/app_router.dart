@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../error_screen.dart';
 import '../../features/auth/presentation/sign_in/sign_in_screen.dart';
+import '../../features/home_screen.dart';
 import '../../splash_screen.dart';
 
 part 'app_router.gr.dart';
@@ -24,6 +25,9 @@ class AppRouter extends _$AppRouter {
         ),
         AutoRoute(
           page: SignInScreenRoute.page,
+        ),
+        AutoRoute(
+          page: HomeScreenRoute.page,
         ),
         // order
         // product
