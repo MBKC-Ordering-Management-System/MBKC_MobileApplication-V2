@@ -27,10 +27,23 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeScreen(),
       );
     },
-    SignInScreenRoute.name: (routeData) {
+    OTPVerificationScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<OTPVerificationScreenRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const SignInScreen(),
+        child: OTPVerificationScreen(
+          key: args.key,
+          email: args.email,
+          verifyType: args.verifyType,
+        ),
+      );
+    },
+    SignInScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<SignInScreenRouteArgs>(
+          orElse: () => const SignInScreenRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: SignInScreen(key: args.key),
       );
     },
     SplashScreenRoute.name: (routeData) {
@@ -71,17 +84,76 @@ class HomeScreenRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
+/// [OTPVerificationScreen]
+class OTPVerificationScreenRoute
+    extends PageRouteInfo<OTPVerificationScreenRouteArgs> {
+  OTPVerificationScreenRoute({
+    Key? key,
+    required String email,
+    required VerificationOTPType verifyType,
+    List<PageRouteInfo>? children,
+  }) : super(
+          OTPVerificationScreenRoute.name,
+          args: OTPVerificationScreenRouteArgs(
+            key: key,
+            email: email,
+            verifyType: verifyType,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'OTPVerificationScreenRoute';
+
+  static const PageInfo<OTPVerificationScreenRouteArgs> page =
+      PageInfo<OTPVerificationScreenRouteArgs>(name);
+}
+
+class OTPVerificationScreenRouteArgs {
+  const OTPVerificationScreenRouteArgs({
+    this.key,
+    required this.email,
+    required this.verifyType,
+  });
+
+  final Key? key;
+
+  final String email;
+
+  final VerificationOTPType verifyType;
+
+  @override
+  String toString() {
+    return 'OTPVerificationScreenRouteArgs{key: $key, email: $email, verifyType: $verifyType}';
+  }
+}
+
+/// generated route for
 /// [SignInScreen]
-class SignInScreenRoute extends PageRouteInfo<void> {
-  const SignInScreenRoute({List<PageRouteInfo>? children})
-      : super(
+class SignInScreenRoute extends PageRouteInfo<SignInScreenRouteArgs> {
+  SignInScreenRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           SignInScreenRoute.name,
+          args: SignInScreenRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'SignInScreenRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<SignInScreenRouteArgs> page =
+      PageInfo<SignInScreenRouteArgs>(name);
+}
+
+class SignInScreenRouteArgs {
+  const SignInScreenRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'SignInScreenRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

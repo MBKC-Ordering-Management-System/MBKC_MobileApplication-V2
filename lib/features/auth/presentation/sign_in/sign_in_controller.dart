@@ -16,7 +16,7 @@ class SignInController extends _$SignInController {
     // nothing to do
   }
 
-  Future<void> loginAsync(
+  Future<void> login(
     String username,
     String password,
     BuildContext context,

@@ -37,6 +37,7 @@ Future<bool?> showAlertDialog({
         child: content != null
             ? LabelText(
                 content: content,
+                maxLine: 2,
                 size: AssetsConstants.defaultFontSize - 4.0,
                 color: AssetsConstants.whiteColor,
               )

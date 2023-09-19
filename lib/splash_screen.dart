@@ -21,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   _navigateTo() async {
     await Future.delayed(const Duration(milliseconds: 2000), () {});
-    context.router.replaceAll([const SignInScreenRoute()]);
+    context.router.replaceAll([SignInScreenRoute()]);
   }
 
   @override
