@@ -1,0 +1,40 @@
+import 'package:flutter/material.dart';
+
+class AssetsConstants {
+  // Color
+  static const mainColor = Color(0xffEC407A);
+  static const warningColor = Color(0xffFF0000);
+  static const subtitleColor = Color(0xff868C98);
+  static const subtitleColorM = Color(0xff7F858D);
+  static const whiteColor = Color(0xffFFFFFF);
+  static const blackColor = Color(0xff000000);
+  static const greyColor = Colors.grey;
+  static const scaffoldColor = Color(0xffF6F7FC);
+  static const borderColor = Color(0xffB3B9C1);
+  static const textBlur = Color(0xff7F858D);
+  static const linearColor = Color(0xffD2D8E0);
+  static const skipText = Color(0xff5B6169);
+  static const cancelIconColor = Color(0xff7F858D);
+  static const transparentColor = Colors.transparent;
+
+  // Assets
+  static const String appLogo = 'assets/images/logo.jpg';
+  static const String welcomeImage = 'assets/images/image_welcome.png';
+  static const String defaultAvatar = 'assets/images/avatar_default.png';
+  static const String errorLogo = 'assets/images/error.png';
+
+  // Size
+  static const double defaultPadding = 20.0;
+  static const double defaultFontSize = 25.0;
+  static const double defaultBorder = 2.0;
+  static const double defaultMargin = 10.0;
+
+  // Title
+  static const String appTitle = 'BẾP HỘI';
+
+  // Icon
+  static const Icon iconSuccess = Icon(
+    Icons.check_circle,
+    size: 30,
+  );
+}
