@@ -113,6 +113,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
                 ),
                 SizedBox(height: size.height * 0.02),
                 LabelText(
+                  maxLine: 2,
                   content:
                       'Hãy nhập mã gồm 6 số vừa được gửi đến email: $email',
                   size: AssetsConstants.defaultFontSize - 9.0,

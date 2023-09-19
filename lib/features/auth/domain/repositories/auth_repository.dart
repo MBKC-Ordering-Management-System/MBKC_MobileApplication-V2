@@ -9,6 +9,8 @@ part 'auth_repository.g.dart';
 abstract class AuthRepository {
   Future<UserModel> signIn({required SignInRequest request});
 
+  Future<void> checkEmail({required String email});
+
   Future<void> getCode({required String email});
 
   Future<void> verifyCode({required OTPVerifyRequest request});

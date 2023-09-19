@@ -8,6 +8,11 @@ sealed class AppException implements Exception {
   String toString() => message;
 }
 
+class EmailNotFoundException extends AppException {
+  EmailNotFoundException()
+      : super('user-not-found', 'Email không tồn tại trong hệ thống');
+}
+
 class UserNotFoundException extends AppException {
   UserNotFoundException()
       : super('user-not-found', 'Thông tin tài khoản không chính xác');

@@ -1,7 +1,7 @@
 import '../../models/user_model.dart';
 
 class AuthDummyData {
-  static const userNameExist = 'test@gmail.com';
+  static const emailExist = 'test@gmail.com';
   static const passwordExis = '12345678';
   static const otpCode = '000000';
   static final userModel = UserModel(

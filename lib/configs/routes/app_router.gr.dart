@@ -15,6 +15,25 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    ChangePasswordScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<ChangePasswordScreenRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ChangePasswordScreen(
+          key: args.key,
+          email: args.email,
+          verifyType: args.verifyType,
+        ),
+      );
+    },
+    EnterEmailScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<EnterEmailScreenRouteArgs>(
+          orElse: () => const EnterEmailScreenRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: EnterEmailScreen(key: args.key),
+      );
+    },
     ErrorScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -53,6 +72,79 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [ChangePasswordScreen]
+class ChangePasswordScreenRoute
+    extends PageRouteInfo<ChangePasswordScreenRouteArgs> {
+  ChangePasswordScreenRoute({
+    Key? key,
+    required String email,
+    required VerificationOTPType verifyType,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ChangePasswordScreenRoute.name,
+          args: ChangePasswordScreenRouteArgs(
+            key: key,
+            email: email,
+            verifyType: verifyType,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ChangePasswordScreenRoute';
+
+  static const PageInfo<ChangePasswordScreenRouteArgs> page =
+      PageInfo<ChangePasswordScreenRouteArgs>(name);
+}
+
+class ChangePasswordScreenRouteArgs {
+  const ChangePasswordScreenRouteArgs({
+    this.key,
+    required this.email,
+    required this.verifyType,
+  });
+
+  final Key? key;
+
+  final String email;
+
+  final VerificationOTPType verifyType;
+
+  @override
+  String toString() {
+    return 'ChangePasswordScreenRouteArgs{key: $key, email: $email, verifyType: $verifyType}';
+  }
+}
+
+/// generated route for
+/// [EnterEmailScreen]
+class EnterEmailScreenRoute extends PageRouteInfo<EnterEmailScreenRouteArgs> {
+  EnterEmailScreenRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          EnterEmailScreenRoute.name,
+          args: EnterEmailScreenRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'EnterEmailScreenRoute';
+
+  static const PageInfo<EnterEmailScreenRouteArgs> page =
+      PageInfo<EnterEmailScreenRouteArgs>(name);
+}
+
+class EnterEmailScreenRouteArgs {
+  const EnterEmailScreenRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'EnterEmailScreenRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

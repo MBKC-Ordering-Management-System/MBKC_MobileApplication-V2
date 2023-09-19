@@ -1,5 +1,7 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../../configs/routes/app_router.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../domain/models/request/otp_verify_request.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -42,6 +44,12 @@ class OtpVerificationController extends _$OtpVerificationController {
     if (state.hasError == false) {
       switch (verifyType) {
         case VerificationOTPType.forgotpassword:
+          context.router.push(
+            ChangePasswordScreenRoute(
+              email: email,
+              verifyType: verifyType,
+            ),
+          );
           break;
 
         case VerificationOTPType.changepassword:

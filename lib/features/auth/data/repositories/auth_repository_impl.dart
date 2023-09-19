@@ -15,11 +15,10 @@ class AuthRepositoryImpl extends RemoteBaseRepository
   @override
   Future<UserModel> signIn({required SignInRequest request}) async {
     await delay(addDelay);
-    if (request.username != AuthDummyData.userNameExist ||
+    if (request.username != AuthDummyData.emailExist ||
         request.password != AuthDummyData.passwordExis) {
       throw UserNotFoundException();
     }
-
     return AuthDummyData.userModel;
   }
 
@@ -35,13 +34,21 @@ class AuthRepositoryImpl extends RemoteBaseRepository
     if (request.otpcode != AuthDummyData.otpCode) {
       throw WrongOTPCodeException();
     }
-
     return;
   }
 
   @override
   Future<void> changePassword({required SignInRequest request}) async {
     await delay(addDelay);
+    return;
+  }
+
+  @override
+  Future<void> checkEmail({required String email}) async {
+    await delay(addDelay);
+    if (email != AuthDummyData.emailExist) {
+      throw EmailNotFoundException();
+    }
     return;
   }
 }
