@@ -5,6 +5,7 @@ export './custom_bottom_bar.dart';
 export './custom_button.dart';
 export './custom_outline_button.dart';
 export './error_message_widget.dart';
+export './home_shimmer.dart';
 export './label_text.dart';
 export './loading_overlay.dart';
 export './padding_widget.dart';

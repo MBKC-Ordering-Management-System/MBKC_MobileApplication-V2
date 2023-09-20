@@ -12,6 +12,7 @@ import '../../features/order/presentation/order_screen.dart';
 import '../../features/product/presentation/product_screen.dart';
 import '../../features/profile/presentation/profile_screen.dart';
 import '../../splash_screen.dart';
+import '../../tabview_screen.dart';
 import '../../utils/enums/verification_type_enum.dart';
 
 part 'app_router.gr.dart';
@@ -37,16 +38,22 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: OTPVerificationScreenRoute.page),
         AutoRoute(page: ChangePasswordScreenRoute.page),
         AutoRoute(
-          page: HomeScreenRoute.page,
+          page: TabViewScreenRoute.page,
           initial: true,
+          children: [
+            AutoRoute(page: HomeScreenRoute.page),
+            AutoRoute(page: OrderScreenRoute.page),
+            AutoRoute(page: ProductScreenRoute.page),
+            AutoRoute(page: ProfileScreenRoute.page),
+          ],
         ),
 
         // order
-        AutoRoute(page: OrderScreenRoute.page),
+        // AutoRoute(page: OrderScreenRoute.page),
         // product
-        AutoRoute(page: ProductScreenRoute.page),
+        // AutoRoute(page: ProductScreenRoute.page),
         // profile
-        AutoRoute(page: ProfileScreenRoute.page),
+        // AutoRoute(page: ProfileScreenRoute.page),
         // partner
 
         // transaction
