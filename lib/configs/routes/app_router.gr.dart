@@ -57,6 +57,24 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    OrderScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const OrderScreen(),
+      );
+    },
+    ProductScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProductScreen(),
+      );
+    },
+    ProfileScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ProfileScreen(),
+      );
+    },
     SignInScreenRoute.name: (routeData) {
       final args = routeData.argsAs<SignInScreenRouteArgs>(
           orElse: () => const SignInScreenRouteArgs());
@@ -217,6 +235,48 @@ class OTPVerificationScreenRouteArgs {
   String toString() {
     return 'OTPVerificationScreenRouteArgs{key: $key, email: $email, verifyType: $verifyType}';
   }
+}
+
+/// generated route for
+/// [OrderScreen]
+class OrderScreenRoute extends PageRouteInfo<void> {
+  const OrderScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          OrderScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OrderScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProductScreen]
+class ProductScreenRoute extends PageRouteInfo<void> {
+  const ProductScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          ProductScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProductScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileScreen]
+class ProfileScreenRoute extends PageRouteInfo<void> {
+  const ProfileScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          ProfileScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

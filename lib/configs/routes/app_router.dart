@@ -8,6 +8,9 @@ import '../../features/auth/presentation/enter_email/enter_email_screen.dart';
 import '../../features/auth/presentation/otp_verification/otp_verification_screen.dart';
 import '../../features/auth/presentation/sign_in/sign_in_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
+import '../../features/order/presentation/order_screen.dart';
+import '../../features/product/presentation/product_screen.dart';
+import '../../features/profile/presentation/profile_screen.dart';
 import '../../splash_screen.dart';
 import '../../utils/enums/verification_type_enum.dart';
 
@@ -37,10 +40,15 @@ class AppRouter extends _$AppRouter {
           page: HomeScreenRoute.page,
           initial: true,
         ),
+
         // order
+        AutoRoute(page: OrderScreenRoute.page),
         // product
+        AutoRoute(page: ProductScreenRoute.page),
         // profile
+        AutoRoute(page: ProfileScreenRoute.page),
         // partner
+
         // transaction
       ];
 }
