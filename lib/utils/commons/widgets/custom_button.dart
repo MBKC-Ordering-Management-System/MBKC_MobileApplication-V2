@@ -6,22 +6,26 @@ class CustomButton extends StatelessWidget {
   final String content;
   final bool isActive;
   final VoidCallback onCallback;
+  final double width;
+  final double height;
+  final double size;
   const CustomButton({
     super.key,
     required this.content,
     required this.onCallback,
     required this.isActive,
+    required this.width,
+    required this.height,
+    this.size = AssetsConstants.defaultFontSize - 5.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.sizeOf(context);
-
     return InkWell(
       onTap: isActive == true ? onCallback : null,
       child: Container(
-        width: size.width * 0.95,
-        height: size.height * 0.07,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           color: isActive == true
               ? AssetsConstants.mainColor
@@ -31,7 +35,7 @@ class CustomButton extends StatelessWidget {
         child: Center(
           child: LabelText(
             content: content.toUpperCase(),
-            size: AssetsConstants.defaultFontSize - 5.0,
+            size: size,
             fontWeight: FontWeight.w700,
             color: AssetsConstants.whiteColor,
           ),

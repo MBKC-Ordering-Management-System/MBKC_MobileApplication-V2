@@ -86,6 +86,8 @@ class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
           child: ValueListenableBuilder1(
             first: email,
             builder: (_, a, __) => CustomButton(
+              width: size.width * 0.95,
+              height: size.height * 0.07,
               isActive: a.text.isNotEmpty,
               content: 'Tiếp Tục',
               onCallback: submit,

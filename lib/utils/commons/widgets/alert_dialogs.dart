@@ -10,7 +10,7 @@ Future<bool?> showAlertDialog({
   required String title,
   String? content,
   String? cancelActionText,
-  String defaultActionText = 'OK',
+  String defaultActionText = 'Đồng ý',
 }) async {
   final size = MediaQuery.sizeOf(context);
   return showDialog(
@@ -44,29 +44,42 @@ Future<bool?> showAlertDialog({
             : null,
       ),
       actions: <Widget>[
-        if (cancelActionText != null)
-          TextButton(
-            child: LabelText(
-              content: cancelActionText,
-              size: AssetsConstants.defaultFontSize,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(
+                  width: 2,
+                  color: AssetsConstants.whiteColor,
+                ),
+              ),
+              key: kDialogDefaultKey,
+              child: LabelText(
+                content: defaultActionText,
+                size: AssetsConstants.defaultFontSize - 4.0,
+                color: AssetsConstants.whiteColor,
+                fontWeight: FontWeight.bold,
+              ),
+              onPressed: () => Navigator.of(context).pop(true),
             ),
-            onPressed: () => Navigator.of(context).pop(false),
-          ),
-        OutlinedButton(
-          style: OutlinedButton.styleFrom(
-            side: const BorderSide(
-              width: 2,
-              color: AssetsConstants.whiteColor,
-            ),
-          ),
-          key: kDialogDefaultKey,
-          child: LabelText(
-            content: defaultActionText,
-            size: AssetsConstants.defaultFontSize - 4.0,
-            color: AssetsConstants.whiteColor,
-            fontWeight: FontWeight.bold,
-          ),
-          onPressed: () => Navigator.of(context).pop(true),
+            if (cancelActionText != null)
+              OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(
+                    width: 2,
+                    color: AssetsConstants.whiteColor,
+                  ),
+                ),
+                child: LabelText(
+                  content: cancelActionText,
+                  size: AssetsConstants.defaultFontSize - 4.0,
+                  color: AssetsConstants.whiteColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                onPressed: () => Navigator.of(context).pop(false),
+              ),
+          ],
         ),
       ],
     ),

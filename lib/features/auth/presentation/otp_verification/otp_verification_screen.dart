@@ -208,6 +208,8 @@ class OTPVerificationScreen extends HookConsumerWidget {
             fifth: otp_5,
             sixth: otp_6,
             builder: (_, a, b, c, d, e, f, __) => CustomButton(
+              width: size.width * 0.95,
+              height: size.height * 0.07,
               isActive: a.text.length +
                       b.text.length +
                       c.text.length +

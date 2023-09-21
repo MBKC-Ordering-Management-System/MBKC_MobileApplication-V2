@@ -19,6 +19,9 @@ class AssetsConstants {
   static const totalOrderBackground = Color(0xffC8FAD6);
   static const totalOrderContent = Color(0xff08660D);
   static const transparentColor = Colors.transparent;
+  static const preparingColor = Color(0xffCE6147);
+  static const deliveringColor = Color(0xffD5770B);
+  static const deliveredColor = Color(0xff1AD285);
 
   // Assets
   static const String appLogo = 'assets/images/logo.jpg';

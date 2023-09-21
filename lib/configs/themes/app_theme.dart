@@ -15,15 +15,5 @@ class AppTheme {
     textSelectionTheme: const TextSelectionThemeData(
       cursorColor: AssetsConstants.mainColor,
     ),
-    tabBarTheme: TabBarTheme(
-      labelColor: AssetsConstants.whiteColor,
-      labelStyle: TextStyle(color: Colors.pink[800]), // color for text
-      indicator: const UnderlineTabIndicator(
-          // color for indicator (underline)
-          borderSide: BorderSide(color: AssetsConstants.mainColor)),
-    ),
-    primaryColor:
-        AssetsConstants.mainColor, // outdated and has no effect to Tabbar
-    // deprecated,
   );
 }

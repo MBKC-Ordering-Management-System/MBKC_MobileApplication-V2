@@ -122,6 +122,8 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
             first: newPassword,
             second: comfirmPassword,
             builder: (_, a, b, __) => CustomButton(
+              width: size.width * 0.95,
+              height: size.height * 0.07,
               content: 'Xác nhận',
               onCallback: submit,
               isActive: a.text.isNotEmpty && b.text.isNotEmpty,
