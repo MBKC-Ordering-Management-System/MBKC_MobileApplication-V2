@@ -52,9 +52,11 @@ class HomeScreen extends HookConsumerWidget {
       ),
       body: isLoading.value
           ? const Center(
-              child: HomeShimmer(),
+              child: HomeShimmer(amount: 2),
             )
           : RefreshIndicator(
+              color: AssetsConstants.mainColor,
+              backgroundColor: AssetsConstants.revenueBackground,
               onRefresh: fetchData,
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),

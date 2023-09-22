@@ -2,8 +2,39 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 import '../../constants/asset_constant.dart';
 
+List<Widget> _generateWidget(int amount, Size size) {
+  // <<<<< Note this change for the return type
+  List<Widget> listings = [];
+  int i = 0;
+  for (i = 0; i < amount; i++) {
+    listings.add(
+      Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          height: size.height * 0.2,
+          width: size.width * 0.9,
+          margin: EdgeInsets.only(
+            top: size.height * 0.02,
+            bottom: size.height * 0.01,
+          ),
+          decoration: BoxDecoration(
+            color: AssetsConstants.whiteColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      ),
+    );
+  }
+  return listings;
+}
+
 class HomeShimmer extends StatelessWidget {
-  const HomeShimmer({super.key});
+  const HomeShimmer({
+    super.key,
+    required this.amount,
+  });
+  final int amount;
 
   @override
   Widget build(BuildContext context) {
@@ -12,32 +43,7 @@ class HomeShimmer extends StatelessWidget {
     return Center(
       child: Column(
         children: [
-          SizedBox(height: size.height * 0.02),
-          Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
-            child: Container(
-              height: size.height * 0.2,
-              width: size.width * 0.9,
-              decoration: BoxDecoration(
-                color: AssetsConstants.whiteColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
-          SizedBox(height: size.height * 0.02),
-          Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
-            child: Container(
-              height: size.height * 0.2,
-              width: size.width * 0.9,
-              decoration: BoxDecoration(
-                color: AssetsConstants.whiteColor,
-                borderRadius: BorderRadius.circular(10),
-              ),
-            ),
-          ),
+          ..._generateWidget(amount, size),
         ],
       ),
     );

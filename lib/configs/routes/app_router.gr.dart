@@ -57,6 +57,16 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
+    OrderDetailScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<OrderDetailScreenRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: OrderDetailScreen(
+          key: args.key,
+          order: args.order,
+        ),
+      );
+    },
     OrderScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -240,6 +250,44 @@ class OTPVerificationScreenRouteArgs {
   @override
   String toString() {
     return 'OTPVerificationScreenRouteArgs{key: $key, email: $email, verifyType: $verifyType}';
+  }
+}
+
+/// generated route for
+/// [OrderDetailScreen]
+class OrderDetailScreenRoute extends PageRouteInfo<OrderDetailScreenRouteArgs> {
+  OrderDetailScreenRoute({
+    Key? key,
+    required OrderModel order,
+    List<PageRouteInfo>? children,
+  }) : super(
+          OrderDetailScreenRoute.name,
+          args: OrderDetailScreenRouteArgs(
+            key: key,
+            order: order,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'OrderDetailScreenRoute';
+
+  static const PageInfo<OrderDetailScreenRouteArgs> page =
+      PageInfo<OrderDetailScreenRouteArgs>(name);
+}
+
+class OrderDetailScreenRouteArgs {
+  const OrderDetailScreenRouteArgs({
+    this.key,
+    required this.order,
+  });
+
+  final Key? key;
+
+  final OrderModel order;
+
+  @override
+  String toString() {
+    return 'OrderDetailScreenRouteArgs{key: $key, order: $order}';
   }
 }
 

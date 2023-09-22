@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../models/order_detail_model.dart';
-import '../../../utils/commons/widgets/label_text.dart';
-import '../../../utils/constants/asset_constant.dart';
+import '../../../../models/order_detail_model.dart';
+import '../../../../utils/commons/widgets/widgets_common_export.dart';
+import '../../../../utils/constants/asset_constant.dart';
 
 class OrderDetailItem extends StatelessWidget {
   const OrderDetailItem({

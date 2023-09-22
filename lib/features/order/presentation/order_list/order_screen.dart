@@ -2,12 +2,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../models/order_model.dart';
-import '../../../utils/commons/widgets/widgets_common_export.dart';
-import '../../../utils/constants/asset_constant.dart';
-import '../../../utils/enums/order_status_type.dart';
-import '../../../utils/extensions/extensions_export.dart';
-import '../domain/repositories/order_repository.dart';
+import '../../../../models/order_model.dart';
+import '../../../../models/paging_model.dart';
+import '../../../../utils/commons/widgets/widgets_common_export.dart';
+import '../../../../utils/constants/asset_constant.dart';
+import '../../../../utils/enums/order_status_type.dart';
+import '../../../../utils/extensions/extensions_export.dart';
+import '../../domain/repositories/order_repository.dart';
 import 'order_list.dart';
 
 final List<OrderStatusType> items = [
@@ -30,6 +31,7 @@ class OrderScreen extends HookConsumerWidget {
     final pageNumber = useState(0);
     final isLastPage = useState(false);
     final isLoading = useState(false);
+    final isShowNoMoreData = useState(false);
     final isLoadMoreLoading = useState(false);
     final scrollController = useScrollController();
     final orders = useState<List<OrderModel>>([]);
@@ -38,12 +40,18 @@ class OrderScreen extends HookConsumerWidget {
     Future<void> fetchData() async {
       pageNumber.value = 0;
       isLastPage.value = false;
-      isLoading.value = true;
+      isShowNoMoreData.value = false;
 
-      final ordersData = await ref.watch(
-        getOrdersProvider.future,
+      isLoading.value = true;
+      pageNumber.value = pageNumber.value + 1;
+      final ordersData = await ref.read(
+        getOrdersProvider(PagingModel(
+          pageNumber: pageNumber.value,
+          pageSize: 20,
+        )).future,
       );
 
+      isLastPage.value = ordersData.length < 20;
       orders.value = ordersData;
       isLoading.value = false;
     }
@@ -51,15 +59,29 @@ class OrderScreen extends HookConsumerWidget {
     // handle scroll to load
     Future<void> loadMoreData() async {
       if (isLastPage.value) {
+        if (isShowNoMoreData.value == false) {
+          showSnackBar(
+            context: context,
+            content: 'Không còn dữ liệu',
+            icon: const Icon(Icons.close),
+            backgroundColor: AssetsConstants.mainColor,
+            textColor: AssetsConstants.whiteColor,
+          );
+          isShowNoMoreData.value = true;
+        }
         return;
       }
 
       isLoadMoreLoading.value = true;
       pageNumber.value = pageNumber.value + 1;
-      final ordersData = await ref.watch(
-        getOrdersProvider.future,
+      final ordersData = await ref.read(
+        getOrdersProvider(PagingModel(
+          pageNumber: pageNumber.value,
+          pageSize: 20,
+        )).future,
       );
-      isLastPage.value = ordersData.length < 5;
+
+      isLastPage.value = ordersData.length < 20;
       orders.value = orders.value + ordersData;
       isLoadMoreLoading.value = false;
     }
@@ -79,6 +101,7 @@ class OrderScreen extends HookConsumerWidget {
       return scrollController.dispose;
     }, const []);
 
+    // UI
     return Scaffold(
       appBar: AppBar(
         backgroundColor: AssetsConstants.mainColor,
@@ -92,9 +115,11 @@ class OrderScreen extends HookConsumerWidget {
       ),
       body: isLoading.value
           ? const Center(
-              child: HomeShimmer(),
+              child: HomeShimmer(amount: 3),
             )
           : RefreshIndicator(
+              color: AssetsConstants.mainColor,
+              backgroundColor: AssetsConstants.revenueBackground,
               onRefresh: fetchData,
               child: Column(
                 children: [
@@ -141,17 +166,14 @@ class OrderScreen extends HookConsumerWidget {
                   ),
                   SizedBox(height: size.height * 0.01),
                   OrderList(
+                    isLoading: isLoadMoreLoading.value,
+                    controller: scrollController,
                     orders: orders.value
                         .where((element) =>
                             element.status == items[currentIndex.value])
                         .toList(),
                     orderType: items[currentIndex.value],
                   ),
-                  SizedBox(height: size.height * 0.01),
-                  if (isLoadMoreLoading.value)
-                    const Center(
-                      child: CircularProgressIndicator(),
-                    ),
                 ],
               ),
             ),
