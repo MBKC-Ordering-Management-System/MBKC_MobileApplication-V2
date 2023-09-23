@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../configs/routes/app_router.dart';
 import '../../../../models/user_model.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../domain/models/request/sign_in_request.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -21,19 +22,22 @@ class SignInController extends _$SignInController {
     String password,
     BuildContext context,
   ) async {
-    UserModel user;
-
     state = const AsyncLoading();
     final authRepository = ref.read(authRepositoryProvider);
     final request = SignInRequest(
-      username: username,
-      password: password,
+      email: username,
+      password: calculateMD5(password),
     );
 
     state = await AsyncValue.guard(
       () async {
-        user = await authRepository.signIn(request: request);
-        ref.read(authProvider.notifier).update((state) => user);
+        final user = await authRepository.signIn(request: request);
+        final userModel = UserModel(
+          id: user.accountId,
+          email: user.email,
+          role: user.roleName,
+        );
+        ref.read(authProvider.notifier).update((state) => userModel);
       },
     );
 

@@ -12,11 +12,10 @@ List<Widget> _generateWidget(int amount, Size size) {
         baseColor: Colors.grey[300]!,
         highlightColor: Colors.grey[100]!,
         child: Container(
-          height: size.height * 0.2,
-          width: size.width * 0.9,
-          margin: EdgeInsets.only(
-            top: size.height * 0.01,
-            bottom: size.height * 0.01,
+          height: size.height * 0.08,
+          width: size.width * 0.3,
+          margin: const EdgeInsets.only(
+            top: AssetsConstants.defaultMargin + 5.0,
           ),
           decoration: BoxDecoration(
             color: AssetsConstants.whiteColor,
@@ -29,8 +28,8 @@ List<Widget> _generateWidget(int amount, Size size) {
   return listings;
 }
 
-class HomeShimmer extends StatelessWidget {
-  const HomeShimmer({
+class TabViewShimmer extends StatelessWidget {
+  const TabViewShimmer({
     super.key,
     required this.amount,
   });
@@ -41,7 +40,8 @@ class HomeShimmer extends StatelessWidget {
     final size = MediaQuery.sizeOf(context);
 
     return Center(
-      child: Column(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           ..._generateWidget(amount, size),
         ],

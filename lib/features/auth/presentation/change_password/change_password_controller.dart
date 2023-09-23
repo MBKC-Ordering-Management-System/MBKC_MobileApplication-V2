@@ -27,7 +27,7 @@ class ChangePasswordController extends _$ChangePasswordController {
     final authRepository = ref.read(authRepositoryProvider);
 
     final request = SignInRequest(
-      username: email,
+      email: email,
       password: password,
     );
 

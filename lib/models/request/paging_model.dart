@@ -6,7 +6,7 @@ class PagingModel {
 
   PagingModel({
     this.pageNumber = 1,
-    this.pageSize = 5,
+    this.pageSize = 10,
   });
 
   Map<String, dynamic> toMap() {
