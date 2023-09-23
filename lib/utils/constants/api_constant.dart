@@ -1,16 +1,22 @@
 class APIConstants {
-  static const String baseUrl = 'https://mbkc.azurewebsites.net';
-  static const String contentType = 'application/json';
+  static const baseUrl = 'https://mbkc.azurewebsites.net';
+  static const contentType = 'application/json';
 
   // auth
-  static const String login = '/api/authentications/login';
-  static const String reGenerateToken =
-      '/api/authentications/tokens-regeneration';
-  static const String resetPassword = '/api/authentications/reset-password';
-  static const String verifyEmail = '/api/verifications/email-verification';
-  static const String otpVerification = '/api/verifications/otp-verification';
+  static const login = '/api/authentications/login';
+  static const reGenerateToken = '/api/authentications/tokens-regeneration';
+  static const resetPassword = '/api/authentications/reset-password';
+  static const verifyEmail = '/api/verifications/email-verification';
+  static const otpVerification = '/api/verifications/otp-verification';
   // statistical
   // order
   // product
   // profile
+  // error
+  static const emailpassinvalid = {
+    'Email or Password is invalid.',
+    'Email hoặc mật khẩu không hợp lệ'
+  };
+
+  static const emailnotFound = 'Email không tồn tại trong hệ thống';
 }

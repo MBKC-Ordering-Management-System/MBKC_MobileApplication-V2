@@ -17,7 +17,7 @@ class AuthRepositoryImpl extends RemoteBaseRepository
 
   @override
   Future<AccountReponse> signIn({required SignInRequest request}) async {
-    return getDataOf(
+    return getDataOf<AccountReponse>(
       request: () => _authSource.signIn(request, APIConstants.contentType),
     );
   }

@@ -11,7 +11,6 @@ import '../../../../utils/commons/widgets/password_input.dart';
 import '../../../../utils/commons/widgets/text_input.dart';
 import '../../../../utils/commons/widgets/value_listenable_builder.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/extensions/async_value_ui.dart';
 import 'sign_in_controller.dart';
 import 'sign_in_validator.dart';
 
@@ -23,16 +22,16 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final username = useTextEditingController();
-    final password = useTextEditingController();
+    final username = useTextEditingController(text: 'mbkcadminn@gmail.com');
+    final password = useTextEditingController(text: '12345678');
     final state = ref.watch(signInControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
 
-    // handle error
-    ref.listen<AsyncValue>(
-      signInControllerProvider,
-      (_, state) => state.showAlertDialogOnError(context),
-    );
+    // // handle error
+    // ref.listen<AsyncValue>(
+    //   signInControllerProvider,
+    //   (_, state) => state.showAlertDialogOnError(context),
+    // );
 
     // handle submit
     void submit() async {

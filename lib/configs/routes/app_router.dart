@@ -15,7 +15,7 @@ import '../../features/profile/presentation/profile_screen.dart';
 import '../../models/order_model.dart';
 import '../../splash_screen.dart';
 import '../../tabview_screen.dart';
-import '../../utils/enums/verification_type_enum.dart';
+import '../../utils/enums/verification_otp_type.dart';
 
 part 'app_router.gr.dart';
 
