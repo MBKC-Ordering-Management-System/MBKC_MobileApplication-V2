@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../configs/routes/app_router.dart';
 import '../../../models/response/error_model.dart';
@@ -13,13 +12,18 @@ void handleAPIError({
   required BuildContext context,
 }) {
   // logger
-  if (kDebugMode) {
-    print((stateError as DioException).response!);
+  final error = (stateError as DioException).response!.data;
+
+  if (error == null) {
+    showExceptionAlertDialog(
+      context: context,
+      title: 'Thông báo',
+      exception: 'Máy chủ không phản hồi, vui lòng thử lại.',
+    );
+    return;
   }
 
-  final errorModel = ErrorModel.fromMap(
-    (stateError as DioException).response!.data as Map<String, dynamic>,
-  );
+  final errorModel = ErrorModel.fromMap(error);
 
   switch (errorModel.statusCode.toStatusCodeTypeEnum()) {
     case StatusCodeType.conflict:

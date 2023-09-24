@@ -2,18 +2,18 @@ import 'dart:convert';
 
 class OTPVerifyRequest {
   final String email;
-  final String otpcode;
+  final String otpCode;
 
   OTPVerifyRequest({
     required this.email,
-    required this.otpcode,
+    required this.otpCode,
   });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
     result.addAll({'email': email});
-    result.addAll({'otpcode': otpcode});
+    result.addAll({'otpCode': otpCode});
 
     return result;
   }
@@ -21,7 +21,7 @@ class OTPVerifyRequest {
   factory OTPVerifyRequest.fromMap(Map<String, dynamic> map) {
     return OTPVerifyRequest(
       email: map['email'] ?? '',
-      otpcode: map['otpcode'] ?? '',
+      otpCode: map['otpCode'] ?? '',
     );
   }
 

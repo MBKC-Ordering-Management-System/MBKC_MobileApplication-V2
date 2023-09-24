@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
-import '../../../../utils/extensions/async_value_ui.dart';
 import 'otp_field.dart';
 import 'otp_verification_controller.dart';
 
@@ -29,12 +28,6 @@ class OTPVerificationScreen extends HookConsumerWidget {
     final start = useState(10);
     final wait = useState(true);
     final state = ref.watch(otpVerificationControllerProvider);
-
-    // handle error
-    ref.listen<AsyncValue>(
-      otpVerificationControllerProvider,
-      (_, state) => state.showAlertDialogOnError(context),
-    );
 
     // text controller
     final otp_1 = useTextEditingController(),
@@ -58,16 +51,22 @@ class OTPVerificationScreen extends HookConsumerWidget {
     }
 
     // get otp code
-    Future<void> getOtpCode() async {
+    Future<void> verifyEmail() async {
       await ref
           .read(otpVerificationControllerProvider.notifier)
-          .getOtpCode(email: email);
+          .checkEmail(email: email, context: context);
     }
 
     // call once when build done
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await getOtpCode();
+        showSnackBar(
+          context: context,
+          content: 'Mã OTP đã được gửi vào email của bạn',
+          icon: AssetsConstants.iconSuccess,
+          backgroundColor: AssetsConstants.mainColor,
+          textColor: AssetsConstants.whiteColor,
+        );
         startTimer();
         wait.value = true;
       });
@@ -77,7 +76,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
 
     // handle submit
     void submit() async {
-      await ref.read(otpVerificationControllerProvider.notifier).verifyOtpCode(
+      await ref.read(otpVerificationControllerProvider.notifier).verifyOTPCode(
             email: email,
             code: otp_1.text +
                 otp_2.text +
@@ -180,7 +179,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
                           ..onTap = wait.value
                               ? null
                               : () async {
-                                  await getOtpCode();
+                                  await verifyEmail();
                                   start.value = 10;
                                   startTimer();
                                   wait.value = true;

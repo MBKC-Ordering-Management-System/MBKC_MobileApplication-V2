@@ -2,7 +2,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../configs/routes/app_router.dart';
+import '../../../../utils/commons/functions/api_utils.dart';
+import '../../../../utils/commons/widgets/snack_bar.dart';
+import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
+import '../../domain/models/request/email_verify_request.dart';
 import '../../domain/models/request/otp_verify_request.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -16,14 +20,34 @@ class OtpVerificationController extends _$OtpVerificationController {
   }
 
   // get verify code
-  Future<void> getOtpCode({required String email}) async {
+  Future<void> checkEmail({
+    required String email,
+    required BuildContext context,
+  }) async {
     state = const AsyncLoading();
     final authRepository = ref.read(authRepositoryProvider);
-    state = await AsyncValue.guard(() => authRepository.getCode(email: email));
+    final request = EmailVerifyRequest(email: email);
+    state = await AsyncValue.guard(
+      () => authRepository.verifyEmail(request: request),
+    );
+
+    if (state.hasError) {
+      handleAPIError(stateError: state.error!, context: context);
+    }
+
+    if (state.hasError == false) {
+      showSnackBar(
+        context: context,
+        content: 'Mã OTP đã được gửi vào email của bạn',
+        icon: AssetsConstants.iconSuccess,
+        backgroundColor: AssetsConstants.mainColor,
+        textColor: AssetsConstants.whiteColor,
+      );
+    }
   }
 
   // verify code
-  Future<void> verifyOtpCode({
+  Future<void> verifyOTPCode({
     required String email,
     required String code,
     required BuildContext context,
@@ -34,12 +58,16 @@ class OtpVerificationController extends _$OtpVerificationController {
 
     final request = OTPVerifyRequest(
       email: email,
-      otpcode: code,
+      otpCode: code,
     );
 
     state = await AsyncValue.guard(
-      () => authRepository.verifyCode(request: request),
+      () => authRepository.verifyOTPCode(request: request),
     );
+
+    if (state.hasError) {
+      handleAPIError(stateError: state.error!, context: context);
+    }
 
     if (state.hasError == false) {
       switch (verifyType) {
@@ -56,6 +84,12 @@ class OtpVerificationController extends _$OtpVerificationController {
           break;
 
         default:
+          context.router.push(
+            ChangePasswordScreenRoute(
+              email: email,
+              verifyType: verifyType,
+            ),
+          );
       }
     }
   }

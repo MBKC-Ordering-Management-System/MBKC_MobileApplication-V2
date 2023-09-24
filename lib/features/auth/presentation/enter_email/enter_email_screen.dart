@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/extensions/extensions_export.dart';
 import '../sign_in/sign_in_validator.dart';
 import 'enter_email_controller.dart';
 
@@ -16,15 +15,9 @@ class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final email = useTextEditingController();
+    final email = useTextEditingController(text: 'mbkcadmin@gmail.com');
     final state = ref.watch(enterEmailControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
-
-    // handle error
-    ref.listen<AsyncValue>(
-      enterEmailControllerProvider,
-      (_, state) => state.showAlertDialogOnError(context),
-    );
 
     // submit
     void submit() async {

@@ -7,7 +7,7 @@ part of 'otp_verification_controller.dart';
 // **************************************************************************
 
 String _$otpVerificationControllerHash() =>
-    r'4ca18a0347b950a6bc5042e8d732c39d7b2ce718';
+    r'54be5058c5612e6e917257cb9bd0d7b9071f5035';
 
 /// See also [OtpVerificationController].
 @ProviderFor(OtpVerificationController)
