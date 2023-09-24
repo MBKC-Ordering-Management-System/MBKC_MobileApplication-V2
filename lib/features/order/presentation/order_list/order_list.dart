@@ -115,7 +115,7 @@ class OrderList extends HookConsumerWidget {
     // UI
     return (state.isLoading && isLoadMoreLoading.value == false)
         ? const Center(
-            child: HomeShimmer(amount: 3),
+            child: HomeShimmer(amount: 4),
           )
         : orders.value.isEmpty
             ? RefreshIndicator(
@@ -127,6 +127,9 @@ class OrderList extends HookConsumerWidget {
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Container(
+                    margin: const EdgeInsets.only(
+                      top: AssetsConstants.defaultMargin,
+                    ),
                     width: size.width * 0.9,
                     height: size.height * 0.2,
                     decoration: BoxDecoration(

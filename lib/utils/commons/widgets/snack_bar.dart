@@ -16,9 +16,10 @@ void showSnackBar({
         elevation: 0,
         backgroundColor: AssetsConstants.transparentColor,
         content: Container(
-          height: 50,
+          height: 30,
           padding: const EdgeInsets.symmetric(
-              horizontal: AssetsConstants.defaultPadding - 9.0),
+            horizontal: AssetsConstants.defaultPadding - 9.0,
+          ),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
             color: backgroundColor,
@@ -31,7 +32,7 @@ void showSnackBar({
                 style: TextStyle(
                   color: textColor,
                   fontWeight: FontWeight.bold,
-                  fontSize: AssetsConstants.defaultFontSize - 8.0,
+                  fontSize: AssetsConstants.defaultFontSize - 14.0,
                 ),
               ),
               icon,

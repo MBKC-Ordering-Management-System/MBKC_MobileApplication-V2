@@ -50,16 +50,15 @@ class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: size.height * 0.001),
                 const LabelText(
                   content: 'Hãy nhập email mà bạn đã đăng kí',
-                  size: AssetsConstants.defaultFontSize - 5.0,
+                  size: AssetsConstants.defaultFontSize - 8.0,
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: size.height * 0.02),
+                SizedBox(height: size.height * 0.01),
                 const LabelText(
                   content: 'MBKC sẽ gửi mã xác nhận đến email này',
-                  size: AssetsConstants.defaultFontSize - 9.0,
+                  size: AssetsConstants.defaultFontSize - 11.0,
                   fontWeight: FontWeight.w700,
                   color: AssetsConstants.subtitleColorM,
                 ),
@@ -78,7 +77,7 @@ class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
           ),
         ),
         bottomNavigationBar: Container(
-          margin: EdgeInsets.only(bottom: size.height * 0.06),
+          margin: EdgeInsets.only(bottom: size.height * 0.04),
           padding: const EdgeInsets.only(
             right: AssetsConstants.defaultPadding,
             left: AssetsConstants.defaultPadding,
@@ -86,11 +85,12 @@ class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
           child: ValueListenableBuilder1(
             first: email,
             builder: (_, a, __) => CustomButton(
-              width: size.width * 0.95,
-              height: size.height * 0.07,
+              width: size.width * 1,
+              height: size.height * 0.05,
               isActive: a.text.isNotEmpty,
               content: 'Tiếp Tục',
               onCallback: submit,
+              size: AssetsConstants.defaultFontSize - 10.0,
             ),
           ),
         ),

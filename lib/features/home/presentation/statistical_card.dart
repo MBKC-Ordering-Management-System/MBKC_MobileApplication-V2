@@ -28,7 +28,7 @@ class StatisticalCard extends StatelessWidget {
         horizontal: AssetsConstants.defaultPadding,
       ),
       width: size.width * 0.9,
-      height: size.height * 0.2,
+      height: size.height * 0.15,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: BorderRadius.circular(20),
@@ -40,14 +40,14 @@ class StatisticalCard extends StatelessWidget {
           SizedBox(height: size.height * 0.01),
           LabelText(
             content: title,
-            size: AssetsConstants.defaultFontSize + 6.0,
+            size: AssetsConstants.defaultFontSize - 8.0,
             color: contentColor,
             fontWeight: FontWeight.w700,
           ),
           SizedBox(height: size.height * 0.01),
           LabelText(
             content: subtitle,
-            size: AssetsConstants.defaultFontSize - 6.0,
+            size: AssetsConstants.defaultFontSize - 10.0,
             color: contentColor,
             fontWeight: FontWeight.w600,
           ),

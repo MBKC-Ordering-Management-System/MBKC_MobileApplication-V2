@@ -70,22 +70,23 @@ class OrderItem extends ConsumerWidget {
                         children: [
                           LabelText(
                             content: '#${order.orderid} • ${order.partner}',
-                            size: AssetsConstants.defaultFontSize - 8.0,
+                            size: AssetsConstants.defaultFontSize - 12.0,
                             fontWeight: FontWeight.w600,
                             maxLine: 2,
                           ),
                           LabelText(
                             content: '${order.totalItem} món',
-                            size: AssetsConstants.defaultFontSize - 8.0,
+                            size: AssetsConstants.defaultFontSize - 14.0,
+                            fontWeight: FontWeight.w600,
                           ),
                         ],
                       ),
                     ),
                     customButtonOrder(
-                      width: size.width * 0.25,
-                      height: size.height * 0.04,
+                      width: size.width * 0.22,
+                      height: size.height * 0.035,
                       content: order.status.type,
-                      size: AssetsConstants.defaultFontSize - 14.0,
+                      size: AssetsConstants.defaultFontSize - 18.0,
                       onCallBack: () {},
                       backgroundColor: getColorOrderStatus(orderType),
                       contentColor: AssetsConstants.whiteColor,
@@ -98,12 +99,12 @@ class OrderItem extends ConsumerWidget {
                   height: 1,
                   color: AssetsConstants.subtitleColor,
                 ),
-                SizedBox(height: size.height * 0.01),
+                SizedBox(height: size.height * 0.005),
                 ...order.orderDetails
                     .map(
                       (e) => Container(
                         margin: const EdgeInsets.only(
-                          bottom: AssetsConstants.defaultMargin - 5.0,
+                          bottom: AssetsConstants.defaultMargin - 8.0,
                         ),
                         child: OrderDetailItem(orderDetail: e),
                       ),
@@ -115,12 +116,12 @@ class OrderItem extends ConsumerWidget {
           ),
           if (orderType == OrderStatusType.preparing)
             CustomButton(
-              size: AssetsConstants.defaultFontSize - 10.0,
+              size: AssetsConstants.defaultFontSize - 14.0,
               content: 'Hoàn thành'.toUpperCase(),
               onCallback: changeStatus,
               isActive: true,
-              width: size.width * 0.95,
-              height: size.height * 0.04,
+              width: size.width * 0.90,
+              height: size.height * 0.035,
             ),
           SizedBox(height: size.height * 0.005),
         ],

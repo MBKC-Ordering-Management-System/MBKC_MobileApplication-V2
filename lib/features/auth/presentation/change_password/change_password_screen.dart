@@ -62,16 +62,15 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: size.height * 0.001),
                 const LabelText(
                   content: 'Đổi mật khẩu mới',
-                  size: AssetsConstants.defaultFontSize - 5.0,
+                  size: AssetsConstants.defaultFontSize - 8.0,
                   fontWeight: FontWeight.bold,
                 ),
                 SizedBox(height: size.height * 0.02),
                 const LabelText(
-                  content: 'Hãy cẩn trọng hơn trong việc ghi nhớ mật khẩu',
-                  size: AssetsConstants.defaultFontSize - 9.0,
+                  content: 'Hãy cẩn trọng hơn khi ghi nhớ mật khẩu',
+                  size: AssetsConstants.defaultFontSize - 11.0,
                   fontWeight: FontWeight.w700,
                   color: AssetsConstants.subtitleColorM,
                 ),
@@ -113,7 +112,7 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
           ),
         ),
         bottomNavigationBar: Container(
-          margin: EdgeInsets.only(bottom: size.height * 0.06),
+          margin: EdgeInsets.only(bottom: size.height * 0.04),
           padding: const EdgeInsets.only(
             right: AssetsConstants.defaultPadding,
             left: AssetsConstants.defaultPadding,
@@ -122,11 +121,12 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
             first: newPassword,
             second: comfirmPassword,
             builder: (_, a, b, __) => CustomButton(
-              width: size.width * 0.95,
-              height: size.height * 0.07,
+              width: size.width * 1,
+              height: size.height * 0.05,
               content: 'Xác nhận',
               onCallback: submit,
               isActive: a.text.isNotEmpty && b.text.isNotEmpty,
+              size: AssetsConstants.defaultFontSize - 10.0,
             ),
           ),
         ),

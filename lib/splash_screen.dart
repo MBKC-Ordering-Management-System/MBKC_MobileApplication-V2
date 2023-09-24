@@ -37,8 +37,8 @@ class _SplashScreenState extends State<SplashScreen> {
               borderRadius: BorderRadius.circular(10),
               child: Image.asset(
                 AssetsConstants.appLogo,
-                width: 180,
-                height: 180,
+                width: 120,
+                height: 120,
               ),
             ),
             SizedBox(
@@ -46,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const LabelText(
               content: AssetsConstants.appTitle,
-              size: AssetsConstants.defaultFontSize + 5.0,
+              size: AssetsConstants.defaultFontSize - 6.0,
               fontWeight: FontWeight.bold,
               color: AssetsConstants.whiteColor,
             ),

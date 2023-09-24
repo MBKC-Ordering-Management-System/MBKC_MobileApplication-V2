@@ -12,11 +12,11 @@ List<Widget> _generateWidget(int amount, Size size) {
         baseColor: Colors.grey[300]!,
         highlightColor: Colors.grey[100]!,
         child: Container(
-          height: size.height * 0.2,
+          height: size.height * 0.15,
           width: size.width * 0.9,
           margin: EdgeInsets.only(
-            top: size.height * 0.01,
-            bottom: size.height * 0.01,
+            top: size.height * 0.02,
+            bottom: size.height * 0.005,
           ),
           decoration: BoxDecoration(
             color: AssetsConstants.whiteColor,

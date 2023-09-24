@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../utils/commons/widgets/tab_view_shimmer.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/order_status_type.dart';
@@ -45,7 +44,7 @@ class OrderScreen extends HookConsumerWidget {
         centerTitle: true,
         title: const LabelText(
           content: 'Đơn hàng',
-          size: AssetsConstants.defaultFontSize,
+          size: AssetsConstants.defaultFontSize - 8.0,
           color: AssetsConstants.whiteColor,
           fontWeight: FontWeight.w600,
         ),
@@ -54,7 +53,16 @@ class OrderScreen extends HookConsumerWidget {
         children: [
           (state.isLoading && isLoadTabView.value)
               ? const TabViewShimmer(amount: 3)
-              : SizedBox(
+              : Container(
+                  decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                        color: AssetsConstants.subtitleColor.withOpacity(0.2),
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                      ),
+                    ],
+                  ),
                   height: size.height * 0.06,
                   width: double.infinity,
                   child: ListView.builder(
@@ -70,7 +78,7 @@ class OrderScreen extends HookConsumerWidget {
                         margin: const EdgeInsets.all(
                           AssetsConstants.defaultMargin - 4.0,
                         ),
-                        width: size.width * 0.3,
+                        width: size.width * 0.25,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
@@ -89,7 +97,7 @@ class OrderScreen extends HookConsumerWidget {
                                 ? AssetsConstants.whiteColor
                                 : AssetsConstants.mainColor,
                             content: items[index].type,
-                            size: AssetsConstants.defaultFontSize - 8.0,
+                            size: AssetsConstants.defaultFontSize - 14.0,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
@@ -97,7 +105,6 @@ class OrderScreen extends HookConsumerWidget {
                     ),
                   ),
                 ),
-          SizedBox(height: size.height * 0.01),
           OrderList(
             onCallbackLoadTabView: setLoadTabView,
           ),

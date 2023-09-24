@@ -17,12 +17,12 @@ class OrderDetailItem extends StatelessWidget {
       children: [
         LabelText(
           content: '${orderDetail.quantity}X  ${orderDetail.productName}',
-          size: AssetsConstants.defaultFontSize - 8.0,
+          size: AssetsConstants.defaultFontSize - 12.0,
           fontWeight: FontWeight.w600,
         ),
         Padding(
           padding: const EdgeInsets.symmetric(
-            horizontal: AssetsConstants.defaultPadding + 10.0,
+            horizontal: AssetsConstants.defaultPadding + 3.0,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +30,7 @@ class OrderDetailItem extends StatelessWidget {
               ...orderDetail.extra
                   .map((e) => LabelText(
                         content: e,
-                        size: AssetsConstants.defaultFontSize - 10.0,
+                        size: AssetsConstants.defaultFontSize - 14.0,
                         color: Colors.grey[700]!,
                         fontWeight: FontWeight.w600,
                       ))

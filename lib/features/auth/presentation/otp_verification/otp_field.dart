@@ -21,13 +21,16 @@ class OTPField extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       height: size.height * 0.06,
-      width: size.width * 0.1,
+      width: size.width * 0.11,
+      padding: const EdgeInsets.only(
+        left: AssetsConstants.defaultPadding - 15.0,
+      ),
       decoration: BoxDecoration(
         border: Border.all(
           color: AssetsConstants.mainColor,
           width: 1.5,
         ),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(5),
       ),
       child: Center(
         child: TextFormField(
@@ -54,7 +57,7 @@ class OTPField extends HookWidget {
             border: InputBorder.none,
           ),
           style: const TextStyle(
-            fontSize: AssetsConstants.defaultFontSize - 5.0,
+            fontSize: AssetsConstants.defaultFontSize - 6.0,
             fontWeight: FontWeight.w600,
           ),
           keyboardType: TextInputType.number,

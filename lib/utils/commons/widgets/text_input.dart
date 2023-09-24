@@ -35,38 +35,38 @@ class TextInput extends StatelessWidget {
         },
         controller: textController,
         style: const TextStyle(
-          fontSize: AssetsConstants.defaultFontSize - 5.0,
+          fontSize: AssetsConstants.defaultFontSize - 12.0,
           fontWeight: FontWeight.w600,
         ),
         decoration: InputDecoration(
           errorMaxLines: 2,
           errorStyle: const TextStyle(
-            fontSize: AssetsConstants.defaultFontSize - 9.0,
+            fontSize: AssetsConstants.defaultFontSize - 15.0,
           ),
           contentPadding: const EdgeInsets.all(
-            AssetsConstants.defaultPadding - 2.0,
+            AssetsConstants.defaultPadding - 5.0,
           ),
           hintText: hintText,
           hintStyle: const TextStyle(
-            fontSize: AssetsConstants.defaultFontSize - 5.0,
+            fontSize: AssetsConstants.defaultFontSize - 12.0,
             color: AssetsConstants.textBlur,
             fontWeight: FontWeight.w400,
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
               width: 2,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
               color: AssetsConstants.mainColor,
               width: 2,
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
               color: AssetsConstants.borderColor,
               width: 2,
@@ -75,7 +75,7 @@ class TextInput extends StatelessWidget {
           suffixIcon: textController.text.isNotEmpty
               ? Padding(
                   padding: const EdgeInsets.only(
-                    right: AssetsConstants.defaultPadding - 10.0,
+                    right: AssetsConstants.defaultPadding - 16.0,
                   ),
                   child: IconButton(
                     onPressed: () {
@@ -84,6 +84,7 @@ class TextInput extends StatelessWidget {
                     icon: const Icon(
                       Icons.cancel_rounded,
                       color: AssetsConstants.cancelIconColor,
+                      size: AssetsConstants.defaultFontSize - 6.0,
                     ),
                   ),
                 )

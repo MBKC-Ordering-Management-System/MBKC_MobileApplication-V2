@@ -18,13 +18,16 @@ class CustomBottomBar extends StatelessWidget {
     return CupertinoTabBar(
       currentIndex: tabsRouter.activeIndex,
       onTap: tabsRouter.setActiveIndex,
-      height: size.height * 0.08,
+      height: size.height * 0.06,
       backgroundColor: AssetsConstants.mainColor,
       items: [
         BottomNavigationBarItem(
           icon: Container(
-            width: size.width * 0.1,
-            height: size.width * 0.09,
+            margin: const EdgeInsets.only(
+              top: AssetsConstants.defaultMargin - 6.0,
+            ),
+            width: size.width * 0.09,
+            height: size.width * 0.08,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: tabsRouter.activeIndex == 0
@@ -36,13 +39,17 @@ class CustomBottomBar extends StatelessWidget {
               color: tabsRouter.activeIndex == 0
                   ? AssetsConstants.mainColor
                   : AssetsConstants.whiteColor,
+              size: AssetsConstants.defaultFontSize - 6.0,
             ),
           ),
         ),
         BottomNavigationBarItem(
           icon: Container(
-            width: size.width * 0.1,
-            height: size.width * 0.09,
+            margin: const EdgeInsets.only(
+              top: AssetsConstants.defaultMargin - 6.0,
+            ),
+            width: size.width * 0.09,
+            height: size.width * 0.08,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: tabsRouter.activeIndex == 1
@@ -54,13 +61,17 @@ class CustomBottomBar extends StatelessWidget {
               color: tabsRouter.activeIndex == 1
                   ? AssetsConstants.mainColor
                   : AssetsConstants.whiteColor,
+              size: AssetsConstants.defaultFontSize - 6.0,
             ),
           ),
         ),
         BottomNavigationBarItem(
           icon: Container(
-            width: size.width * 0.1,
-            height: size.width * 0.09,
+            margin: const EdgeInsets.only(
+              top: AssetsConstants.defaultMargin - 6.0,
+            ),
+            width: size.width * 0.09,
+            height: size.width * 0.08,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: tabsRouter.activeIndex == 2
@@ -73,14 +84,18 @@ class CustomBottomBar extends StatelessWidget {
                 color: tabsRouter.activeIndex == 2
                     ? AssetsConstants.mainColor
                     : AssetsConstants.whiteColor,
+                size: AssetsConstants.defaultFontSize - 6.0,
               ),
             ),
           ),
         ),
         BottomNavigationBarItem(
           icon: Container(
-            width: size.width * 0.1,
-            height: size.width * 0.09,
+            margin: const EdgeInsets.only(
+              top: AssetsConstants.defaultMargin - 6.0,
+            ),
+            width: size.width * 0.09,
+            height: size.width * 0.08,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: tabsRouter.activeIndex == 3
@@ -92,6 +107,7 @@ class CustomBottomBar extends StatelessWidget {
               color: tabsRouter.activeIndex == 3
                   ? AssetsConstants.mainColor
                   : AssetsConstants.whiteColor,
+              size: AssetsConstants.defaultFontSize - 6.0,
             ),
           ),
         ),

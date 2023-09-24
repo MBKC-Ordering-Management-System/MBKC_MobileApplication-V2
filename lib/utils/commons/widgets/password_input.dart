@@ -44,46 +44,46 @@ class _InputPasswordState extends State<PasswordInput> {
         obscureText: isObscureText,
         controller: widget.textEditingController,
         style: const TextStyle(
-          fontSize: AssetsConstants.defaultFontSize - 5.0,
+          fontSize: AssetsConstants.defaultFontSize - 12.0,
           fontWeight: FontWeight.w600,
         ),
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.all(
-            AssetsConstants.defaultPadding - 2.0,
-          ),
           errorMaxLines: 2,
           errorStyle: const TextStyle(
-            fontSize: AssetsConstants.defaultFontSize - 9.0,
+            fontSize: AssetsConstants.defaultFontSize - 15.0,
+          ),
+          contentPadding: const EdgeInsets.all(
+            AssetsConstants.defaultPadding - 5.0,
+          ),
+          hintText: widget.hintText,
+          hintStyle: const TextStyle(
+            fontSize: AssetsConstants.defaultFontSize - 12.0,
+            color: AssetsConstants.textBlur,
+            fontWeight: FontWeight.w400,
           ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
               width: 2,
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
               color: AssetsConstants.mainColor,
               width: 2,
             ),
           ),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(5),
             borderSide: const BorderSide(
               color: AssetsConstants.borderColor,
               width: 2,
             ),
           ),
-          hintText: widget.hintText,
-          hintStyle: const TextStyle(
-            fontSize: AssetsConstants.defaultFontSize - 5.0,
-            color: AssetsConstants.textBlur,
-            fontWeight: FontWeight.w400,
-          ),
           suffixIcon: Padding(
             padding: const EdgeInsets.only(
-              right: AssetsConstants.defaultPadding,
+              right: AssetsConstants.defaultPadding - 2.0,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
@@ -98,6 +98,7 @@ class _InputPasswordState extends State<PasswordInput> {
                     child: Icon(
                       isObscureText ? Icons.visibility : Icons.visibility_off,
                       color: AssetsConstants.cancelIconColor,
+                      size: AssetsConstants.defaultFontSize - 6.0,
                     ),
                   ),
                 SizedBox(
@@ -116,6 +117,7 @@ class _InputPasswordState extends State<PasswordInput> {
                     child: const Icon(
                       Icons.cancel_rounded,
                       color: AssetsConstants.cancelIconColor,
+                      size: AssetsConstants.defaultFontSize - 6.0,
                     ),
                   ),
               ],

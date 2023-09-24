@@ -13,10 +13,9 @@ class APIConstants {
   // product
   // profile
   // error
-  static const emailpassinvalid = {
-    'Email or Password is invalid.',
-    'Email hoặc mật khẩu không hợp lệ'
+  static const Map<String, String> errorTrans = {
+    'Email does not exist in the system.':
+        'Email không tồn tại trong hệ thống.',
+    'Email or Password is invalid.': 'Email hoặc mật khẩu không hợp lệ.',
   };
-
-  static const emailnotFound = 'Email không tồn tại trong hệ thống';
 }

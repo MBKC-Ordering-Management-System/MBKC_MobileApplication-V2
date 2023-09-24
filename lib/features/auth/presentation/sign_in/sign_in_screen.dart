@@ -27,14 +27,17 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
     final state = ref.watch(signInControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
 
-    // // handle error
-    // ref.listen<AsyncValue>(
-    //   signInControllerProvider,
-    //   (_, state) => state.showAlertDialogOnError(context),
-    // );
+    // unfocus
+    void unfocus() {
+      FocusScopeNode currentFocus = FocusScope.of(context);
+      if (!currentFocus.hasPrimaryFocus) {
+        currentFocus.unfocus();
+      }
+    }
 
     // handle submit
     void submit() async {
+      unfocus();
       if (formKey.currentState!.validate()) {
         await ref.read(signInControllerProvider.notifier).login(
               username.text.trim(),
@@ -48,16 +51,16 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
       isLoading: state.isLoading,
       child: Scaffold(
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(size.height * 0.3),
+          preferredSize: Size.fromHeight(size.height * 0.2),
           child: Stack(
             children: [
               const CustomeAppBar(backgroundColor: AssetsConstants.mainColor),
-              Positioned(
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    topRight: Radius.circular(50),
-                  ),
-                  child: Image.asset(AssetsConstants.welcomeImage),
+              ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(10),
+                ),
+                child: Image.asset(
+                  AssetsConstants.welcomeImage,
                 ),
               ),
             ],
@@ -76,13 +79,13 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
                   SizedBox(height: size.height * 0.02),
                   LabelText(
                     content: 'Chào mừng bạn đến với MBKC'.toUpperCase(),
-                    size: AssetsConstants.defaultFontSize - 3,
+                    size: AssetsConstants.defaultFontSize - 8.0,
                     fontWeight: FontWeight.bold,
                   ),
-                  SizedBox(height: size.height * 0.02),
+                  SizedBox(height: size.height * 0.01),
                   const LabelText(
                     content: 'Hãy nhập tài khoản để tiếp tục',
-                    size: AssetsConstants.defaultFontSize - 7.0,
+                    size: AssetsConstants.defaultFontSize - 11.0,
                     fontWeight: FontWeight.w600,
                   ),
                   SizedBox(height: size.height * 0.02),
@@ -104,7 +107,6 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
                           onValidate: (val) => passwordErrorText(val),
                           autoFocus: false,
                         ),
-                        SizedBox(height: size.height * 0.02),
                         TextButton(
                           style: TextButton.styleFrom(
                             minimumSize: Size.zero,
@@ -115,7 +117,7 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
                           },
                           child: const LabelText(
                             content: 'Quên mật khẩu?',
-                            size: AssetsConstants.defaultFontSize - 9.0,
+                            size: AssetsConstants.defaultFontSize - 15.0,
                             fontWeight: FontWeight.w700,
                             color: AssetsConstants.subtitleColorM,
                             textDecoration: TextDecoration.underline,
@@ -130,7 +132,7 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
           ),
         ),
         bottomNavigationBar: Container(
-          margin: EdgeInsets.only(bottom: size.height * 0.06),
+          margin: EdgeInsets.only(bottom: size.height * 0.04),
           padding: const EdgeInsets.only(
             right: AssetsConstants.defaultPadding,
             left: AssetsConstants.defaultPadding,
@@ -139,11 +141,12 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
             first: username,
             second: password,
             builder: (_, a, b, __) => CustomButton(
-              width: size.width * 0.95,
-              height: size.height * 0.07,
+              width: size.width * 1,
+              height: size.height * 0.05,
               content: 'Đăng nhập',
               onCallback: submit,
               isActive: a.text.isNotEmpty && b.text.isNotEmpty,
+              size: AssetsConstants.defaultFontSize - 10.0,
             ),
           ),
         ),

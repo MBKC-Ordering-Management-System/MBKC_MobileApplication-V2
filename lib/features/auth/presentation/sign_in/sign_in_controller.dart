@@ -1,13 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../configs/routes/app_router.dart';
-import '../../../../models/response/error_model.dart';
 import '../../../../models/user_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../../../utils/commons/widgets/widgets_common_export.dart';
-import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../domain/models/request/sign_in_request.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -46,29 +42,7 @@ class SignInController extends _$SignInController {
     );
 
     if (state.hasError) {
-      final errorModel = ErrorModel.fromMap(
-        (state.error as DioException).response!.data as Map<String, dynamic>,
-      );
-
-      switch (errorModel.statusCode.toStatusCodeTypeEnum()) {
-        case StatusCodeType.conflict:
-        case StatusCodeType.notfound:
-        case StatusCodeType.badrequest:
-          showExceptionAlertDialog(
-            context: context,
-            title: errorModel.message.first.fieldNameError,
-            exception: errorModel.message.first.descriptionError.first,
-          );
-          break;
-        case StatusCodeType.exception:
-          break;
-        default:
-          showExceptionAlertDialog(
-            context: context,
-            title: errorModel.message.first.fieldNameError,
-            exception: errorModel.message.first.descriptionError.first,
-          );
-      }
+      handleAPIError(stateError: state.error!, context: context);
     }
 
     if (state.hasError == false) {

@@ -105,18 +105,17 @@ class OTPVerificationScreen extends HookConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: size.height * 0.001),
                 const LabelText(
                   content: 'Mã xác nhận OTP',
-                  size: AssetsConstants.defaultFontSize - 5.0,
+                  size: AssetsConstants.defaultFontSize - 8.0,
                   fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: size.height * 0.02),
+                SizedBox(height: size.height * 0.01),
                 LabelText(
                   maxLine: 2,
                   content:
                       'Hãy nhập mã gồm 6 số vừa được gửi đến email: $email',
-                  size: AssetsConstants.defaultFontSize - 9.0,
+                  size: AssetsConstants.defaultFontSize - 12.0,
                   fontWeight: FontWeight.w700,
                   color: AssetsConstants.subtitleColorM,
                 ),
@@ -161,7 +160,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
                       const TextSpan(
                         text: 'Bạn không nhận được mã?',
                         style: TextStyle(
-                          fontSize: AssetsConstants.defaultFontSize - 9,
+                          fontSize: AssetsConstants.defaultFontSize - 12.0,
                           fontWeight: FontWeight.w500,
                           color: AssetsConstants.subtitleColorM,
                         ),
@@ -171,7 +170,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
                             ? ' Gửi lại (${start.value})'
                             : ' Gửi lại',
                         style: TextStyle(
-                          fontSize: AssetsConstants.defaultFontSize - 9,
+                          fontSize: AssetsConstants.defaultFontSize - 12.0,
                           fontWeight: FontWeight.w700,
                           color: wait.value
                               ? AssetsConstants.subtitleColorM
@@ -195,7 +194,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
           ),
         ),
         bottomNavigationBar: Container(
-          margin: EdgeInsets.only(bottom: size.height * 0.06),
+          margin: EdgeInsets.only(bottom: size.height * 0.04),
           padding: const EdgeInsets.only(
             right: AssetsConstants.defaultPadding,
             left: AssetsConstants.defaultPadding,
@@ -208,8 +207,8 @@ class OTPVerificationScreen extends HookConsumerWidget {
             fifth: otp_5,
             sixth: otp_6,
             builder: (_, a, b, c, d, e, f, __) => CustomButton(
-              width: size.width * 0.95,
-              height: size.height * 0.07,
+              width: size.width * 1,
+              height: size.height * 0.05,
               isActive: a.text.length +
                       b.text.length +
                       c.text.length +
@@ -219,6 +218,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
                   6,
               content: 'Xác nhận',
               onCallback: submit,
+              size: AssetsConstants.defaultFontSize - 10.0,
             ),
           ),
         ),

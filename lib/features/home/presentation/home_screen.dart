@@ -45,7 +45,7 @@ class HomeScreen extends HookConsumerWidget {
         backgroundColor: AssetsConstants.mainColor,
         title: LabelText(
           content: 'Trang chủ',
-          size: AssetsConstants.defaultFontSize,
+          size: AssetsConstants.defaultFontSize - 8.0,
           color: AssetsConstants.whiteColor,
           fontWeight: FontWeight.w600,
         ),
@@ -70,7 +70,7 @@ class HomeScreen extends HookConsumerWidget {
                         icon: const Icon(
                           Icons.wallet_rounded,
                           color: AssetsConstants.mainColor,
-                          size: AssetsConstants.defaultFontSize + 6.0,
+                          size: AssetsConstants.defaultFontSize - 6.0,
                         ),
                         title: '${statistical.value?.totalRevenue}đ',
                         subtitle: 'Doanh thu trong tuần',
@@ -82,7 +82,7 @@ class HomeScreen extends HookConsumerWidget {
                         icon: const Icon(
                           Icons.shopping_bag,
                           color: AssetsConstants.totalOrderContent,
-                          size: AssetsConstants.defaultFontSize + 6.0,
+                          size: AssetsConstants.defaultFontSize - 6.0,
                         ),
                         title: '${statistical.value?.totalOrder}',
                         subtitle: 'Tổng số đơn hàng trong tuần',

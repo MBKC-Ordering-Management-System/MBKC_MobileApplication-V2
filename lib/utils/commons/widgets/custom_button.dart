@@ -30,7 +30,7 @@ class CustomButton extends StatelessWidget {
           color: isActive == true
               ? AssetsConstants.mainColor
               : AssetsConstants.subtitleColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(5),
         ),
         child: Center(
           child: LabelText(

@@ -22,27 +22,26 @@ Future<bool?> showAlertDialog({
         children: [
           LabelText(
             content: title,
-            size: AssetsConstants.defaultFontSize,
+            size: AssetsConstants.defaultFontSize - 10.0,
             color: AssetsConstants.whiteColor,
             fontWeight: FontWeight.bold,
           ),
           SizedBox(width: size.width * 0.02),
-          const Icon(Icons.error_outline, size: 30)
+          const Icon(
+            Icons.error_outline,
+            size: AssetsConstants.defaultFontSize - 10.0,
+          )
         ],
       ),
       backgroundColor: AssetsConstants.mainColor,
-      content: SizedBox(
-        height: size.height * 0.1,
-        width: size.width * 1,
-        child: content != null
-            ? LabelText(
-                content: content,
-                maxLine: 2,
-                size: AssetsConstants.defaultFontSize - 4.0,
-                color: AssetsConstants.whiteColor,
-              )
-            : null,
-      ),
+      content: content != null
+          ? LabelText(
+              content: content,
+              maxLine: 3,
+              size: AssetsConstants.defaultFontSize - 12.0,
+              color: AssetsConstants.whiteColor,
+            )
+          : null,
       actions: <Widget>[
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -57,7 +56,7 @@ Future<bool?> showAlertDialog({
               key: kDialogDefaultKey,
               child: LabelText(
                 content: defaultActionText,
-                size: AssetsConstants.defaultFontSize - 4.0,
+                size: AssetsConstants.defaultFontSize - 15.0,
                 color: AssetsConstants.whiteColor,
                 fontWeight: FontWeight.bold,
               ),
@@ -73,7 +72,7 @@ Future<bool?> showAlertDialog({
                 ),
                 child: LabelText(
                   content: cancelActionText,
-                  size: AssetsConstants.defaultFontSize - 4.0,
+                  size: AssetsConstants.defaultFontSize - 15.0,
                   color: AssetsConstants.whiteColor,
                   fontWeight: FontWeight.bold,
                 ),

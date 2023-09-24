@@ -41,6 +41,6 @@ class AssetsConstants {
   // Icon
   static const Icon iconSuccess = Icon(
     Icons.check_circle,
-    size: 30,
+    size: defaultFontSize - 10.0,
   );
 }

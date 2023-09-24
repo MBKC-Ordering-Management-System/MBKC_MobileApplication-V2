@@ -30,10 +30,13 @@ class AppRouter extends _$AppRouter {
   List<AutoRoute> get routes => [
         // routes go here
 
+        // common
+        AutoRoute(page: ErrorScreenRoute.page),
+
         // auth
         AutoRoute(
           page: SplashScreenRoute.page,
-          initial: true,
+          //initial: true,
         ),
         AutoRoute(page: SignInScreenRoute.page),
         AutoRoute(page: EnterEmailScreenRoute.page),
@@ -41,7 +44,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: ChangePasswordScreenRoute.page),
         AutoRoute(
           page: TabViewScreenRoute.page,
-          // initial: true,
+          initial: true,
           children: [
             AutoRoute(page: HomeScreenRoute.page),
             AutoRoute(page: OrderScreenRoute.page),
