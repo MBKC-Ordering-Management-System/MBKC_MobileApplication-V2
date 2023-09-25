@@ -1,4 +1,4 @@
-import '../../../../models/refresh_token_model.dart';
+import '../../../../models/token_model.dart';
 import '../../../../models/response/success_model.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/resources/remote_base_repository.dart';

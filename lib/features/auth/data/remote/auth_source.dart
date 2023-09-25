@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../../models/refresh_token_model.dart';
+import '../../../../models/token_model.dart';
 import '../../../../models/response/success_model.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/providers/common_provider.dart';

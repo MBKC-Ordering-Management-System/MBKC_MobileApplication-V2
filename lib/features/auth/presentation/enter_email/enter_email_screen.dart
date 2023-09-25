@@ -15,7 +15,7 @@ class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final email = useTextEditingController(text: 'mbkcadmin@gmail.com');
+    final email = useTextEditingController(text: 'mbkcAd011@gmail.com');
     final state = ref.watch(enterEmailControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
 

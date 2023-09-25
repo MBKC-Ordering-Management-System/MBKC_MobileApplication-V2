@@ -33,7 +33,8 @@ mixin SignInValidators {
 
   String passwordEqualErrorText(String newPassword, String confirmPassword) {
     final bool showErrorText = !(newPassword == confirmPassword);
-    const String errorText = '2 mật khẩu không trùng khớp';
+    const String errorText =
+        'Mật khẩu xác nhận không trùng khớp với mật khẩu bạn đã nhập';
     return showErrorText ? errorText : '';
   }
 }

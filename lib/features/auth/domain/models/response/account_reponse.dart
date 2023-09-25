@@ -1,5 +1,5 @@
 import 'dart:convert';
-import '../../../../../models/refresh_token_model.dart';
+import '../../../../../models/token_model.dart';
 
 class AccountReponse {
   final int accountId;

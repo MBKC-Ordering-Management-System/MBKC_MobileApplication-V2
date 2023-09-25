@@ -173,7 +173,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
                           fontWeight: FontWeight.w700,
                           color: wait.value
                               ? AssetsConstants.subtitleColorM
-                              : AssetsConstants.blackColor,
+                              : AssetsConstants.mainColor,
                         ),
                         recognizer: TapGestureRecognizer()
                           ..onTap = wait.value

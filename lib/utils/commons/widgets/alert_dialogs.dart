@@ -44,24 +44,10 @@ Future<bool?> showAlertDialog({
           : null,
       actions: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: cancelActionText == null
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.spaceBetween,
           children: [
-            OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(
-                  width: 2,
-                  color: AssetsConstants.whiteColor,
-                ),
-              ),
-              key: kDialogDefaultKey,
-              child: LabelText(
-                content: defaultActionText,
-                size: AssetsConstants.defaultFontSize - 15.0,
-                color: AssetsConstants.whiteColor,
-                fontWeight: FontWeight.bold,
-              ),
-              onPressed: () => Navigator.of(context).pop(true),
-            ),
             if (cancelActionText != null)
               OutlinedButton(
                 style: OutlinedButton.styleFrom(
@@ -78,6 +64,22 @@ Future<bool?> showAlertDialog({
                 ),
                 onPressed: () => Navigator.of(context).pop(false),
               ),
+            OutlinedButton(
+              style: OutlinedButton.styleFrom(
+                side: const BorderSide(
+                  width: 2,
+                  color: AssetsConstants.whiteColor,
+                ),
+              ),
+              key: kDialogDefaultKey,
+              child: LabelText(
+                content: defaultActionText,
+                size: AssetsConstants.defaultFontSize - 15.0,
+                color: AssetsConstants.whiteColor,
+                fontWeight: FontWeight.bold,
+              ),
+              onPressed: () => Navigator.of(context).pop(true),
+            ),
           ],
         ),
       ],

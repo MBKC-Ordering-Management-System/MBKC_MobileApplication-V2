@@ -22,7 +22,7 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final username = useTextEditingController(text: 'mbkcadminn@gmail.com');
+    final username = useTextEditingController(text: 'mbkcAd011@gmail.com');
     final password = useTextEditingController(text: '12345678');
     final state = ref.watch(signInControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
@@ -39,7 +39,7 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
     void submit() async {
       unfocus();
       if (formKey.currentState!.validate()) {
-        await ref.read(signInControllerProvider.notifier).login(
+        await ref.read(signInControllerProvider.notifier).signIn(
               username.text.trim(),
               password.text.trim(),
               context,

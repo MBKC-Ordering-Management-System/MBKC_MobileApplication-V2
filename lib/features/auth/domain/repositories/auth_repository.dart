@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../../models/refresh_token_model.dart';
+import '../../../../models/token_model.dart';
 import '../../../../models/response/success_model.dart';
 import '../../data/remote/auth_source.dart';
 import '../../data/repositories/auth_repository_impl.dart';
