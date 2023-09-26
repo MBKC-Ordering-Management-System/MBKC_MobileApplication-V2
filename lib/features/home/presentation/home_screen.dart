@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../utils/commons/functions/functions_common_export.dart';
 import '../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../utils/constants/asset_constant.dart';
 import '../domain/models/statistical_model.dart';
@@ -36,7 +38,12 @@ class HomeScreen extends HookConsumerWidget {
         fetchData();
       });
 
-      return;
+      () async {
+        await delay(true);
+      };
+
+      FlutterNativeSplash.remove();
+      return null;
     }, const []);
 
     return Scaffold(

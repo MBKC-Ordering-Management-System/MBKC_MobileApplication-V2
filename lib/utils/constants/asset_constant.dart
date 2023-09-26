@@ -22,6 +22,7 @@ class AssetsConstants {
   static const preparingColor = Color(0xffCE6147);
   static const deliveringColor = Color(0xffD5770B);
   static const deliveredColor = Color(0xff1AD285);
+  static const discountColor = Color(0xffff8134);
 
   // Assets
   static const String appLogo = 'assets/images/logo.jpg';

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../configs/routes/app_router.dart';
+import '../../../../utils/commons/functions/delay_util.dart';
 import '../../../../utils/commons/widgets/app_bar.dart';
 import '../../../../utils/commons/widgets/custom_button.dart';
 import '../../../../utils/commons/widgets/label_text.dart';
@@ -26,6 +28,16 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
     final password = useTextEditingController(text: '12345678');
     final state = ref.watch(signInControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
+
+    // first build
+    useEffect(() {
+      () async {
+        await delay(true);
+      };
+
+      FlutterNativeSplash.remove();
+      return null;
+    }, const []);
 
     // unfocus
     void unfocus() {
