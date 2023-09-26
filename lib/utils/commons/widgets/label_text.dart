@@ -19,7 +19,7 @@ class LabelText extends StatelessWidget {
     this.fontFamily = 'Open Sans',
     this.textDecoration,
     this.textAlign = TextAlign.start,
-    this.maxLine = 1,
+    this.maxLine = AssetsConstants.defaultMaxline,
   });
 
   @override

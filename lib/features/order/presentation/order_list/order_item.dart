@@ -72,13 +72,19 @@ class OrderItem extends ConsumerWidget {
                             content: '#${order.orderid} • ${order.partner}',
                             size: AssetsConstants.defaultFontSize - 12.0,
                             fontWeight: FontWeight.w600,
-                            maxLine: 2,
                           ),
                           LabelText(
                             content: '${order.totalItem} món',
                             size: AssetsConstants.defaultFontSize - 14.0,
                             fontWeight: FontWeight.w600,
                           ),
+                          if (order.note.isNotEmpty)
+                            LabelText(
+                              color: AssetsConstants.skipText,
+                              content: '> ${order.note}',
+                              size: AssetsConstants.defaultFontSize - 14.0,
+                              fontWeight: FontWeight.w600,
+                            ),
                         ],
                       ),
                     ),

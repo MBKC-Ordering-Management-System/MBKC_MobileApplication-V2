@@ -52,19 +52,28 @@ class ProductDetail extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                LabelText(
-                  content:
-                      '${orderDetail.quantity}X  ${orderDetail.productName}',
-                  size: AssetsConstants.defaultFontSize - 13.0,
-                  fontWeight: FontWeight.w600,
-                  color: AssetsConstants.mainColor,
+                Expanded(
+                  flex: 3,
+                  child: LabelText(
+                    content:
+                        '${orderDetail.quantity}X  ${orderDetail.productName}',
+                    size: AssetsConstants.defaultFontSize - 13.0,
+                    fontWeight: FontWeight.w600,
+                    color: AssetsConstants.mainColor,
+                  ),
                 ),
-                LabelText(
-                  content: getCustomContent({'Giá:': orderDetail.totalPrice}),
-                  size: AssetsConstants.defaultFontSize - 13.0,
-                  fontWeight: FontWeight.w600,
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.topRight,
+                    child: LabelText(
+                      content:
+                          getCustomContent({'Giá:': orderDetail.totalPrice}),
+                      size: AssetsConstants.defaultFontSize - 13.0,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ],
             ),

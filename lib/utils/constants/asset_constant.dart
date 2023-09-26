@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AssetsConstants {
-  // Color
+  // Colors
   static const mainColor = Color(0xffEC407A);
   static const warningColor = Color(0xffFF0000);
   static const subtitleColor = Color(0xff868C98);
@@ -24,13 +24,13 @@ class AssetsConstants {
   static const deliveredColor = Color(0xff1AD285);
   static const discountColor = Color(0xffff8134);
 
-  // Assets
+  // Images
   static const String appLogo = 'assets/images/logo.jpg';
   static const String welcomeImage = 'assets/images/image_welcome.png';
   static const String defaultAvatar = 'assets/images/avatar_default.png';
   static const String errorLogo = 'assets/images/error.png';
 
-  // Size
+  // Sizes
   static const double defaultPadding = 20.0;
   static const double defaultFontSize = 25.0;
   static const double defaultBorder = 2.0;
@@ -39,9 +39,12 @@ class AssetsConstants {
   // Title
   static const String appTitle = 'BẾP HỘI';
 
-  // Icon
+  // Icons
   static const Icon iconSuccess = Icon(
     Icons.check_circle,
     size: defaultFontSize - 10.0,
   );
+
+  // Others
+  static const int defaultMaxline = 2;
 }

@@ -59,6 +59,11 @@ class OrderDetailScreen extends StatelessWidget {
                 {'Tổng cộng:': order.finalTotal},
               ],
             ),
+            NormalRow(
+              content: [
+                {'Trạng thái:': order.status},
+              ],
+            ),
           ],
         ),
       ),
