@@ -18,6 +18,64 @@ import 'search_box.dart';
 class ProductScreen extends HookConsumerWidget {
   const ProductScreen({super.key});
 
+  // fetch data
+  Future<void> fetchData({
+    required WidgetRef ref,
+    required BuildContext context,
+    required ValueNotifier<int> pageNumber,
+    required ValueNotifier<bool> isLastPage,
+    required ValueNotifier<bool> isShowNoMoreData,
+    required ValueNotifier<bool> isLoadMoreLoading,
+    required ValueNotifier<List<ProductModel>> products,
+  }) async {
+    pageNumber.value = 0;
+    isLastPage.value = false;
+    isShowNoMoreData.value = false;
+    isLoadMoreLoading.value = false;
+    pageNumber.value = pageNumber.value + 1;
+
+    final productsData = await ref
+        .read(productControllerProvider.notifier)
+        .getProducts(PagingModel(pageNumber: pageNumber.value), context);
+
+    isLastPage.value = productsData.length < 10;
+    isLoadMoreLoading.value = true;
+
+    products.value = productsData;
+  }
+
+  // scroll to load
+  Future<void> loadMoreData({
+    required WidgetRef ref,
+    required BuildContext context,
+    required ValueNotifier<bool> isLastPage,
+    required ValueNotifier<bool> isShowNoMoreData,
+    required ValueNotifier<int> pageNumber,
+    required ValueNotifier<List<ProductModel>> products,
+  }) async {
+    if (isLastPage.value) {
+      if (isShowNoMoreData.value == false) {
+        showSnackBar(
+          context: context,
+          content: 'Không còn dữ liệu',
+          icon: const Icon(Icons.close),
+          backgroundColor: AssetsConstants.mainColor,
+          textColor: AssetsConstants.whiteColor,
+        );
+        isShowNoMoreData.value = true;
+      }
+      return;
+    }
+
+    pageNumber.value = pageNumber.value + 1;
+    final productsData = await ref
+        .read(productControllerProvider.notifier)
+        .getProducts(PagingModel(pageNumber: pageNumber.value), context);
+
+    isLastPage.value = productsData.length < 10;
+    products.value = products.value + productsData;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
@@ -30,65 +88,35 @@ class ProductScreen extends HookConsumerWidget {
     final searchContent = useTextEditingController();
     //final sortContent = useState<SearchingType?>(null);
     //final filterContent = useTextEditingController();
-
-    // paging
     final pageNumber = useState(0);
     final isLastPage = useState(false);
     final isShowNoMoreData = useState(false);
     final isLoadMoreLoading = useState(false);
 
-    // fetch data
-    Future<void> fetchData() async {
-      pageNumber.value = 0;
-      isLastPage.value = false;
-      isShowNoMoreData.value = false;
-      isLoadMoreLoading.value = false;
-      pageNumber.value = pageNumber.value + 1;
-
-      final productsData = await ref
-          .read(productControllerProvider.notifier)
-          .getProducts(PagingModel(pageNumber: pageNumber.value), context);
-
-      isLastPage.value = productsData.length < 10;
-      isLoadMoreLoading.value = true;
-
-      products.value = productsData;
-    }
-
-    // scroll to load
-    Future<void> loadMoreData() async {
-      if (isLastPage.value) {
-        if (isShowNoMoreData.value == false) {
-          showSnackBar(
-            context: context,
-            content: 'Không còn dữ liệu',
-            icon: const Icon(Icons.close),
-            backgroundColor: AssetsConstants.mainColor,
-            textColor: AssetsConstants.whiteColor,
-          );
-          isShowNoMoreData.value = true;
-        }
-        return;
-      }
-
-      pageNumber.value = pageNumber.value + 1;
-      final productsData = await ref
-          .read(productControllerProvider.notifier)
-          .getProducts(PagingModel(pageNumber: pageNumber.value), context);
-
-      isLastPage.value = productsData.length < 10;
-      products.value = products.value + productsData;
-    }
-
-    // first load
+    // first build(init state)
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        fetchData();
+        await fetchData(
+          ref: ref,
+          context: context,
+          pageNumber: pageNumber,
+          isLastPage: isLastPage,
+          isShowNoMoreData: isShowNoMoreData,
+          isLoadMoreLoading: isLoadMoreLoading,
+          products: products,
+        );
       });
 
       scrollController.onScrollEndsListener(
-        () {
-          loadMoreData();
+        () async {
+          await loadMoreData(
+            ref: ref,
+            context: context,
+            isLastPage: isLastPage,
+            isShowNoMoreData: isShowNoMoreData,
+            pageNumber: pageNumber,
+            products: products,
+          );
         },
       );
 

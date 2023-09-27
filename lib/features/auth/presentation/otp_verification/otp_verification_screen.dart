@@ -12,20 +12,62 @@ import 'otp_verification_controller.dart';
 
 @RoutePage()
 class OTPVerificationScreen extends HookConsumerWidget {
-  final VerificationOTPType verifyType;
-  final String email;
   const OTPVerificationScreen({
     super.key,
     required this.email,
     required this.verifyType,
   });
 
+  final String email;
+  final VerificationOTPType verifyType;
+
+  // countdown resent
+  void startTimer({
+    required ValueNotifier<Timer?> timer,
+    required ValueNotifier<int> start,
+    required ValueNotifier<bool> wait,
+  }) {
+    const onsec = Duration(seconds: 1);
+    timer.value = Timer.periodic(onsec, (timer) {
+      if (start.value == 0) {
+        timer.cancel();
+        wait.value = false;
+      } else {
+        start.value--;
+      }
+    });
+  }
+
+  // get otp code
+  Future<void> verifyEmail({
+    required WidgetRef ref,
+    required BuildContext context,
+  }) async {
+    await ref
+        .read(otpVerificationControllerProvider.notifier)
+        .checkEmail(email: email, context: context);
+  }
+
+  // handle submit
+  void submit({
+    required WidgetRef ref,
+    required BuildContext context,
+    required String otpCode,
+  }) async {
+    await ref.read(otpVerificationControllerProvider.notifier).verifyOTPCode(
+          email: email,
+          code: otpCode,
+          context: context,
+          verifyType: verifyType,
+        );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
     final timer = useState<Timer?>(null);
-    final start = useState(10);
+    final start = useState(30);
     final wait = useState(true);
     final state = ref.watch(otpVerificationControllerProvider);
 
@@ -37,26 +79,6 @@ class OTPVerificationScreen extends HookConsumerWidget {
         otp_5 = useTextEditingController(),
         otp_6 = useTextEditingController();
 
-    // countdown resent
-    void startTimer() {
-      const onsec = Duration(seconds: 1);
-      timer.value = Timer.periodic(onsec, (timer) {
-        if (start.value == 0) {
-          timer.cancel();
-          wait.value = false;
-        } else {
-          start.value--;
-        }
-      });
-    }
-
-    // get otp code
-    Future<void> verifyEmail() async {
-      await ref
-          .read(otpVerificationControllerProvider.notifier)
-          .checkEmail(email: email, context: context);
-    }
-
     // call once when build done
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -67,33 +89,22 @@ class OTPVerificationScreen extends HookConsumerWidget {
           backgroundColor: AssetsConstants.mainColor,
           textColor: AssetsConstants.whiteColor,
         );
-        startTimer();
+        startTimer(timer: timer, start: start, wait: wait);
         wait.value = true;
       });
 
-      return null;
+      return () {
+        timer.value?.cancel();
+      };
     }, const []);
-
-    // handle submit
-    void submit() async {
-      await ref.read(otpVerificationControllerProvider.notifier).verifyOTPCode(
-            email: email,
-            code: otp_1.text +
-                otp_2.text +
-                otp_3.text +
-                otp_4.text +
-                otp_5.text +
-                otp_6.text,
-            context: context,
-            verifyType: verifyType,
-          );
-    }
 
     return LoadingOverlay(
       isLoading: state.isLoading,
       child: Scaffold(
         backgroundColor: AssetsConstants.whiteColor,
-        appBar: const CustomeAppBar(),
+        appBar: const CustomeAppBar(
+          backgroundColor: AssetsConstants.whiteColor,
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.only(
@@ -178,9 +189,13 @@ class OTPVerificationScreen extends HookConsumerWidget {
                           ..onTap = wait.value
                               ? null
                               : () async {
-                                  await verifyEmail();
+                                  await verifyEmail(ref: ref, context: context);
                                   start.value = 10;
-                                  startTimer();
+                                  startTimer(
+                                    timer: timer,
+                                    start: start,
+                                    wait: wait,
+                                  );
                                   wait.value = true;
                                 },
                       ),
@@ -215,7 +230,16 @@ class OTPVerificationScreen extends HookConsumerWidget {
                       f.text.length ==
                   6,
               content: 'Xác nhận',
-              onCallback: submit,
+              onCallback: () => submit(
+                ref: ref,
+                context: context,
+                otpCode: otp_1.text +
+                    otp_2.text +
+                    otp_3.text +
+                    otp_4.text +
+                    otp_5.text +
+                    otp_6.text,
+              ),
               size: AssetsConstants.defaultFontSize - 10.0,
             ),
           ),

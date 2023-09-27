@@ -20,6 +20,32 @@ import 'sign_in_validator.dart';
 class SignInScreen extends HookConsumerWidget with SignInValidators {
   SignInScreen({super.key});
 
+  // unfocus
+  void unfocus(BuildContext context) {
+    FocusScopeNode currentFocus = FocusScope.of(context);
+    if (!currentFocus.hasPrimaryFocus) {
+      currentFocus.unfocus();
+    }
+  }
+
+  // handle submit
+  void submit({
+    required GlobalKey<FormState> formKey,
+    required BuildContext context,
+    required WidgetRef ref,
+    required String username,
+    required String password,
+  }) async {
+    unfocus(context);
+    if (formKey.currentState!.validate()) {
+      await ref.read(signInControllerProvider.notifier).signIn(
+            username,
+            password,
+            context,
+          );
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
@@ -39,26 +65,6 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
       return null;
     }, const []);
 
-    // unfocus
-    void unfocus() {
-      FocusScopeNode currentFocus = FocusScope.of(context);
-      if (!currentFocus.hasPrimaryFocus) {
-        currentFocus.unfocus();
-      }
-    }
-
-    // handle submit
-    void submit() async {
-      unfocus();
-      if (formKey.currentState!.validate()) {
-        await ref.read(signInControllerProvider.notifier).signIn(
-              username.text.trim(),
-              password.text.trim(),
-              context,
-            );
-      }
-    }
-
     return LoadingOverlay(
       isLoading: state.isLoading,
       child: Scaffold(
@@ -66,7 +72,7 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
           preferredSize: Size.fromHeight(size.height * 0.2),
           child: Stack(
             children: [
-              const CustomeAppBar(),
+              const CustomeAppBar(title: ''),
               ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(10),
@@ -156,7 +162,13 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
               width: size.width * 1,
               height: size.height * 0.05,
               content: 'Đăng nhập',
-              onCallback: submit,
+              onCallback: () => submit(
+                context: context,
+                formKey: formKey,
+                ref: ref,
+                username: username.text.trim(),
+                password: password.text.trim(),
+              ),
               isActive: a.text.isNotEmpty && b.text.isNotEmpty,
               size: AssetsConstants.defaultFontSize - 10.0,
             ),

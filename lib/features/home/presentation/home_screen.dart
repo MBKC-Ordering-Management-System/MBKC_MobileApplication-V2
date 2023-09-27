@@ -14,28 +14,32 @@ import 'statistical_card.dart';
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
 
+  // handle refresh
+  Future<void> fetchData({
+    required WidgetRef ref,
+    required ValueNotifier<bool> isLoading,
+    required ValueNotifier<StatisticalModel?> statistical,
+  }) async {
+    isLoading.value = true;
+
+    final statisticalData = await ref.watch(
+      getStatisticalDataProvider.future,
+    );
+
+    statistical.value = statisticalData;
+    isLoading.value = false;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
     final isLoading = useState(false);
     final statistical = useState<StatisticalModel?>(null);
 
-    // handle refresh
-    Future<void> fetchData() async {
-      isLoading.value = true;
-
-      final statisticalData = await ref.watch(
-        getStatisticalDataProvider.future,
-      );
-
-      statistical.value = statisticalData;
-      isLoading.value = false;
-    }
-
     // first load
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        fetchData();
+        fetchData(ref: ref, isLoading: isLoading, statistical: statistical);
       });
 
       () async {
@@ -56,7 +60,11 @@ class HomeScreen extends HookConsumerWidget {
           : RefreshIndicator(
               color: AssetsConstants.mainColor,
               backgroundColor: AssetsConstants.revenueBackground,
-              onRefresh: fetchData,
+              onRefresh: () => fetchData(
+                ref: ref,
+                isLoading: isLoading,
+                statistical: statistical,
+              ),
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Center(

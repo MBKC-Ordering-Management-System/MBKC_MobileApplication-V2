@@ -11,6 +11,21 @@ import 'enter_email_controller.dart';
 class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
   EnterEmailScreen({super.key});
 
+  // submit
+  void submit({
+    required GlobalKey<FormState> formKey,
+    required BuildContext context,
+    required WidgetRef ref,
+    required String email,
+  }) async {
+    if (formKey.currentState!.validate()) {
+      await ref.read(enterEmailControllerProvider.notifier).checkEmail(
+            email: email,
+            context: context,
+          );
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
@@ -19,21 +34,13 @@ class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
     final state = ref.watch(enterEmailControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
 
-    // submit
-    void submit() async {
-      if (formKey.currentState!.validate()) {
-        await ref.read(enterEmailControllerProvider.notifier).checkEmail(
-              email: email.text.trim(),
-              context: context,
-            );
-      }
-    }
-
     return LoadingOverlay(
       isLoading: state.isLoading,
       child: Scaffold(
         backgroundColor: AssetsConstants.whiteColor,
-        appBar: const CustomeAppBar(),
+        appBar: const CustomeAppBar(
+          backgroundColor: AssetsConstants.whiteColor,
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -81,7 +88,12 @@ class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
               height: size.height * 0.05,
               isActive: a.text.isNotEmpty,
               content: 'Tiếp Tục',
-              onCallback: submit,
+              onCallback: () => submit(
+                formKey: formKey,
+                context: context,
+                ref: ref,
+                email: email.text.trim(),
+              ),
               size: AssetsConstants.defaultFontSize - 10.0,
             ),
           ),

@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
-import '../../../../utils/extensions/extensions_export.dart';
 import '../sign_in/sign_in_validator.dart';
 import 'change_password_controller.dart';
 
@@ -19,6 +18,23 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
   final String email;
   final VerificationOTPType verifyType;
 
+  // handle submit
+  void submit({
+    required WidgetRef ref,
+    required BuildContext context,
+    required GlobalKey<FormState> formKey,
+    required String password,
+  }) async {
+    if (formKey.currentState!.validate()) {
+      await ref.read(changePasswordControllerProvider.notifier).changePassword(
+            email: email,
+            password: password,
+            context: context,
+            verifyType: verifyType,
+          );
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
@@ -28,31 +44,13 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
     final state = ref.watch(changePasswordControllerProvider);
 
-    // handle error
-    ref.listen<AsyncValue>(
-      changePasswordControllerProvider,
-      (_, state) => state.showAlertDialogOnError(context),
-    );
-
-    // submit
-    void submit() async {
-      if (formKey.currentState!.validate()) {
-        await ref
-            .read(changePasswordControllerProvider.notifier)
-            .changePassword(
-              email: email,
-              password: newPassword.text.trim(),
-              context: context,
-              verifyType: verifyType,
-            );
-      }
-    }
-
     return LoadingOverlay(
       isLoading: state.isLoading,
       child: Scaffold(
         backgroundColor: AssetsConstants.whiteColor,
-        appBar: const CustomeAppBar(),
+        appBar: const CustomeAppBar(
+          backgroundColor: AssetsConstants.whiteColor,
+        ),
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -123,7 +121,12 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
               width: size.width * 1,
               height: size.height * 0.05,
               content: 'Xác nhận',
-              onCallback: submit,
+              onCallback: () => submit(
+                ref: ref,
+                context: context,
+                formKey: formKey,
+                password: newPassword.text.trim(),
+              ),
               isActive: a.text.isNotEmpty && b.text.isNotEmpty,
               size: AssetsConstants.defaultFontSize - 10.0,
             ),
