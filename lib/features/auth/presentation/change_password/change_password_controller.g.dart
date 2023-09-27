@@ -7,7 +7,7 @@ part of 'change_password_controller.dart';
 // **************************************************************************
 
 String _$changePasswordControllerHash() =>
-    r'2aad93eaa05c3735dc5c522957597e2f0b64caa8';
+    r'334cf35a1a8afe3617987c7107ca1114664c66ac';
 
 /// See also [ChangePasswordController].
 @ProviderFor(ChangePasswordController)
