@@ -39,16 +39,7 @@ class OrderScreen extends HookConsumerWidget {
 
     // UI
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AssetsConstants.mainColor,
-        centerTitle: true,
-        title: const LabelText(
-          content: 'Đơn hàng',
-          size: AssetsConstants.defaultFontSize - 8.0,
-          color: AssetsConstants.whiteColor,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+      appBar: const CustomeAppBar(title: 'Đơn Hàng'),
       body: Column(
         children: [
           (state.isLoading && isLoadTabView.value)

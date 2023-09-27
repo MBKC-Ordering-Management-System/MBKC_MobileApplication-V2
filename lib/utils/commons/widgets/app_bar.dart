@@ -4,7 +4,7 @@ import 'widgets_common_export.dart';
 
 /// must implement [PreferredSizeWidget]
 class CustomeAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final LabelText? title;
+  final String? title;
   final Color? backButtonColor;
   final Color? backgroundColor;
   final bool? centerTitle;
@@ -14,17 +14,22 @@ class CustomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.title,
     this.backButtonColor = AssetsConstants.blackColor,
     this.centerTitle = true,
-    this.backgroundColor = AssetsConstants.whiteColor,
+    this.backgroundColor = AssetsConstants.mainColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: backgroundColor,
-      title: title,
       centerTitle: centerTitle,
       iconTheme: IconThemeData(
         color: backButtonColor,
+      ),
+      title: LabelText(
+        content: title ?? 'AppBar',
+        size: AssetsConstants.defaultFontSize - 8.0,
+        color: AssetsConstants.whiteColor,
+        fontWeight: FontWeight.w600,
       ),
     );
   }

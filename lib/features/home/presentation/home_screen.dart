@@ -48,15 +48,7 @@ class HomeScreen extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: AssetsConstants.whiteColor,
-      appBar: const CustomeAppBar(
-        backgroundColor: AssetsConstants.mainColor,
-        title: LabelText(
-          content: 'Trang chủ',
-          size: AssetsConstants.defaultFontSize - 8.0,
-          color: AssetsConstants.whiteColor,
-          fontWeight: FontWeight.w600,
-        ),
-      ),
+      appBar: const CustomeAppBar(title: 'Trang Chủ'),
       body: isLoading.value
           ? const Center(
               child: HomeShimmer(amount: 2),
