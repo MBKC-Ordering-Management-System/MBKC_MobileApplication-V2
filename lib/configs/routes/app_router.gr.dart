@@ -74,9 +74,13 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     PartnerDetailScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<PartnerDetailScreenRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const PartnerDetailScreen(),
+        child: PartnerDetailScreen(
+          key: args.key,
+          partner: args.partner,
+        ),
       );
     },
     PartnerModifyScreenRoute.name: (routeData) {
@@ -330,16 +334,41 @@ class OrderScreenRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [PartnerDetailScreen]
-class PartnerDetailScreenRoute extends PageRouteInfo<void> {
-  const PartnerDetailScreenRoute({List<PageRouteInfo>? children})
-      : super(
+class PartnerDetailScreenRoute
+    extends PageRouteInfo<PartnerDetailScreenRouteArgs> {
+  PartnerDetailScreenRoute({
+    Key? key,
+    required PartnerModel partner,
+    List<PageRouteInfo>? children,
+  }) : super(
           PartnerDetailScreenRoute.name,
+          args: PartnerDetailScreenRouteArgs(
+            key: key,
+            partner: partner,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'PartnerDetailScreenRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<PartnerDetailScreenRouteArgs> page =
+      PageInfo<PartnerDetailScreenRouteArgs>(name);
+}
+
+class PartnerDetailScreenRouteArgs {
+  const PartnerDetailScreenRouteArgs({
+    this.key,
+    required this.partner,
+  });
+
+  final Key? key;
+
+  final PartnerModel partner;
+
+  @override
+  String toString() {
+    return 'PartnerDetailScreenRouteArgs{key: $key, partner: $partner}';
+  }
 }
 
 /// generated route for

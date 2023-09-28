@@ -33,7 +33,7 @@ class PartnerScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // inits
+    // init
     final size = MediaQuery.sizeOf(context);
     final partners = useState<List<PartnerModel>>([]);
     final state = ref.watch(partnerControllerProvider);
@@ -49,7 +49,7 @@ class PartnerScreen extends HookConsumerWidget {
       });
 
       return null;
-    }, const []);
+    }, []);
 
     return Scaffold(
       backgroundColor: AssetsConstants.whiteColor,
@@ -72,6 +72,7 @@ class PartnerScreen extends HookConsumerWidget {
                   child: ListView.builder(
                     itemCount: partners.value.length,
                     itemBuilder: (_, index) => PartnerItem(
+                      partners: partners,
                       partner: partners.value[index],
                     ),
                   ),
@@ -79,8 +80,8 @@ class PartnerScreen extends HookConsumerWidget {
       floatingActionButton: Visibility(
         visible: !state.isLoading,
         child: SizedBox(
-          width: size.width * 0.15,
-          height: size.height * 0.08,
+          width: size.width * 0.14,
+          height: size.height * 0.07,
           child: FloatingActionButton(
             onPressed: () {
               context.router.push(

@@ -25,6 +25,9 @@ class AssetsConstants {
   static const discountColor = Color(0xffff8134);
   static const searchBoxColor = Color(0xffF6F7FB);
   static const descriptionColor = Color(0xff818A94);
+  static const beaminColor = Color(0xff3BC6C9);
+  static const grabColor = Color(0xff00B14F);
+  static const shopeeColor = Color(0xffED4C2F);
 
   // Images
   static const String appLogo = 'assets/images/logo.jpg';
@@ -32,9 +35,9 @@ class AssetsConstants {
   static const String defaultAvatar = 'assets/images/avatar_default.png';
   static const String errorLogo = 'assets/images/error.png';
   static const String avatarXB = 'assets/images/avt_bach.png';
-  static const String grabLogo = 'assets/images/grab_avt.png';
-  static const String shopeeLogo = 'assets/images/shoppe_avt.jpg';
-  static const String beaminLogo = 'assets/images/beamin_avt.png';
+  static const String grabLogo = 'assets/images/grab_avt.jpg';
+  static const String shopeeLogo = 'assets/images/shopee_avt.jpg';
+  static const String beaminLogo = 'assets/images/beamin_avt.jpg';
 
   // Sizes
   static const double defaultPadding = 20.0;

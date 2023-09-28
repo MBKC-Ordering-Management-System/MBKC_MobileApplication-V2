@@ -1,54 +1,116 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import '../../../../configs/routes/app_router.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/commons/functions/logo_utils.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/enums_export.dart';
+import '../../../../utils/enums/modify_partner_type.dart';
 import '../../domain/models/partner_model.dart';
 
 class PartnerItem extends StatelessWidget {
-  const PartnerItem({super.key, required this.partner});
+  const PartnerItem({
+    super.key,
+    required this.partner,
+    required this.partners,
+  });
   final PartnerModel partner;
+  final ValueNotifier<List<PartnerModel>> partners;
+
+  // on delete
+  void deletePartner({
+    required BuildContext context,
+  }) {
+    partners.value.removeWhere((item) => item.id == partner.id);
+
+    showSnackBar(
+      context: context,
+      content: 'Xóa thành công',
+      icon: AssetsConstants.iconSuccess,
+      backgroundColor: AssetsConstants.mainColor,
+      textColor: AssetsConstants.whiteColor,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     // init
     // final size = MediaQuery.sizeOf(context);
 
-    return Container(
-      margin: const EdgeInsets.only(
-        bottom: AssetsConstants.defaultMargin - 2.0,
+    return Dismissible(
+      confirmDismiss: (DismissDirection direction) async =>
+          await showAlertDialog(
+        context: context,
+        title: 'Xác nhận',
+        content: 'Bạn chắc chứ',
+        cancelActionText: 'Hủy',
       ),
-      child: ListTile(
-        leading: Image.asset(
-          partner.type == PartnerType.grabfood
-              ? AssetsConstants.grabLogo
-              : partner.type == PartnerType.shopeefood
-                  ? AssetsConstants.shopeeLogo
-                  : AssetsConstants.beaminLogo,
+      onDismissed: (_) => deletePartner(context: context),
+      background: Container(
+        padding: const EdgeInsets.only(
+          right: AssetsConstants.defaultPadding - 10.0,
         ),
-        shape: RoundedRectangleBorder(
+        margin: const EdgeInsets.only(
+          bottom: AssetsConstants.defaultMargin - 2.0,
+        ),
+        decoration: BoxDecoration(
+          color: AssetsConstants.warningColor,
           borderRadius: BorderRadius.circular(10),
-          side: const BorderSide(
+        ),
+        child: const Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(
+              Icons.delete,
+            ),
+          ],
+        ),
+      ),
+      direction: DismissDirection.endToStart,
+      key: ValueKey(partner.id),
+      child: Container(
+        margin: const EdgeInsets.only(
+          bottom: AssetsConstants.defaultMargin - 2.0,
+        ),
+        decoration: BoxDecoration(
+          border: Border.all(
             color: AssetsConstants.subtitleColor,
           ),
+          borderRadius: BorderRadius.circular(10),
         ),
-        title: LabelText(
-          content: partner.type == PartnerType.grabfood
-              ? 'GrabFood'
-              : partner.type == PartnerType.shopeefood
-                  ? 'ShopeeFood'
-                  : 'Beamin',
-          size: AssetsConstants.defaultFontSize - 12.0,
-          fontWeight: FontWeight.bold,
-        ),
-        subtitle: LabelText(
-          content: partner.username,
-          size: AssetsConstants.defaultFontSize - 14.0,
-          fontWeight: FontWeight.w600,
-        ),
-        trailing: const Icon(
-          Icons.edit_square,
-          color: AssetsConstants.blackColor,
-          size: AssetsConstants.defaultFontSize - 6.0,
+        child: ListTile(
+          onTap: () {
+            context.router.push(PartnerDetailScreenRoute(partner: partner));
+          },
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(10),
+            child: Image.asset(getLogoPartner(partner.type)),
+          ),
+          title: LabelText(
+            content: getTitlePartner(partner.type),
+            size: AssetsConstants.defaultFontSize - 12.0,
+            fontWeight: FontWeight.bold,
+          ),
+          subtitle: LabelText(
+            content: partner.username,
+            size: AssetsConstants.defaultFontSize - 14.0,
+            fontWeight: FontWeight.w600,
+          ),
+          trailing: IconButton(
+            onPressed: () {
+              context.router.push(
+                PartnerModifyScreenRoute(
+                  type: ModifyPartnerType.update,
+                  partner: partner,
+                ),
+              );
+            },
+            icon: const Icon(
+              Icons.edit_square,
+              color: AssetsConstants.blackColor,
+              size: AssetsConstants.defaultFontSize - 6.0,
+            ),
+          ),
         ),
       ),
     );

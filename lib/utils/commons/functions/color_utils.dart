@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/asset_constant.dart';
-import '../../enums/order_status_type.dart';
+import '../../enums/enums_export.dart';
 
 Color getColorOrderStatus(OrderStatusType orderType) {
   switch (orderType) {
@@ -16,5 +16,18 @@ Color getColorOrderStatus(OrderStatusType orderType) {
       return AssetsConstants.subtitleColor;
     default:
       return AssetsConstants.preparingColor;
+  }
+}
+
+Color getColorPartner(PartnerType type) {
+  switch (type) {
+    case PartnerType.beamin:
+      return AssetsConstants.beaminColor;
+    case PartnerType.grabfood:
+      return AssetsConstants.grabColor;
+    case PartnerType.shopeefood:
+      return AssetsConstants.shopeeColor;
+    default:
+      return AssetsConstants.beaminColor;
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:intl/intl.dart';
+import '../../enums/partner_type_enum.dart';
 
 String calculateMD5(String input) {
   var bytes = utf8.encode(input); // Encode the input string to bytes
@@ -27,5 +28,18 @@ String getCustomContent(Map<String, dynamic> content) {
 
     default:
       return content.entries.first.value.toString();
+  }
+}
+
+String getTitlePartner(PartnerType type) {
+  switch (type) {
+    case PartnerType.beamin:
+      return 'Beamin';
+    case PartnerType.grabfood:
+      return 'GrabFood';
+    case PartnerType.shopeefood:
+      return 'ShopeeFood';
+    default:
+      return 'Beamin';
   }
 }

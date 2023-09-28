@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
+import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/modify_partner_type.dart';
 import '../../domain/models/partner_model.dart';
 
@@ -16,9 +17,10 @@ class PartnerModifyScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       appBar: CustomAppBar(
-        title: '',
+        title: type == ModifyPartnerType.create ? 'Tạo Mới' : 'Cập Nhật',
+        backButtonColor: AssetsConstants.whiteColor,
       ),
     );
   }
