@@ -31,6 +31,10 @@ class AssetsConstants {
   static const String welcomeImage = 'assets/images/image_welcome.png';
   static const String defaultAvatar = 'assets/images/avatar_default.png';
   static const String errorLogo = 'assets/images/error.png';
+  static const String avatarXB = 'assets/images/avt_bach.png';
+  static const String grabLogo = 'assets/images/grab_avt.png';
+  static const String shopeeLogo = 'assets/images/shoppe_avt.jpg';
+  static const String beaminLogo = 'assets/images/beamin_avt.png';
 
   // Sizes
   static const double defaultPadding = 20.0;

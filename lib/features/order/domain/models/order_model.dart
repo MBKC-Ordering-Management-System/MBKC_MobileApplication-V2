@@ -1,5 +1,5 @@
 import 'dart:convert';
-import '../utils/enums/order_status_type.dart';
+import '../../../../utils/enums/order_status_type.dart';
 import 'order_detail_model.dart';
 
 class OrderModel {

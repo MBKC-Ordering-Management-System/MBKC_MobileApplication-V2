@@ -1,4 +1,4 @@
-import '../../../../models/order_model.dart';
+import '../../domain/models/order_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/delay_util.dart';
 import '../../../../utils/dummy_data/order_dummy_data.dart';

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../../models/order_model.dart';
+import '../../domain/models/order_model.dart';
+import '../../../../utils/commons/widgets/empty_box.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/order_status_type.dart';
@@ -23,6 +23,7 @@ class OrderList extends HookConsumerWidget {
     bool isLoadTabView = true,
     OrderStatusType type = OrderStatusType.preparing,
     required WidgetRef ref,
+    required BuildContext context,
     required ValueNotifier<int> pageNumber,
     required ValueNotifier<bool> isLastPage,
     required ValueNotifier<bool> isShowNoMoreData,
@@ -43,6 +44,7 @@ class OrderList extends HookConsumerWidget {
         await ref.read(orderControllerProvider.notifier).getOrders(
               pageNumber.value,
               type,
+              context,
             );
 
     isLastPage.value = ordersData.length < 10;
@@ -82,6 +84,7 @@ class OrderList extends HookConsumerWidget {
         await ref.read(orderControllerProvider.notifier).getOrders(
               pageNumber.value,
               ref.read(orderType),
+              context,
             );
 
     isLastPage.value = ordersData.length < 10;
@@ -106,6 +109,7 @@ class OrderList extends HookConsumerWidget {
     ref.listen<OrderStatusType>(
       orderType,
       (_, state) => fetchData(
+        context: context,
         type: state,
         isLoadTabView: false,
         ref: ref,
@@ -121,6 +125,7 @@ class OrderList extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         fetchData(
+          context: context,
           ref: ref,
           pageNumber: pageNumber,
           isLastPage: isLastPage,
@@ -156,6 +161,7 @@ class OrderList extends HookConsumerWidget {
                 backgroundColor: AssetsConstants.revenueBackground,
                 color: AssetsConstants.mainColor,
                 onRefresh: () async => await fetchData(
+                  context: context,
                   type: ref.read(orderType),
                   ref: ref,
                   pageNumber: pageNumber,
@@ -164,33 +170,9 @@ class OrderList extends HookConsumerWidget {
                   isLoadMoreLoading: isLoadMoreLoading,
                   orders: orders,
                 ),
-                child: SingleChildScrollView(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  child: Container(
-                    margin: const EdgeInsets.only(
-                      top: AssetsConstants.defaultMargin,
-                    ),
-                    width: size.width * 0.9,
-                    height: size.height * 0.2,
-                    decoration: BoxDecoration(
-                      color: AssetsConstants.mainColor,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const FaIcon(FontAwesomeIcons.boxArchive),
-                        SizedBox(
-                          height: size.height * 0.02,
-                        ),
-                        const LabelText(
-                          content: 'Đơn hàng đang trống',
-                          size: AssetsConstants.defaultFontSize,
-                          color: AssetsConstants.whiteColor,
-                        ),
-                      ],
-                    ),
-                  ),
+                child: const SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: EmptyBox(title: 'Đơn hàng đang trống'),
                 ),
               )
             : Expanded(
@@ -198,6 +180,7 @@ class OrderList extends HookConsumerWidget {
                   backgroundColor: AssetsConstants.revenueBackground,
                   color: AssetsConstants.mainColor,
                   onRefresh: () async => await fetchData(
+                    context: context,
                     type: ref.read(orderType),
                     ref: ref,
                     pageNumber: pageNumber,

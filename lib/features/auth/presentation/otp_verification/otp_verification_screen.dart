@@ -102,7 +102,7 @@ class OTPVerificationScreen extends HookConsumerWidget {
       isLoading: state.isLoading,
       child: Scaffold(
         backgroundColor: AssetsConstants.whiteColor,
-        appBar: const CustomeAppBar(
+        appBar: const CustomAppBar(
           backgroundColor: AssetsConstants.whiteColor,
         ),
         body: SingleChildScrollView(

@@ -72,7 +72,7 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
           preferredSize: Size.fromHeight(size.height * 0.2),
           child: Stack(
             children: [
-              const CustomeAppBar(title: ''),
+              const CustomAppBar(title: ''),
               ClipRRect(
                 borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(10),

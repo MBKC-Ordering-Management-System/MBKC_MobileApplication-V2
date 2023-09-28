@@ -1,6 +1,6 @@
 import 'package:faker/faker.dart';
-import '../../models/order_detail_model.dart';
-import '../../models/order_model.dart';
+import '../../features/order/domain/models/order_detail_model.dart';
+import '../../features/order/domain/models/order_model.dart';
 import '../enums/order_status_type.dart';
 
 OrderStatusType getOrderStatus(int number) {

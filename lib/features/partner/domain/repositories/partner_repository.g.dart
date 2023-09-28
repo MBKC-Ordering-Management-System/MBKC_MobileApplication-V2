@@ -1,26 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'order_controller.dart';
+part of 'partner_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$orderControllerHash() => r'7fd7c4f605c357911b8f4c7ddcb550746b14ed90';
+String _$partnerRepositoryHash() => r'231a5925ecb9039a2adda7d686e44e9ae1ceeddb';
 
-/// See also [OrderController].
-@ProviderFor(OrderController)
-final orderControllerProvider =
-    AutoDisposeAsyncNotifierProvider<OrderController, void>.internal(
-  OrderController.new,
-  name: r'orderControllerProvider',
+/// See also [partnerRepository].
+@ProviderFor(partnerRepository)
+final partnerRepositoryProvider = Provider<PartnerRepository>.internal(
+  partnerRepository,
+  name: r'partnerRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$orderControllerHash,
+      : _$partnerRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$OrderController = AutoDisposeAsyncNotifier<void>;
+typedef PartnerRepositoryRef = ProviderRef<PartnerRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

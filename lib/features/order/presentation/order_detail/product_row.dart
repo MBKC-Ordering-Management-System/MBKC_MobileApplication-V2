@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../../models/order_detail_model.dart';
+import '../../domain/models/order_detail_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';

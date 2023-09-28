@@ -3,13 +3,13 @@ import '../../constants/asset_constant.dart';
 import 'widgets_common_export.dart';
 
 /// must implement [PreferredSizeWidget]
-class CustomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String? title;
   final Color? backButtonColor;
   final Color? backgroundColor;
   final bool? centerTitle;
 
-  const CustomeAppBar({
+  const CustomAppBar({
     super.key,
     this.title,
     this.backButtonColor = AssetsConstants.blackColor,

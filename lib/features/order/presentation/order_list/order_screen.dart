@@ -39,7 +39,7 @@ class OrderScreen extends HookConsumerWidget {
 
     // UI
     return Scaffold(
-      appBar: const CustomeAppBar(title: 'Đơn Hàng'),
+      appBar: const CustomAppBar(title: 'Đơn Hàng'),
       body: Column(
         children: [
           (state.isLoading && isLoadTabView.value)

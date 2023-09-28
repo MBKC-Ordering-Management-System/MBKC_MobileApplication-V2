@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../models/product_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/widgets/custom_bottom_sheet.dart';
+import '../../../../utils/commons/widgets/empty_box.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 //import '../../../../utils/enums/searching_type_enum.dart';
@@ -125,7 +126,7 @@ class ProductScreen extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: AssetsConstants.whiteColor,
-      appBar: const CustomeAppBar(
+      appBar: const CustomAppBar(
         title: 'Sản Phẩm',
       ),
       body: Padding(
@@ -161,16 +162,21 @@ class ProductScreen extends HookConsumerWidget {
             ),
             state.isLoading
                 ? const Center(
-                    child: CircularProgressIndicator(),
-                  )
-                : Expanded(
-                    child: ListView.builder(
-                      itemCount: products.value.length,
-                      itemBuilder: (_, index) => ProductItem(
-                        product: products.value[index],
-                      ),
+                    child: Padding(
+                      padding: EdgeInsets.all(AssetsConstants.defaultPadding),
+                      child: CircularProgressIndicator(),
                     ),
-                  ),
+                  )
+                : products.value.isNotEmpty
+                    ? Expanded(
+                        child: ListView.builder(
+                          itemCount: products.value.length,
+                          itemBuilder: (_, index) => ProductItem(
+                            product: products.value[index],
+                          ),
+                        ),
+                      )
+                    : const EmptyBox(title: 'Không có sản phẩm'),
           ],
         ),
       ),

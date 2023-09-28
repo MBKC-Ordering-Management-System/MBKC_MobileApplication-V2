@@ -1,5 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../../models/order_model.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../domain/models/order_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/enums/order_status_type.dart';
 import '../../domain/repositories/order_repository.dart';
@@ -17,6 +19,7 @@ class OrderController extends _$OrderController {
   Future<List<OrderModel>> getOrders(
     int pageNum,
     OrderStatusType orderType,
+    BuildContext context,
   ) async {
     List<OrderModel> orders = [];
     state = const AsyncLoading();
@@ -29,7 +32,9 @@ class OrderController extends _$OrderController {
       },
     );
 
-    if (state.hasError) {}
+    if (state.hasError) {
+      handleAPIError(stateError: state.error!, context: context);
+    }
 
     return orders;
   }
