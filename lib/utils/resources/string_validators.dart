@@ -42,7 +42,6 @@ class NonEmptyStringValidator extends StringValidator {
   }
 }
 
-// Handle limit length
 class MinLengthStringValidator extends StringValidator {
   MinLengthStringValidator(this.minLength);
   final int minLength;
@@ -60,5 +59,16 @@ class MaxLengthStringValidator extends StringValidator {
   @override
   bool isValid(String value) {
     return value.length <= maxLength;
+  }
+}
+
+class BetweenLengthStringValidator extends StringValidator {
+  BetweenLengthStringValidator(this.minLength, this.maxLength);
+  final int minLength;
+  final int maxLength;
+
+  @override
+  bool isValid(String value) {
+    return value.length >= minLength && value.length <= maxLength;
   }
 }

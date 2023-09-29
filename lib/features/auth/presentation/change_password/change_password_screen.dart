@@ -5,11 +5,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
-import '../sign_in/sign_in_validator.dart';
+import '../../../../utils/resources/validations.dart';
 import 'change_password_controller.dart';
 
 @RoutePage()
-class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
+class ChangePasswordScreen extends HookConsumerWidget with Validations {
   ChangePasswordScreen({
     super.key,
     required this.email,
@@ -79,7 +79,8 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
                       PasswordInput(
                         textEditingController: newPassword,
                         hintText: 'Mật khẩu',
-                        onValidate: (val) => passwordErrorText(val),
+                        onValidate: (val) =>
+                            passwordBetweenLengthErrorText(val),
                         autoFocus: true,
                       ),
                       SizedBox(height: size.height * 0.02),
@@ -88,7 +89,7 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
                         hintText: 'Nhập lại mật khẩu',
                         onValidate: (val) {
                           var error = '';
-                          error = passwordErrorText(val);
+                          error = passwordBetweenLengthErrorText(val);
                           if (newPassword.text.length >= 8 &&
                               comfirmPassword.text.length >= 8) {
                             error = passwordEqualErrorText(
@@ -96,7 +97,6 @@ class ChangePasswordScreen extends HookConsumerWidget with SignInValidators {
                               comfirmPassword.text.trim(),
                             );
                           }
-
                           return error;
                         },
                         autoFocus: false,

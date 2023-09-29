@@ -1,7 +1,6 @@
 import '../../../../models/product_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../../../utils/commons/functions/searching_utils.dart';
 import '../../../../utils/dummy_data/product_dummy_data.dart';
 import '../../../../utils/enums/searching_type_enum.dart';
 import '../../../../utils/resources/remote_base_repository.dart';

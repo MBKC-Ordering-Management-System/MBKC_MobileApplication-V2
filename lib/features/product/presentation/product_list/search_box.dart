@@ -24,8 +24,8 @@ class SearchBox extends StatelessWidget {
           boxShadow: const [
             BoxShadow(
               color: AssetsConstants.mainColor,
-              blurRadius: 1.0, // soften the shadow
-              spreadRadius: 1.0, //extend the shadow
+              blurRadius: 2,
+              offset: Offset(0.2, 0.2), // Shadow position
             ),
           ],
         ),

@@ -4,11 +4,11 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../sign_in/sign_in_validator.dart';
+import '../../../../utils/resources/validations.dart';
 import 'enter_email_controller.dart';
 
 @RoutePage()
-class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
+class EnterEmailScreen extends HookConsumerWidget with Validations {
   EnterEmailScreen({super.key});
 
   // submit
@@ -67,7 +67,7 @@ class EnterEmailScreen extends HookConsumerWidget with SignInValidators {
                   child: TextInput(
                     textController: email,
                     hintText: 'Email',
-                    onValidate: (val) => emailErrorText(val),
+                    onValidate: (val) => emailRegexErrorText(val),
                     autoFocus: true,
                   ),
                 )

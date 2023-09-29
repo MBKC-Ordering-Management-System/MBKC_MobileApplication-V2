@@ -50,7 +50,43 @@ class ValueListenableBuilder2<A, B> extends StatelessWidget {
         valueListenable: first,
         builder: (_, a, __) => ValueListenableBuilder<B>(
           valueListenable: second,
-          builder: (context, b, __) => builder(context, a, b, child),
+          builder: (_, b, __) => builder(context, a, b, child),
+        ),
+      );
+}
+
+// listen 3
+class ValueListenableBuilder3<A, B, C> extends StatelessWidget {
+  const ValueListenableBuilder3({
+    required this.first,
+    required this.second,
+    required this.third,
+    Key? key,
+    required this.builder,
+    this.child,
+  }) : super(key: key);
+
+  final ValueListenable<A> first;
+  final ValueListenable<B> second;
+  final ValueListenable<C> third;
+  final Widget? child;
+  final Widget Function(
+    BuildContext context,
+    A a,
+    B b,
+    C c,
+    Widget? child,
+  ) builder;
+
+  @override
+  Widget build(BuildContext context) => ValueListenableBuilder<A>(
+        valueListenable: first,
+        builder: (_, a, __) => ValueListenableBuilder<B>(
+          valueListenable: second,
+          builder: (_, b, __) => ValueListenableBuilder<C>(
+            valueListenable: third,
+            builder: (_, c, __) => builder(context, a, b, c, child),
+          ),
         ),
       );
 }
@@ -92,13 +128,13 @@ class ValueListenableBuilder6<A, B, C, D, E, F> extends StatelessWidget {
         valueListenable: first,
         builder: (_, a, __) => ValueListenableBuilder<B>(
           valueListenable: second,
-          builder: (_, b, __) => ValueListenableBuilder(
+          builder: (_, b, __) => ValueListenableBuilder<C>(
             valueListenable: third,
-            builder: (_, c, __) => ValueListenableBuilder(
+            builder: (_, c, __) => ValueListenableBuilder<D>(
               valueListenable: fourth,
-              builder: (_, d, __) => ValueListenableBuilder(
+              builder: (_, d, __) => ValueListenableBuilder<E>(
                 valueListenable: fifth,
-                builder: (_, e, __) => ValueListenableBuilder(
+                builder: (_, e, __) => ValueListenableBuilder<F>(
                   valueListenable: sixth,
                   builder: (context, f, _) =>
                       builder(context, a, b, c, d, e, f, child),

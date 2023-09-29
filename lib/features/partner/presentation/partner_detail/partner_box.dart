@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../../../utils/commons/functions/logo_utils.dart';
 import '../../../../utils/commons/widgets/label_text.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';

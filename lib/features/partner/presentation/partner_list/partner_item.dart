@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import '../../../../configs/routes/app_router.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../../../utils/commons/functions/logo_utils.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/modify_partner_type.dart';
@@ -13,9 +12,11 @@ class PartnerItem extends StatelessWidget {
     super.key,
     required this.partner,
     required this.partners,
+    required this.isRefresh,
   });
   final PartnerModel partner;
   final ValueNotifier<List<PartnerModel>> partners;
+  final ValueNotifier<bool> isRefresh;
 
   // on delete
   void deletePartner({
@@ -98,12 +99,18 @@ class PartnerItem extends StatelessWidget {
           ),
           trailing: IconButton(
             onPressed: () {
-              context.router.push(
+              context.router
+                  .push(
                 PartnerModifyScreenRoute(
                   type: ModifyPartnerType.update,
                   partner: partner,
                 ),
-              );
+              )
+                  .then((value) {
+                if (value != null && value == true) {
+                  isRefresh.value = !isRefresh.value;
+                }
+              });
             },
             icon: const Icon(
               Icons.edit_square,

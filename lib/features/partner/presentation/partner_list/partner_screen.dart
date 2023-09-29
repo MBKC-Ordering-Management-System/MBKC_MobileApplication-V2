@@ -37,6 +37,7 @@ class PartnerScreen extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final partners = useState<List<PartnerModel>>([]);
     final state = ref.watch(partnerControllerProvider);
+    final isRefresh = useState(false);
 
     // first build
     useEffect(() {
@@ -49,7 +50,7 @@ class PartnerScreen extends HookConsumerWidget {
       });
 
       return null;
-    }, []);
+    }, [isRefresh.value]);
 
     return Scaffold(
       backgroundColor: AssetsConstants.whiteColor,
@@ -62,7 +63,10 @@ class PartnerScreen extends HookConsumerWidget {
               child: CircularProgressIndicator(),
             )
           : partners.value.isEmpty
-              ? const EmptyBox(title: 'Không có tài khoản')
+              ? const Align(
+                  alignment: Alignment.topCenter,
+                  child: EmptyBox(title: 'Không có tài khoản'),
+                )
               : Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: AssetsConstants.defaultPadding - 8.0,
@@ -74,6 +78,7 @@ class PartnerScreen extends HookConsumerWidget {
                     itemBuilder: (_, index) => PartnerItem(
                       partners: partners,
                       partner: partners.value[index],
+                      isRefresh: isRefresh,
                     ),
                   ),
                 ),
@@ -84,9 +89,15 @@ class PartnerScreen extends HookConsumerWidget {
           height: size.height * 0.07,
           child: FloatingActionButton(
             onPressed: () {
-              context.router.push(
+              context.router
+                  .push(
                 PartnerModifyScreenRoute(type: ModifyPartnerType.create),
-              );
+              )
+                  .then((value) {
+                if (value != null && value == true) {
+                  isRefresh.value = !isRefresh.value;
+                }
+              });
             },
             child: const Icon(
               Icons.add,

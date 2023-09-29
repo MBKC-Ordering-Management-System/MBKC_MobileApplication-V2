@@ -20,6 +20,7 @@ class FilterSortBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
           color: AssetsConstants.mainColor,
+          width: 2,
         ),
       ),
       child: Row(

@@ -14,10 +14,10 @@ import '../../../../utils/commons/widgets/text_input.dart';
 import '../../../../utils/commons/widgets/value_listenable_builder.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import 'sign_in_controller.dart';
-import 'sign_in_validator.dart';
+import '../../../../utils/resources/validations.dart';
 
 @RoutePage()
-class SignInScreen extends HookConsumerWidget with SignInValidators {
+class SignInScreen extends HookConsumerWidget with Validations {
   SignInScreen({super.key});
 
   // unfocus
@@ -115,14 +115,14 @@ class SignInScreen extends HookConsumerWidget with SignInValidators {
                         TextInput(
                           textController: username,
                           hintText: 'Tài khoản',
-                          onValidate: (val) => emailErrorText(val),
+                          onValidate: (val) => emailRegexErrorText(val),
                           autoFocus: true,
                         ),
                         SizedBox(height: size.height * 0.02),
                         PasswordInput(
                           textEditingController: password,
                           hintText: 'Mật khẩu',
-                          onValidate: (val) => passwordErrorText(val),
+                          onValidate: (val) => passwordMinErrorText(val),
                           autoFocus: false,
                         ),
                         TextButton(
