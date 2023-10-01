@@ -7,7 +7,7 @@ import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/widgets/empty_box.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/modify_partner_type.dart';
+import '../../../../utils/enums/modify_type.dart';
 import '../../domain/models/partner_model.dart';
 import 'partner_controller.dart';
 import 'partner_item.dart';
@@ -91,7 +91,7 @@ class PartnerScreen extends HookConsumerWidget {
             onPressed: () {
               context.router
                   .push(
-                PartnerModifyScreenRoute(type: ModifyPartnerType.create),
+                PartnerModifyScreenRoute(type: ModifyType.create),
               )
                   .then((value) {
                 if (value != null && value == true) {

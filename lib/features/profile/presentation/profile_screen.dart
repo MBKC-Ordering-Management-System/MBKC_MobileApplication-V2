@@ -62,15 +62,16 @@ class ProfileScreen extends ConsumerWidget {
               ),
             ),
           ),
-          const ActionBox(
-            icon: FontAwesomeIcons.wallet,
-            title: 'Ví',
-            color: AssetsConstants.blackColor,
+          InkWell(
+            onTap: () => context.router.push(const WalletScreenRoute()),
+            child: const ActionBox(
+              icon: FontAwesomeIcons.wallet,
+              title: 'Ví',
+              color: AssetsConstants.blackColor,
+            ),
           ),
           InkWell(
-            onTap: () {
-              context.router.push(const PartnerScreenRoute());
-            },
+            onTap: () => context.router.push(const PartnerScreenRoute()),
             child: const ActionBox(
               icon: FontAwesomeIcons.handshakeAngle,
               title: 'Đối tác',

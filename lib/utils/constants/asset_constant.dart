@@ -28,9 +28,13 @@ class AssetsConstants {
   static const beaminColor = Color(0xff3BC6C9);
   static const grabColor = Color(0xff00B14F);
   static const shopeeColor = Color(0xffED4C2F);
+  static const accountBankingBackgroundColor = Color(0xffD1E9FC);
+  static const accountBankingContent = Color(0xff061B64);
+  static const transactionBackgroundColor = Color(0xffFDF7D5);
+  static const transactionContent = Color(0xff906D2E);
 
   // Images
-  static const String appLogo = 'assets/images/logo.jpg';
+  static const String appLogo = 'assets/images/mbkc_logo.jpg';
   static const String welcomeImage = 'assets/images/image_welcome.png';
   static const String defaultAvatar = 'assets/images/avatar_default.png';
   static const String errorLogo = 'assets/images/error.png';

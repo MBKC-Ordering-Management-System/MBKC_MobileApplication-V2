@@ -29,20 +29,15 @@ class OrderScreen extends HookConsumerWidget {
     // init
     final size = MediaQuery.sizeOf(context);
     final state = ref.watch(orderControllerProvider);
-    final isLoadTabView = useState(false);
+    final isFirstLoad = useState(true);
     final nowIndex = items.indexOf(ref.watch(orderType));
-
-    // set first loaded
-    setLoadTabView(bool val) {
-      isLoadTabView.value = val;
-    }
 
     // UI
     return Scaffold(
       appBar: const CustomAppBar(title: 'Đơn Hàng'),
       body: Column(
         children: [
-          (state.isLoading && isLoadTabView.value)
+          (state.isLoading && isFirstLoad.value)
               ? const TabViewShimmer(amount: 3)
               : Container(
                   decoration: BoxDecoration(
@@ -97,7 +92,7 @@ class OrderScreen extends HookConsumerWidget {
                   ),
                 ),
           OrderList(
-            onCallbackLoadTabView: setLoadTabView,
+            isFirstLoad: isFirstLoad,
           ),
         ],
       ),

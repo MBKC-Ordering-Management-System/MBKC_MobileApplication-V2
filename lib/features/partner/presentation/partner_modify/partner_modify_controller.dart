@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/snack_bar.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/modify_partner_type.dart';
+import '../../../../utils/enums/modify_type.dart';
 import '../../domain/models/request/partner_request.dart';
 import '../../domain/repositories/partner_repository.dart';
 
@@ -22,14 +22,14 @@ class PartnerModifyController extends _$PartnerModifyController {
     int? id,
     PartnerRequest partner,
     BuildContext context,
-    ModifyPartnerType type,
+    ModifyType type,
   ) async {
     state = const AsyncLoading();
     final partnerRepository = ref.read(partnerRepositoryProvider);
 
     state = await AsyncValue.guard(
       () async {
-        if (type == ModifyPartnerType.create) {
+        if (type == ModifyType.create) {
           await partnerRepository.createPartner(request: partner);
         } else {
           await partnerRepository.updatePartner(id: id!, request: partner);
@@ -42,7 +42,7 @@ class PartnerModifyController extends _$PartnerModifyController {
       return;
     }
 
-    if (type == ModifyPartnerType.create) {
+    if (type == ModifyType.create) {
       showSnackBar(
         context: context,
         content: 'Tạo mới thành công',

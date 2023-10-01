@@ -46,6 +46,7 @@ class OrderItem extends ConsumerWidget {
 
     return Container(
       padding: const EdgeInsets.all(AssetsConstants.defaultPadding - 15.0),
+      margin: const EdgeInsets.only(bottom: AssetsConstants.defaultMargin),
       decoration: BoxDecoration(
         color: AssetsConstants.whiteColor,
         border: Border.all(color: AssetsConstants.subtitleColor),

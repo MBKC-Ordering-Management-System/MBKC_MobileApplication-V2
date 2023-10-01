@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../utils/commons/widgets/widgets_common_export.dart';
-import '../../../utils/constants/asset_constant.dart';
+import 'widgets_common_export.dart';
+import '../../constants/asset_constant.dart';
 
 class StatisticalCard extends StatelessWidget {
   const StatisticalCard({
@@ -27,11 +27,11 @@ class StatisticalCard extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         horizontal: AssetsConstants.defaultPadding,
       ),
-      width: size.width * 0.9,
+      width: size.width * 1,
       height: size.height * 0.15,
       decoration: BoxDecoration(
         color: backgroundColor,
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -47,7 +47,7 @@ class StatisticalCard extends StatelessWidget {
           SizedBox(height: size.height * 0.01),
           LabelText(
             content: subtitle,
-            size: AssetsConstants.defaultFontSize - 10.0,
+            size: AssetsConstants.defaultFontSize - 12.0,
             color: contentColor,
             fontWeight: FontWeight.w600,
           ),

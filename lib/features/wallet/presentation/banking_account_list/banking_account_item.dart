@@ -1,52 +1,45 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import '../../../../configs/routes/app_router.dart';
-import '../../../../utils/commons/functions/functions_common_export.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/modify_type.dart';
-import '../../domain/models/partner_model.dart';
+import '../../domain/models/banking_account_model.dart';
+import 'banking_account_controller.dart';
 
-class PartnerItem extends StatelessWidget {
-  const PartnerItem({
+class BankingAccountItem extends ConsumerWidget {
+  const BankingAccountItem({
     super.key,
-    required this.partner,
-    required this.partners,
-    required this.isRefresh,
+    required this.account,
+    required this.isFirst,
+    required this.onCallBack,
   });
-  final PartnerModel partner;
-  final ValueNotifier<List<PartnerModel>> partners;
-  final ValueNotifier<bool> isRefresh;
+  final BankingAccountModel account;
+  final bool isFirst;
+  final VoidCallback onCallBack;
 
   // on delete
-  void deletePartner({
+  void deleteAccount({
     required BuildContext context,
-  }) {
-    partners.value.removeWhere((item) => item.id == partner.id);
-
-    showSnackBar(
-      context: context,
-      content: 'Xóa thành công',
-      icon: AssetsConstants.iconSuccess,
-      backgroundColor: AssetsConstants.mainColor,
-      textColor: AssetsConstants.whiteColor,
-    );
+    required WidgetRef ref,
+  }) async {
+    final result = await ref
+        .read(bankingAccountControllerProvider.notifier)
+        .deleteBankingAccount(account.id, context);
+    if (result) {
+      onCallBack();
+    }
   }
 
   @override
-  Widget build(BuildContext context) {
-    // init
-    // final size = MediaQuery.sizeOf(context);
-
+  Widget build(BuildContext context, WidgetRef ref) {
     return Dismissible(
       confirmDismiss: (DismissDirection direction) async =>
           await showAlertDialog(
         context: context,
         title: 'Xác nhận',
-        content: 'Bạn chắc chứ',
+        content: 'Bạn có chắc muốn xóa tài khoản?',
         cancelActionText: 'Hủy',
       ),
-      onDismissed: (_) => deletePartner(context: context),
+      onDismissed: (_) => deleteAccount(context: context, ref: ref),
       background: Container(
         padding: const EdgeInsets.only(
           right: AssetsConstants.defaultPadding - 10.0,
@@ -68,10 +61,13 @@ class PartnerItem extends StatelessWidget {
         ),
       ),
       direction: DismissDirection.endToStart,
-      key: ValueKey(partner.id),
+      key: UniqueKey(),
       child: Container(
-        margin: const EdgeInsets.only(
+        margin: EdgeInsets.only(
           bottom: AssetsConstants.defaultMargin - 2.0,
+          top: isFirst
+              ? AssetsConstants.defaultMargin - 2.0
+              : AssetsConstants.defaultMargin - 10.0,
         ),
         decoration: BoxDecoration(
           border: Border.all(
@@ -80,42 +76,26 @@ class PartnerItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: ListTile(
-          onTap: () {
-            context.router.push(PartnerDetailScreenRoute(partner: partner));
-          },
           leading: ClipRRect(
             borderRadius: BorderRadius.circular(10),
-            child: Image.asset(getLogoPartner(partner.type)),
+            child: Image.asset(AssetsConstants.appLogo),
           ),
           title: LabelText(
-            content: getTitlePartner(partner.type),
+            content: '${account.name} - ${account.id}',
             size: AssetsConstants.defaultFontSize - 12.0,
             fontWeight: FontWeight.bold,
           ),
           subtitle: LabelText(
-            content: partner.username,
+            content: account.numberAccount,
             size: AssetsConstants.defaultFontSize - 14.0,
             fontWeight: FontWeight.w600,
           ),
           trailing: IconButton(
-            onPressed: () {
-              context.router
-                  .push(
-                PartnerModifyScreenRoute(
-                  type: ModifyType.update,
-                  partner: partner,
-                ),
-              )
-                  .then((value) {
-                if (value != null && value == true) {
-                  isRefresh.value = !isRefresh.value;
-                }
-              });
-            },
+            onPressed: () {},
             icon: const Icon(
               Icons.edit_square,
               color: AssetsConstants.blackColor,
-              size: AssetsConstants.defaultFontSize - 6.0,
+              size: AssetsConstants.defaultFontSize - 8.0,
             ),
           ),
         ),

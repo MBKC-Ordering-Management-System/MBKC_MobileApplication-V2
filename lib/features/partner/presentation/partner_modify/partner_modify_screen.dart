@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
-import '../../../../utils/enums/modify_partner_type.dart';
 import '../../../../utils/resources/validations.dart';
 import '../../domain/models/partner_model.dart';
 import '../../domain/models/request/partner_request.dart';
@@ -19,7 +18,7 @@ class PartnerModifyScreen extends HookConsumerWidget with Validations {
     this.partner,
     required this.type,
   });
-  final ModifyPartnerType type;
+  final ModifyType type;
   final PartnerModel? partner;
 
   // handle submit
@@ -69,7 +68,7 @@ class PartnerModifyScreen extends HookConsumerWidget with Validations {
       child: Scaffold(
         backgroundColor: AssetsConstants.whiteColor,
         appBar: CustomAppBar(
-          title: type == ModifyPartnerType.create ? 'Tạo Mới' : 'Cập Nhật',
+          title: type == ModifyType.create ? 'Tạo Mới' : 'Cập Nhật',
           backButtonColor: AssetsConstants.whiteColor,
         ),
         body: SingleChildScrollView(
@@ -204,8 +203,7 @@ class PartnerModifyScreen extends HookConsumerWidget with Validations {
             second: password,
             third: confirmPassword,
             builder: (_, a, b, c, __) => CustomButton(
-              content:
-                  type == ModifyPartnerType.create ? 'Tạo mới' : 'Cập nhật',
+              content: type == ModifyType.create ? 'Tạo mới' : 'Cập nhật',
               onCallback: () => submit(
                 ref: ref,
                 context: context,

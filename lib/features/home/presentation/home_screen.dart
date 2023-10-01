@@ -8,7 +8,6 @@ import '../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../utils/constants/asset_constant.dart';
 import '../domain/models/statistical_model.dart';
 import '../domain/repositories/home_repository.dart';
-import 'statistical_card.dart';
 
 @RoutePage()
 class HomeScreen extends HookConsumerWidget {
@@ -67,7 +66,10 @@ class HomeScreen extends HookConsumerWidget {
               ),
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
-                child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AssetsConstants.defaultPadding - 6.0,
+                  ),
                   child: Column(
                     children: [
                       SizedBox(height: size.height * 0.02),

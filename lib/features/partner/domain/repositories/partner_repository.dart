@@ -9,11 +9,14 @@ part 'partner_repository.g.dart';
 
 abstract class PartnerRepository {
   Future<List<PartnerModel>> getPartners({required PagingModel request});
+
   Future<SuccessModel> createPartner({required PartnerRequest request});
+
   Future<SuccessModel> updatePartner({
     required int id,
     required PartnerRequest request,
   });
+
   Future<SuccessModel> deletePartner({required int id});
 }
 

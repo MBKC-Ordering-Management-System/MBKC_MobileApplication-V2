@@ -15,6 +15,12 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    BankingAccountScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const BankingAccountScreen(),
+      );
+    },
     ChangePasswordScreenRoute.name: (routeData) {
       final args = routeData.argsAs<ChangePasswordScreenRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -132,7 +138,33 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const TabViewScreen(),
       );
     },
+    TransactionScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TransactionScreen(),
+      );
+    },
+    WalletScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const WalletScreen(),
+      );
+    },
   };
+}
+
+/// generated route for
+/// [BankingAccountScreen]
+class BankingAccountScreenRoute extends PageRouteInfo<void> {
+  const BankingAccountScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          BankingAccountScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'BankingAccountScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -378,7 +410,7 @@ class PartnerModifyScreenRoute
   PartnerModifyScreenRoute({
     Key? key,
     PartnerModel? partner,
-    required ModifyPartnerType type,
+    required ModifyType type,
     List<PageRouteInfo>? children,
   }) : super(
           PartnerModifyScreenRoute.name,
@@ -407,7 +439,7 @@ class PartnerModifyScreenRouteArgs {
 
   final PartnerModel? partner;
 
-  final ModifyPartnerType type;
+  final ModifyType type;
 
   @override
   String toString() {
@@ -510,6 +542,34 @@ class TabViewScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TabViewScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TransactionScreen]
+class TransactionScreenRoute extends PageRouteInfo<void> {
+  const TransactionScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          TransactionScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TransactionScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WalletScreen]
+class WalletScreenRoute extends PageRouteInfo<void> {
+  const WalletScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          WalletScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WalletScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
