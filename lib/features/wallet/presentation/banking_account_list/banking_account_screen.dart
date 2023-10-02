@@ -101,7 +101,7 @@ class BankingAccountScreen extends HookConsumerWidget {
         title: 'Tài Khoản Ngân Hàng',
         backButtonColor: AssetsConstants.whiteColor,
       ),
-      body: (state.isLoading)
+      body: (state.isLoading && isLoadMoreLoading.value == false)
           ? const Center(
               child: HomeShimmer(amount: 4),
             )
@@ -138,6 +138,7 @@ class BankingAccountScreen extends HookConsumerWidget {
                           isLoadMoreLoading: isLoadMoreLoading,
                           accounts: accounts,
                         ),
+                        isLoadMoreLoading: isLoadMoreLoading,
                       );
                     },
                   ),

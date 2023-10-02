@@ -20,7 +20,6 @@ import '../../features/order/domain/models/order_model.dart';
 import '../../features/wallet/presentation/banking_account_list/banking_account_screen.dart';
 import '../../features/wallet/presentation/transaction_list/transaction_screen.dart';
 import '../../features/wallet/presentation/wallet_balance/wallet_screen.dart';
-import '../../splash_screen.dart';
 import '../../tabview_screen.dart';
 import '../../utils/enums/modify_type.dart';
 import '../../utils/enums/verification_otp_type.dart';
@@ -42,10 +41,6 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: ErrorScreenRoute.page),
 
         // auth
-        AutoRoute(
-          page: SplashScreenRoute.page,
-          // initial: true,
-        ),
         AutoRoute(
           page: SignInScreenRoute.page,
           // initial: true,

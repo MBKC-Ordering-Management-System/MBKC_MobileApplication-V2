@@ -11,20 +11,24 @@ class BankingAccountItem extends ConsumerWidget {
     required this.account,
     required this.isFirst,
     required this.onCallBack,
+    required this.isLoadMoreLoading,
   });
   final BankingAccountModel account;
   final bool isFirst;
   final VoidCallback onCallBack;
+  final ValueNotifier<bool> isLoadMoreLoading;
 
   // on delete
   void deleteAccount({
     required BuildContext context,
     required WidgetRef ref,
   }) async {
+    isLoadMoreLoading.value = false;
     final result = await ref
         .read(bankingAccountControllerProvider.notifier)
         .deleteBankingAccount(account.id, context);
     if (result) {
+      isLoadMoreLoading.value = true;
       onCallBack();
     }
   }
