@@ -15,8 +15,10 @@ import '../../features/partner/presentation/partner_detail/partner_detail_screen
 import '../../features/partner/presentation/partner_list/partner_screen.dart';
 import '../../features/partner/presentation/partner_modify/partner_modify_screen.dart';
 import '../../features/product/presentation/product_list/product_screen.dart';
-import '../../features/profile/presentation/profile_screen.dart';
+import '../../features/profile/domain/models/profile_model.dart';
+import '../../features/profile/presentation/profile/profile_screen.dart';
 import '../../features/order/domain/models/order_model.dart';
+import '../../features/profile/presentation/profile_detail/profile_detail_screen.dart';
 import '../../features/wallet/presentation/banking_account_list/banking_account_screen.dart';
 import '../../features/wallet/presentation/transaction_list/transaction_screen.dart';
 import '../../features/wallet/presentation/wallet_balance/wallet_screen.dart';
@@ -43,14 +45,14 @@ class AppRouter extends _$AppRouter {
         // auth
         AutoRoute(
           page: SignInScreenRoute.page,
-          // initial: true,
+          initial: true,
         ),
         AutoRoute(page: EnterEmailScreenRoute.page),
         AutoRoute(page: OTPVerificationScreenRoute.page),
         AutoRoute(page: ChangePasswordScreenRoute.page),
         AutoRoute(
           page: TabViewScreenRoute.page,
-          initial: true,
+          // initial: true,
           children: [
             AutoRoute(page: HomeScreenRoute.page),
             AutoRoute(page: OrderScreenRoute.page),
@@ -58,6 +60,9 @@ class AppRouter extends _$AppRouter {
             AutoRoute(page: ProfileScreenRoute.page),
           ],
         ),
+
+        // profile
+        AutoRoute(page: ProfileDetailScreenRoute.page),
 
         // order
         AutoRoute(page: OrderDetailScreenRoute.page),

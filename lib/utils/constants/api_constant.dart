@@ -1,13 +1,13 @@
 class APIConstants {
-  static const baseUrl = 'https://mbkc.azurewebsites.net';
+  static const baseUrl = 'https://mbkc.azurewebsites.net/api/v1';
   static const contentType = 'application/json';
 
   // auth
-  static const login = '/api/authentications/login';
-  static const reGenerateToken = '/api/authentications/tokens-regeneration';
-  static const resetPassword = '/api/authentications/reset-password';
-  static const verifyEmail = '/api/verifications/email-verification';
-  static const otpVerification = '/api/verifications/otp-verification';
+  static const login = '/authentications/login';
+  static const reGenerateToken = '/authentications/regeneration-tokens';
+  static const resetPassword = '/authentications/password-resetation';
+  static const verifyEmail = '/verifications/email-verification';
+  static const otpVerification = '/verifications/otp-verification';
   // statistical
   // order
   // product

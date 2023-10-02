@@ -13,7 +13,7 @@ class _AuthSource implements AuthSource {
     this._dio, {
     this.baseUrl,
   }) {
-    baseUrl ??= 'https://mbkc.azurewebsites.net';
+    baseUrl ??= 'https://mbkc.azurewebsites.net/api/v1';
   }
 
   final Dio _dio;
@@ -40,7 +40,7 @@ class _AuthSource implements AuthSource {
     )
             .compose(
               _dio.options,
-              '/api/authentications/login',
+              '/authentications/login',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -74,7 +74,7 @@ class _AuthSource implements AuthSource {
     )
             .compose(
               _dio.options,
-              '/api/authentications/tokens-regeneration',
+              '/authentications/regeneration-tokens',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -108,7 +108,7 @@ class _AuthSource implements AuthSource {
     )
             .compose(
               _dio.options,
-              '/api/authentications/reset-password',
+              '/authentications/password-resetation',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -142,7 +142,7 @@ class _AuthSource implements AuthSource {
     )
             .compose(
               _dio.options,
-              '/api/verifications/email-verification',
+              '/verifications/email-verification',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -176,7 +176,7 @@ class _AuthSource implements AuthSource {
     )
             .compose(
               _dio.options,
-              '/api/verifications/otp-verification',
+              '/verifications/otp-verification',
               queryParameters: queryParameters,
               data: _data,
             )

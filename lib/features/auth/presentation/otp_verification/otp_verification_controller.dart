@@ -28,21 +28,20 @@ class OtpVerificationController extends _$OtpVerificationController {
     final authRepository = ref.read(authRepositoryProvider);
     final request = EmailVerifyRequest(email: email);
     state = await AsyncValue.guard(
-      () => authRepository.verifyEmail(request: request),
+      () async {
+        await authRepository.verifyEmail(request: request);
+        showSnackBar(
+          context: context,
+          content: 'Mã OTP đã được gửi vào email của bạn',
+          icon: AssetsConstants.iconSuccess,
+          backgroundColor: AssetsConstants.mainColor,
+          textColor: AssetsConstants.whiteColor,
+        );
+      },
     );
 
     if (state.hasError) {
       handleAPIError(stateError: state.error!, context: context);
-    }
-
-    if (state.hasError == false) {
-      showSnackBar(
-        context: context,
-        content: 'Mã OTP đã được gửi vào email của bạn',
-        icon: AssetsConstants.iconSuccess,
-        backgroundColor: AssetsConstants.mainColor,
-        textColor: AssetsConstants.whiteColor,
-      );
     }
   }
 
@@ -62,35 +61,20 @@ class OtpVerificationController extends _$OtpVerificationController {
     );
 
     state = await AsyncValue.guard(
-      () => authRepository.verifyOTPCode(request: request),
+      () async {
+        await authRepository.verifyOTPCode(request: request);
+        context.router.pop();
+        context.router.push(
+          ChangePasswordScreenRoute(
+            email: email,
+            verifyType: verifyType,
+          ),
+        );
+      },
     );
 
     if (state.hasError) {
       handleAPIError(stateError: state.error!, context: context);
-    }
-
-    if (state.hasError == false) {
-      switch (verifyType) {
-        case VerificationOTPType.forgotpassword:
-          context.router.push(
-            ChangePasswordScreenRoute(
-              email: email,
-              verifyType: verifyType,
-            ),
-          );
-          break;
-
-        case VerificationOTPType.changepassword:
-          break;
-
-        default:
-          context.router.push(
-            ChangePasswordScreenRoute(
-              email: email,
-              verifyType: verifyType,
-            ),
-          );
-      }
     }
   }
 }

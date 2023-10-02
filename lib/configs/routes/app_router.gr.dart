@@ -112,6 +112,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const ProductScreen(),
       );
     },
+    ProfileDetailScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<ProfileDetailScreenRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ProfileDetailScreen(
+          key: args.key,
+          profile: args.profile,
+        ),
+      );
+    },
     ProfileScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -467,6 +477,45 @@ class ProductScreenRoute extends PageRouteInfo<void> {
   static const String name = 'ProductScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProfileDetailScreen]
+class ProfileDetailScreenRoute
+    extends PageRouteInfo<ProfileDetailScreenRouteArgs> {
+  ProfileDetailScreenRoute({
+    Key? key,
+    required ProfileModel profile,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ProfileDetailScreenRoute.name,
+          args: ProfileDetailScreenRouteArgs(
+            key: key,
+            profile: profile,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ProfileDetailScreenRoute';
+
+  static const PageInfo<ProfileDetailScreenRouteArgs> page =
+      PageInfo<ProfileDetailScreenRouteArgs>(name);
+}
+
+class ProfileDetailScreenRouteArgs {
+  const ProfileDetailScreenRouteArgs({
+    this.key,
+    required this.profile,
+  });
+
+  final Key? key;
+
+  final ProfileModel profile;
+
+  @override
+  String toString() {
+    return 'ProfileDetailScreenRouteArgs{key: $key, profile: $profile}';
+  }
 }
 
 /// generated route for

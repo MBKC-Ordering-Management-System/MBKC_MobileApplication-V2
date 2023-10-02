@@ -34,34 +34,33 @@ class PartnerModifyController extends _$PartnerModifyController {
         } else {
           await partnerRepository.updatePartner(id: id!, request: partner);
         }
+
+        if (type == ModifyType.create) {
+          showSnackBar(
+            context: context,
+            content: 'Tạo mới thành công',
+            icon: AssetsConstants.iconSuccess,
+            backgroundColor: AssetsConstants.mainColor,
+            textColor: AssetsConstants.whiteColor,
+          );
+        } else {
+          showSnackBar(
+            context: context,
+            content: 'Cập nhật thành công',
+            icon: AssetsConstants.iconSuccess,
+            backgroundColor: AssetsConstants.mainColor,
+            textColor: AssetsConstants.whiteColor,
+          );
+        }
+
+        if (context.mounted) {
+          context.router.pop(true);
+        }
       },
     );
 
     if (state.hasError) {
       handleAPIError(stateError: state.error!, context: context);
-      return;
-    }
-
-    if (type == ModifyType.create) {
-      showSnackBar(
-        context: context,
-        content: 'Tạo mới thành công',
-        icon: AssetsConstants.iconSuccess,
-        backgroundColor: AssetsConstants.mainColor,
-        textColor: AssetsConstants.whiteColor,
-      );
-    } else {
-      showSnackBar(
-        context: context,
-        content: 'Cập nhật thành công',
-        icon: AssetsConstants.iconSuccess,
-        backgroundColor: AssetsConstants.mainColor,
-        textColor: AssetsConstants.whiteColor,
-      );
-    }
-
-    if (context.mounted) {
-      context.router.pop(true);
     }
   }
 }

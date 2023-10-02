@@ -43,3 +43,16 @@ String getTitlePartner(PartnerType type) {
       return 'Beamin';
   }
 }
+
+String getTitleStatus(String status) {
+  switch (status) {
+    case 'active':
+      return 'Hoạt động';
+    case 'inactive':
+      return 'Dừng hoạt động';
+    case 'deactive':
+      return 'Đóng cửa';
+    default:
+      return 'undefine';
+  }
+}

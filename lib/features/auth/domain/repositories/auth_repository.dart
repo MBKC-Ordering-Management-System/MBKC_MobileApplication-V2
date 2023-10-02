@@ -21,6 +21,8 @@ abstract class AuthRepository {
   Future<SuccessModel> verifyEmail({required EmailVerifyRequest request});
 
   Future<SuccessModel> verifyOTPCode({required OTPVerifyRequest request});
+
+  Future<void> signOut();
 }
 
 @Riverpod(keepAlive: true)

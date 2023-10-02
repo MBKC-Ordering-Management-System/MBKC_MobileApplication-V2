@@ -18,4 +18,10 @@ class SharedPreferencesUtils {
     await prefs.remove(key);
     await prefs.setString(key, token.toJson());
   }
+
+  // set token
+  static Future<void> clearInstance(String key) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+  }
 }

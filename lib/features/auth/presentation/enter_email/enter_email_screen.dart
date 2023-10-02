@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
+import '../../../../utils/enums/verification_otp_type.dart';
 import '../../../../utils/resources/validations.dart';
 import 'enter_email_controller.dart';
 
@@ -22,6 +23,7 @@ class EnterEmailScreen extends HookConsumerWidget with Validations {
       await ref.read(enterEmailControllerProvider.notifier).checkEmail(
             email: email,
             context: context,
+            type: VerificationOTPType.forgotpassword,
           );
     }
   }

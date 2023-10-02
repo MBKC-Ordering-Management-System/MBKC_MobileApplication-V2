@@ -1,5 +1,6 @@
 import '../../../../models/token_model.dart';
 import '../../../../models/response/success_model.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/resources/remote_base_repository.dart';
 import '../../domain/models/request/change_password_request.dart';
@@ -54,5 +55,10 @@ class AuthRepositoryImpl extends RemoteBaseRepository
       request: () =>
           _authSource.verifyOTPCode(request, APIConstants.contentType),
     );
+  }
+
+  @override
+  Future<void> signOut() async {
+    await SharedPreferencesUtils.clearInstance('user_token');
   }
 }

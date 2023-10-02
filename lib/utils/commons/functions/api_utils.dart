@@ -10,18 +10,7 @@ Future<void> handleAPIError({
   required BuildContext context,
   Future<void>? onCallBackGenerateToken,
 }) async {
-  // logger
   final error = (stateError as DioException).response!.data;
-
-  if (error == null) {
-    showExceptionAlertDialog(
-      context: context,
-      title: 'Thông báo',
-      exception: 'Máy chủ không phản hồi, vui lòng thử lại.',
-    );
-    return;
-  }
-
   final errorModel = ErrorModel.fromMap(error);
   switch (errorModel.statusCode.toStatusCodeTypeEnum()) {
     case StatusCodeType.conflict:
@@ -37,6 +26,11 @@ Future<void> handleAPIError({
       break;
 
     case StatusCodeType.exception:
+      showExceptionAlertDialog(
+        context: context,
+        title: 'Thông báo',
+        exception: 'Máy chủ không phản hồi, vui lòng thử lại.',
+      );
       break;
 
     case StatusCodeType.unauthentication:

@@ -55,4 +55,18 @@ class SignInController extends _$SignInController {
       handleAPIError(stateError: state.error!, context: context);
     }
   }
+
+  void signOut(
+    BuildContext context,
+  ) async {
+    final authRepository = ref.read(authRepositoryProvider);
+
+    state = await AsyncValue.guard(
+      () async {
+        ref.read(authProvider.notifier).update((state) => null);
+        await authRepository.signOut();
+        context.router.replaceAll([SignInScreenRoute()]);
+      },
+    );
+  }
 }

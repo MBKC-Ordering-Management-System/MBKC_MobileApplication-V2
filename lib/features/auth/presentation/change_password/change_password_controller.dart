@@ -33,24 +33,25 @@ class ChangePasswordController extends _$ChangePasswordController {
     );
 
     state = await AsyncValue.guard(
-      () => authRepository.changePassword(request: request),
+      () async {
+        await authRepository.changePassword(request: request);
+        showSnackBar(
+          context: context,
+          content: 'Thay đổi mật khẩu thành công',
+          icon: AssetsConstants.iconSuccess,
+          backgroundColor: AssetsConstants.mainColor,
+          textColor: AssetsConstants.whiteColor,
+        );
+        if (verifyType == VerificationOTPType.forgotpassword) {
+          context.router.replaceAll([SignInScreenRoute()]);
+        } else {
+          context.router.pop();
+        }
+      },
     );
 
     if (state.hasError) {
       handleAPIError(stateError: state.error!, context: context);
-    }
-
-    if (state.hasError == false) {
-      showSnackBar(
-        context: context,
-        content: 'Thay đổi mật khẩu thành công',
-        icon: AssetsConstants.iconSuccess,
-        backgroundColor: AssetsConstants.mainColor,
-        textColor: AssetsConstants.whiteColor,
-      );
-      if (verifyType == VerificationOTPType.forgotpassword) {
-        context.router.replaceAll([SignInScreenRoute()]);
-      } else {}
     }
   }
 }

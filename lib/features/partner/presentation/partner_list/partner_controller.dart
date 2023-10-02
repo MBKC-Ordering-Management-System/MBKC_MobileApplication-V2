@@ -50,24 +50,22 @@ class PartnerController extends _$PartnerController {
     state = await AsyncValue.guard(
       () async {
         await partnerRepository.deletePartner(id: id);
+        showSnackBar(
+          context: context,
+          content: 'Xóa thành công',
+          icon: AssetsConstants.iconSuccess,
+          backgroundColor: AssetsConstants.mainColor,
+          textColor: AssetsConstants.whiteColor,
+        );
+
+        if (context.mounted) {
+          context.router.pop(true);
+        }
       },
     );
 
     if (state.hasError) {
       handleAPIError(stateError: state.error!, context: context);
-      return;
-    }
-
-    showSnackBar(
-      context: context,
-      content: 'Xóa thành công',
-      icon: AssetsConstants.iconSuccess,
-      backgroundColor: AssetsConstants.mainColor,
-      textColor: AssetsConstants.whiteColor,
-    );
-
-    if (context.mounted) {
-      context.router.pop(true);
     }
   }
 }
