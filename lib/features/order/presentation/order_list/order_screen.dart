@@ -28,9 +28,9 @@ class OrderScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final state = ref.watch(orderControllerProvider);
     final isFirstLoad = useState(true);
     final nowIndex = items.indexOf(ref.watch(orderType));
+    final state = ref.watch(orderControllerProvider);
 
     // UI
     return Scaffold(

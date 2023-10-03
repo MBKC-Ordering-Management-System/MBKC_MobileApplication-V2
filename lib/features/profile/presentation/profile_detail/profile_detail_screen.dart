@@ -19,7 +19,7 @@ class ProfileDetailScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            expandedHeight: size.height * 0.25,
+            expandedHeight: size.height * 0.26,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Hero(

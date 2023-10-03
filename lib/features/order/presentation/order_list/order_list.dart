@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../domain/models/order_model.dart';
 import '../../../../utils/commons/widgets/empty_box.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/order_status_type.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import 'order_controller.dart';
 import 'order_item.dart';
@@ -20,56 +20,52 @@ class OrderList extends HookConsumerWidget {
   final ValueNotifier<bool> isFirstLoad;
 
   // handle refresh
-  Future<void> fetchData({
-    OrderStatusType type = OrderStatusType.preparing,
+  void fetchData({
+    OrderStatusType ordertype = OrderStatusType.preparing,
+    required GetDataType getDatatype,
     required WidgetRef ref,
     required BuildContext context,
     required ValueNotifier<int> pageNumber,
     required ValueNotifier<bool> isLastPage,
     required ValueNotifier<bool> isLoadMoreLoading,
     required ValueNotifier<List<OrderModel>> orders,
+    required ValueNotifier<bool> isFetchingData,
   }) async {
-    pageNumber.value = 0;
-    isLastPage.value = false;
-    isLoadMoreLoading.value = false;
-    pageNumber.value = pageNumber.value + 1;
-    final ordersData =
-        await ref.read(orderControllerProvider.notifier).getOrders(
-              pageNumber.value,
-              type,
-              context,
-            );
-
-    isLastPage.value = ordersData.length < 10;
-    isLoadMoreLoading.value = true;
-    if (isFirstLoad.value) {
-      isFirstLoad.value = !isFirstLoad.value;
+    if (getDatatype == GetDataType.loadmore && isFetchingData.value) {
+      return;
     }
 
-    orders.value = ordersData;
-  }
+    if (getDatatype == GetDataType.fetchdata) {
+      pageNumber.value = 0;
+      isLastPage.value = false;
+      isLoadMoreLoading.value = false;
+    }
 
-  //  scroll to load
-  Future<void> loadMoreData({
-    required BuildContext context,
-    required WidgetRef ref,
-    required ValueNotifier<bool> isLastPage,
-    required ValueNotifier<int> pageNumber,
-    required ValueNotifier<List<OrderModel>> orders,
-  }) async {
     if (isLastPage.value) {
       return;
     }
 
+    isFetchingData.value = true;
     pageNumber.value = pageNumber.value + 1;
     final ordersData =
         await ref.read(orderControllerProvider.notifier).getOrders(
               pageNumber.value,
-              ref.read(orderType),
+              ordertype,
               context,
             );
 
     isLastPage.value = ordersData.length < 10;
+    if (getDatatype == GetDataType.fetchdata) {
+      isLoadMoreLoading.value = true;
+      if (isFirstLoad.value) {
+        isFirstLoad.value = !isFirstLoad.value;
+      }
+      orders.value = ordersData;
+      isFetchingData.value = false;
+      return;
+    }
+
+    isFetchingData.value = false;
     orders.value = orders.value + ordersData;
   }
 
@@ -78,6 +74,7 @@ class OrderList extends HookConsumerWidget {
     // init
     final scrollController = useScrollController();
     final orders = useState<List<OrderModel>>([]);
+    final isFetchingData = useState(true);
     final state = ref.watch(orderControllerProvider);
 
     // paging
@@ -89,13 +86,15 @@ class OrderList extends HookConsumerWidget {
     ref.listen<OrderStatusType>(
       orderType,
       (_, state) => fetchData(
-        context: context,
-        type: state,
+        ordertype: state,
+        getDatatype: GetDataType.fetchdata,
         ref: ref,
+        context: context,
         pageNumber: pageNumber,
         isLastPage: isLastPage,
         isLoadMoreLoading: isLoadMoreLoading,
         orders: orders,
+        isFetchingData: isFetchingData,
       ),
     );
 
@@ -103,23 +102,28 @@ class OrderList extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         fetchData(
-          context: context,
+          getDatatype: GetDataType.fetchdata,
           ref: ref,
+          context: context,
           pageNumber: pageNumber,
           isLastPage: isLastPage,
           isLoadMoreLoading: isLoadMoreLoading,
           orders: orders,
+          isFetchingData: isFetchingData,
         );
       });
 
       scrollController.onScrollEndsListener(
         () {
-          loadMoreData(
-            context: context,
+          fetchData(
+            getDatatype: GetDataType.loadmore,
             ref: ref,
-            isLastPage: isLastPage,
+            context: context,
             pageNumber: pageNumber,
+            isLastPage: isLastPage,
+            isLoadMoreLoading: isLoadMoreLoading,
             orders: orders,
+            isFetchingData: isFetchingData,
           );
         },
       );
@@ -136,14 +140,15 @@ class OrderList extends HookConsumerWidget {
             ? RefreshIndicator(
                 backgroundColor: AssetsConstants.revenueBackground,
                 color: AssetsConstants.mainColor,
-                onRefresh: () async => await fetchData(
-                  context: context,
-                  type: ref.read(orderType),
+                onRefresh: () async => fetchData(
+                  getDatatype: GetDataType.fetchdata,
                   ref: ref,
+                  context: context,
                   pageNumber: pageNumber,
                   isLastPage: isLastPage,
                   isLoadMoreLoading: isLoadMoreLoading,
                   orders: orders,
+                  isFetchingData: isFetchingData,
                 ),
                 child: const SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
@@ -154,14 +159,15 @@ class OrderList extends HookConsumerWidget {
                 child: RefreshIndicator(
                   backgroundColor: AssetsConstants.revenueBackground,
                   color: AssetsConstants.mainColor,
-                  onRefresh: () async => await fetchData(
-                    context: context,
-                    type: ref.read(orderType),
+                  onRefresh: () async => fetchData(
+                    getDatatype: GetDataType.fetchdata,
                     ref: ref,
+                    context: context,
                     pageNumber: pageNumber,
                     isLastPage: isLastPage,
                     isLoadMoreLoading: isLoadMoreLoading,
                     orders: orders,
+                    isFetchingData: isFetchingData,
                   ),
                   child: ListView.builder(
                     itemCount: orders.value.length + 1,

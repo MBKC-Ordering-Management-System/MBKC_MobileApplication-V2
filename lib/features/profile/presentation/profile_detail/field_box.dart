@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 
@@ -29,13 +28,13 @@ class FieldBox extends StatelessWidget {
         children: [
           LabelText(
             content: title,
-            size: AssetsConstants.defaultFontSize - 10.0,
+            size: AssetsConstants.defaultFontSize - 12.0,
             color: AssetsConstants.skipText,
           ),
           SizedBox(height: size.height * 0.01),
           LabelText(
             content: content,
-            size: AssetsConstants.defaultFontSize - 10.0,
+            size: AssetsConstants.defaultFontSize - 12.0,
             fontWeight: FontWeight.w600,
           ),
         ],

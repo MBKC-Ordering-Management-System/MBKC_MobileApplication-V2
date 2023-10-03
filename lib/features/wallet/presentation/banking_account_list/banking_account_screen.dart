@@ -19,15 +19,20 @@ class BankingAccountScreen extends HookConsumerWidget {
 
   // handle refresh
   Future<void> fetchData({
-    required GetDataType type,
+    required GetDataType getDatatype,
     required WidgetRef ref,
     required BuildContext context,
     required ValueNotifier<int> pageNumber,
     required ValueNotifier<bool> isLastPage,
     required ValueNotifier<bool> isLoadMoreLoading,
     required ValueNotifier<List<BankingAccountModel>> accounts,
+    required ValueNotifier<bool> isFetchingData,
   }) async {
-    if (type == GetDataType.fetchdata) {
+    if (getDatatype == GetDataType.loadmore && isFetchingData.value) {
+      return;
+    }
+
+    if (getDatatype == GetDataType.fetchdata) {
       pageNumber.value = 0;
       isLastPage.value = false;
       isLoadMoreLoading.value = false;
@@ -37,18 +42,22 @@ class BankingAccountScreen extends HookConsumerWidget {
       return;
     }
 
+    isFetchingData.value = true;
     pageNumber.value = pageNumber.value + 1;
     final accountsData = await ref
         .read(bankingAccountControllerProvider.notifier)
         .getBankingAccounts(PagingModel(pageNumber: pageNumber.value), context);
 
     isLastPage.value = accountsData.length < 10;
-    if (type == GetDataType.fetchdata) {
+    if (getDatatype == GetDataType.fetchdata) {
       isLoadMoreLoading.value = true;
+      // here
       accounts.value = accountsData;
+      isFetchingData.value = false;
       return;
     }
 
+    isFetchingData.value = false;
     accounts.value = accounts.value + accountsData;
   }
 
@@ -58,6 +67,7 @@ class BankingAccountScreen extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final accounts = useState<List<BankingAccountModel>>([]);
     final scrollController = useScrollController();
+    final isFetchingData = useState(true);
     final state = ref.watch(bankingAccountControllerProvider);
 
     // paging
@@ -69,26 +79,28 @@ class BankingAccountScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         fetchData(
-          type: GetDataType.fetchdata,
+          getDatatype: GetDataType.fetchdata,
           context: context,
           ref: ref,
           pageNumber: pageNumber,
           isLastPage: isLastPage,
           isLoadMoreLoading: isLoadMoreLoading,
           accounts: accounts,
+          isFetchingData: isFetchingData,
         );
       });
 
       scrollController.onScrollEndsListener(
         () {
           fetchData(
-            type: GetDataType.loadmore,
+            getDatatype: GetDataType.loadmore,
             context: context,
             ref: ref,
             pageNumber: pageNumber,
             isLastPage: isLastPage,
             isLoadMoreLoading: isLoadMoreLoading,
             accounts: accounts,
+            isFetchingData: isFetchingData,
           );
         },
       );
@@ -130,13 +142,14 @@ class BankingAccountScreen extends HookConsumerWidget {
                         isFirst: index == 0 ? true : false,
                         account: accounts.value[index],
                         onCallBack: () => fetchData(
-                          type: GetDataType.fetchdata,
+                          getDatatype: GetDataType.fetchdata,
                           ref: ref,
                           context: context,
                           pageNumber: pageNumber,
                           isLastPage: isLastPage,
                           isLoadMoreLoading: isLoadMoreLoading,
                           accounts: accounts,
+                          isFetchingData: isFetchingData,
                         ),
                         isLoadMoreLoading: isLoadMoreLoading,
                       );
