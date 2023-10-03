@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'partner_controller.dart';
+part of 'confirm_order_controller.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$partnerControllerHash() => r'8b0f2870ef7a88a543c582936d44dbca61f7a498';
+String _$confirmOrderControllerHash() =>
+    r'f4101e1d1a4e2a62e2d4b46e919bcb92d7acca18';
 
-/// See also [PartnerController].
-@ProviderFor(PartnerController)
-final partnerControllerProvider =
-    AutoDisposeAsyncNotifierProvider<PartnerController, void>.internal(
-  PartnerController.new,
-  name: r'partnerControllerProvider',
+/// See also [ConfirmOrderController].
+@ProviderFor(ConfirmOrderController)
+final confirmOrderControllerProvider =
+    AutoDisposeAsyncNotifierProvider<ConfirmOrderController, void>.internal(
+  ConfirmOrderController.new,
+  name: r'confirmOrderControllerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$partnerControllerHash,
+      : _$confirmOrderControllerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$PartnerController = AutoDisposeAsyncNotifier<void>;
+typedef _$ConfirmOrderController = AutoDisposeAsyncNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

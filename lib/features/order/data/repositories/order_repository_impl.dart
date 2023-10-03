@@ -1,3 +1,4 @@
+import '../../../../models/response/success_model.dart';
 import '../../domain/models/order_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/delay_util.dart';
@@ -22,5 +23,11 @@ class OrderRepositoryImpl extends RemoteBaseRepository
         .skip((page.pageNumber - 1) * page.pageSize)
         .take(page.pageSize)
         .toList();
+  }
+
+  @override
+  Future<SuccessModel> confirmOrder(int id) async {
+    await delay(addDelay);
+    return SuccessModel(message: 'Update successfully.');
   }
 }

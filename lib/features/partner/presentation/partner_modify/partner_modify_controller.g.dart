@@ -7,7 +7,7 @@ part of 'partner_modify_controller.dart';
 // **************************************************************************
 
 String _$partnerModifyControllerHash() =>
-    r'a235a7d3d8011ca0d20e0039b688f57be1928751';
+    r'19f0f277a08bb0ebbfcb15db490347888e96257e';
 
 /// See also [PartnerModifyController].
 @ProviderFor(PartnerModifyController)

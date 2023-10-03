@@ -116,6 +116,7 @@ class OrderList extends HookConsumerWidget {
       scrollController.onScrollEndsListener(
         () {
           fetchData(
+            ordertype: ref.read(orderType),
             getDatatype: GetDataType.loadmore,
             ref: ref,
             context: context,
@@ -141,6 +142,7 @@ class OrderList extends HookConsumerWidget {
                 backgroundColor: AssetsConstants.revenueBackground,
                 color: AssetsConstants.mainColor,
                 onRefresh: () async => fetchData(
+                  ordertype: ref.read(orderType),
                   getDatatype: GetDataType.fetchdata,
                   ref: ref,
                   context: context,
@@ -160,6 +162,7 @@ class OrderList extends HookConsumerWidget {
                   backgroundColor: AssetsConstants.revenueBackground,
                   color: AssetsConstants.mainColor,
                   onRefresh: () async => fetchData(
+                    ordertype: ref.read(orderType),
                     getDatatype: GetDataType.fetchdata,
                     ref: ref,
                     context: context,
@@ -188,6 +191,17 @@ class OrderList extends HookConsumerWidget {
                       return OrderItem(
                         order: orders.value[index],
                         orderType: orders.value[index].status,
+                        onCallback: () => fetchData(
+                          ordertype: ref.read(orderType),
+                          getDatatype: GetDataType.fetchdata,
+                          ref: ref,
+                          context: context,
+                          pageNumber: pageNumber,
+                          isLastPage: isLastPage,
+                          isLoadMoreLoading: isLoadMoreLoading,
+                          orders: orders,
+                          isFetchingData: isFetchingData,
+                        ),
                       );
                     },
                   ),

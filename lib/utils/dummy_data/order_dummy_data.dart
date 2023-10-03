@@ -25,7 +25,7 @@ class OrderDummyData {
       partner: faker.company.name(),
       totalItem: faker.randomGenerator.integer(3, min: 1),
       note: '',
-      status: OrderStatusType.preparing,
+      status: getOrderStatus(index),
       paymentMethod: index % 2 == 0 ? 'Tiền mặt' : 'Momo',
       customerName: faker.person.name(),
       customerPhone: faker.phoneNumber.us(),

@@ -7,6 +7,7 @@ import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/order_status_type.dart';
+import '../order_detail/confirm_order_controller.dart';
 import 'order_detail_item.dart';
 
 class OrderItem extends ConsumerWidget {
@@ -14,10 +15,12 @@ class OrderItem extends ConsumerWidget {
     super.key,
     required this.order,
     required this.orderType,
+    required this.onCallback,
   });
 
   final OrderModel order;
   final OrderStatusType orderType;
+  final VoidCallback onCallback;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,7 +28,11 @@ class OrderItem extends ConsumerWidget {
     final size = MediaQuery.sizeOf(context);
 
     // change status
-    Future<void> changeStatus() async {
+    void changeStatus({
+      required int id,
+      required BuildContext context,
+      required WidgetRef ref,
+    }) async {
       final result = await showAlertDialog(
         context: context,
         title: 'Xác nhận',
@@ -33,15 +40,14 @@ class OrderItem extends ConsumerWidget {
         cancelActionText: 'Hủy',
       );
       if (result != null && result) {
-        showSnackBar(
-          context: context,
-          content: 'Hoàn thành',
-          icon: AssetsConstants.iconSuccess,
-          backgroundColor: AssetsConstants.mainColor,
-          textColor: AssetsConstants.whiteColor,
-        );
+        final result = await ref
+            .read(confirmOrderControllerProvider.notifier)
+            .confirmOrder(id, context);
+
+        if (result) {
+          onCallback();
+        }
       }
-      return;
     }
 
     return Container(
@@ -56,7 +62,13 @@ class OrderItem extends ConsumerWidget {
         children: [
           InkWell(
             onTap: () {
-              context.router.push(OrderDetailScreenRoute(order: order));
+              context.router
+                  .push(OrderDetailScreenRoute(order: order))
+                  .then((value) {
+                if (value != null && value == true) {
+                  onCallback();
+                }
+              });
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,7 +137,11 @@ class OrderItem extends ConsumerWidget {
             CustomButton(
               size: AssetsConstants.defaultFontSize - 14.0,
               content: 'Hoàn thành'.toUpperCase(),
-              onCallback: changeStatus,
+              onCallback: () => changeStatus(
+                id: order.orderid,
+                context: context,
+                ref: ref,
+              ),
               isActive: true,
               width: size.width * 0.90,
               height: size.height * 0.035,

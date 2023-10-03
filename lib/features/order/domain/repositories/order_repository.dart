@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../../models/response/success_model.dart';
 import '../models/order_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/enums/order_status_type.dart';
@@ -11,6 +12,8 @@ abstract class OrderRepository {
     PagingModel request,
     OrderStatusType orderType,
   );
+
+  Future<SuccessModel> confirmOrder(int id);
 }
 
 @Riverpod(keepAlive: true)
