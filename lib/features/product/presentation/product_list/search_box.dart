@@ -20,7 +20,9 @@ class SearchBox extends StatelessWidget {
       valueListenable: controller,
       builder: (_, value, __) => Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(
+            AssetsConstants.defaultBorder + 10.0,
+          ),
           boxShadow: const [
             BoxShadow(
               color: AssetsConstants.mainColor,
@@ -49,13 +51,17 @@ class SearchBox extends StatelessWidget {
               fontWeight: FontWeight.w400,
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(
+                AssetsConstants.defaultBorder + 10.0,
+              ),
               borderSide: const BorderSide(
                 color: AssetsConstants.scaffoldColor,
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(
+                AssetsConstants.defaultBorder + 10.0,
+              ),
               borderSide: const BorderSide(
                 color: AssetsConstants.scaffoldColor,
               ),

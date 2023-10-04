@@ -92,7 +92,9 @@ class PartnerModifyScreen extends HookConsumerWidget with Validations {
                     border: Border.all(
                       color: AssetsConstants.borderColor,
                     ),
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(
+                      AssetsConstants.defaultBorder,
+                    ),
                     boxShadow: const [
                       BoxShadow(
                         blurRadius: 2,

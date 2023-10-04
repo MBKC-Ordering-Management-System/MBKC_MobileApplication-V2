@@ -75,7 +75,7 @@ class SignInScreen extends HookConsumerWidget with Validations {
               const CustomAppBar(title: ''),
               ClipRRect(
                 borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(10),
+                  topRight: Radius.circular(AssetsConstants.defaultBorder),
                 ),
                 child: Image.asset(
                   AssetsConstants.welcomeImage,

@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../utils/providers/common_provider.dart';
 import '../../domain/models/order_model.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
@@ -26,7 +27,7 @@ class OrderDetailScreen extends ConsumerWidget {
     final result = await showAlertDialog(
       context: context,
       title: 'Xác nhận',
-      content: 'Bạn chắc chứ ?',
+      content: 'Bạn muốn xác nhận đơn hàng đã hoàn thành ?',
       cancelActionText: 'Hủy',
     );
     if (result != null && result) {
@@ -44,10 +45,10 @@ class OrderDetailScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final confirmOrderState = ref.watch(confirmOrderControllerProvider);
+    final confirmOrderState = ref.watch(modifyProfiver);
 
     return LoadingOverlay(
-      isLoading: confirmOrderState.isLoading,
+      isLoading: confirmOrderState,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AssetsConstants.mainColor,

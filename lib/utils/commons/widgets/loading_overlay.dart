@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../constants/asset_constant.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:lottie/lottie.dart';
+import '../../constants/asset_constant.dart';
 
 class LoadingOverlay extends HookWidget {
   final Widget child;
@@ -13,6 +14,9 @@ class LoadingOverlay extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    // init
+    final size = MediaQuery.sizeOf(context);
+
     return Stack(
       children: [
         child,
@@ -25,8 +29,12 @@ class LoadingOverlay extends HookWidget {
             ),
           ),
         if (isLoading)
-          const Center(
-            child: CircularProgressIndicator(),
+          Center(
+            child: Lottie.asset(
+              AssetsConstants.lottieLoading,
+              width: size.width * 0.5,
+              height: size.height * 0.5,
+            ),
           ),
       ],
     );

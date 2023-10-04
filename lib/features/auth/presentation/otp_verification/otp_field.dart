@@ -30,7 +30,9 @@ class OTPField extends HookWidget {
           color: AssetsConstants.mainColor,
           width: 1.5,
         ),
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(
+          AssetsConstants.defaultBorder - 5.0,
+        ),
       ),
       child: Center(
         child: TextFormField(

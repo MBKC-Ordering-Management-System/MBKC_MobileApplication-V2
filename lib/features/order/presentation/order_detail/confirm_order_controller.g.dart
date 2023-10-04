@@ -7,7 +7,7 @@ part of 'confirm_order_controller.dart';
 // **************************************************************************
 
 String _$confirmOrderControllerHash() =>
-    r'f4101e1d1a4e2a62e2d4b46e919bcb92d7acca18';
+    r'cda58295518db9efb57843e73dc01423ed9de8c2';
 
 /// See also [ConfirmOrderController].
 @ProviderFor(ConfirmOrderController)

@@ -45,12 +45,27 @@ class ProfileScreen extends HookConsumerWidget {
         );
   }
 
+  // sign out
+  void signOut({
+    required BuildContext context,
+    required WidgetRef ref,
+  }) async {
+    final result = await showAlertDialog(
+      context: context,
+      title: 'Xác nhận',
+      content: 'Bạn có muốn đăng xuất ?',
+      cancelActionText: 'Hủy',
+    );
+    if (result != null && result) {
+      ref.read(signInControllerProvider.notifier).signOut(context);
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final profile = useState<ProfileModel?>(null);
     final state = ref.watch(profileControllerProvider);
-    final enterEmailState = ref.watch(enterEmailControllerProvider);
 
     // first build
     useEffect(() {
@@ -61,65 +76,60 @@ class ProfileScreen extends HookConsumerWidget {
       return null;
     }, const []);
 
-    return LoadingOverlay(
-      isLoading: enterEmailState.isLoading,
-      child: Scaffold(
-        appBar: const CustomAppBar(
-          title: 'Tài Khoản',
-        ),
-        body: state.isLoading
-            ? const HomeShimmer(amount: 3)
-            : profile.value == null
-                ? const EmptyBox(title: 'Sai thông tin')
-                : Column(
-                    children: [
-                      ProfileBox(profile: profile.value!),
-                      InkWell(
-                        onTap: () =>
-                            context.router.push(const WalletScreenRoute()),
-                        child: const ActionBox(
-                          icon: FontAwesomeIcons.wallet,
-                          title: 'Ví',
-                          color: AssetsConstants.blackColor,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () =>
-                            context.router.push(const PartnerScreenRoute()),
-                        child: const ActionBox(
-                          icon: FontAwesomeIcons.handshakeAngle,
-                          title: 'Đối tác',
-                          color: AssetsConstants.blackColor,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          final user = ref.read(authProvider);
-                          checkEmail(
-                            context: context,
-                            ref: ref,
-                            email: user!.email,
-                          );
-                        },
-                        child: const ActionBox(
-                          icon: Icons.lock,
-                          title: 'Thay đổi mật khẩu',
-                          color: AssetsConstants.blackColor,
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () => ref
-                            .read(signInControllerProvider.notifier)
-                            .signOut(context),
-                        child: const ActionBox(
-                          icon: FontAwesomeIcons.rightFromBracket,
-                          title: 'Đăng xuất',
-                          color: AssetsConstants.warningColor,
-                        ),
-                      ),
-                    ],
-                  ),
+    return Scaffold(
+      appBar: const CustomAppBar(
+        title: 'Tài Khoản',
       ),
+      body: state.isLoading
+          ? const HomeShimmer(amount: 3)
+          : profile.value == null
+              ? const EmptyBox(title: 'Sai thông tin')
+              : Column(
+                  children: [
+                    ProfileBox(profile: profile.value!),
+                    InkWell(
+                      onTap: () =>
+                          context.router.push(const WalletScreenRoute()),
+                      child: const ActionBox(
+                        icon: FontAwesomeIcons.wallet,
+                        title: 'Ví',
+                        color: AssetsConstants.blackColor,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () =>
+                          context.router.push(const PartnerScreenRoute()),
+                      child: const ActionBox(
+                        icon: FontAwesomeIcons.handshakeAngle,
+                        title: 'Đối tác',
+                        color: AssetsConstants.blackColor,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        final user = ref.read(authProvider);
+                        checkEmail(
+                          context: context,
+                          ref: ref,
+                          email: user!.email,
+                        );
+                      },
+                      child: const ActionBox(
+                        icon: Icons.lock,
+                        title: 'Thay đổi mật khẩu',
+                        color: AssetsConstants.blackColor,
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () => signOut(context: context, ref: ref),
+                      child: const ActionBox(
+                        icon: FontAwesomeIcons.rightFromBracket,
+                        title: 'Đăng xuất',
+                        color: AssetsConstants.warningColor,
+                      ),
+                    ),
+                  ],
+                ),
     );
   }
 }

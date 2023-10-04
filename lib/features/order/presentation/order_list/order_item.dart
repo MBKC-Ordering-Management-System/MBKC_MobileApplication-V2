@@ -1,3 +1,4 @@
+// ignore_for_file: unused_local_variable
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -22,33 +23,34 @@ class OrderItem extends ConsumerWidget {
   final OrderStatusType orderType;
   final VoidCallback onCallback;
 
+  // change status
+  void changeStatus({
+    required int id,
+    required BuildContext context,
+    required WidgetRef ref,
+  }) async {
+    final result = await showAlertDialog(
+      context: context,
+      title: 'Xác nhận',
+      content: 'Bạn muốn xác nhận đơn hàng đã hoàn thành ?',
+      cancelActionText: 'Hủy',
+    );
+    if (result != null && result) {
+      final result = await ref
+          .read(confirmOrderControllerProvider.notifier)
+          .confirmOrder(id, context);
+
+      if (result) {
+        onCallback();
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-
-    // change status
-    void changeStatus({
-      required int id,
-      required BuildContext context,
-      required WidgetRef ref,
-    }) async {
-      final result = await showAlertDialog(
-        context: context,
-        title: 'Xác nhận',
-        content: 'Bạn chắc chứ ?',
-        cancelActionText: 'Hủy',
-      );
-      if (result != null && result) {
-        final result = await ref
-            .read(confirmOrderControllerProvider.notifier)
-            .confirmOrder(id, context);
-
-        if (result) {
-          onCallback();
-        }
-      }
-    }
+    final state = ref.watch(confirmOrderControllerProvider);
 
     return Container(
       padding: const EdgeInsets.all(AssetsConstants.defaultPadding - 15.0),
@@ -56,7 +58,7 @@ class OrderItem extends ConsumerWidget {
       decoration: BoxDecoration(
         color: AssetsConstants.whiteColor,
         border: Border.all(color: AssetsConstants.subtitleColor),
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
       ),
       child: Column(
         children: [

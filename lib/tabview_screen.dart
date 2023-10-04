@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'configs/routes/app_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'features/home/presentation/custom_bottom_bar.dart';
+import 'utils/commons/widgets/loading_overlay.dart';
+import 'utils/providers/common_provider.dart';
 
 @RoutePage()
 class TabViewScreen extends ConsumerWidget {
@@ -10,15 +12,21 @@ class TabViewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return AutoTabsScaffold(
-      routes: const [
-        HomeScreenRoute(),
-        OrderScreenRoute(),
-        ProductScreenRoute(),
-        ProfileScreenRoute(),
-      ],
-      bottomNavigationBuilder: (_, tabsRouter) =>
-          CustomBottomBar(tabsRouter: tabsRouter),
+    // init
+    final state = ref.watch(modifyProfiver);
+
+    return LoadingOverlay(
+      isLoading: state,
+      child: AutoTabsScaffold(
+        routes: const [
+          HomeScreenRoute(),
+          OrderScreenRoute(),
+          ProductScreenRoute(),
+          ProfileScreenRoute(),
+        ],
+        bottomNavigationBuilder: (_, tabsRouter) =>
+            CustomBottomBar(tabsRouter: tabsRouter),
+      ),
     );
   }
 }

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:intl/intl.dart';
-import '../../enums/partner_type_enum.dart';
+import '../../enums/enums_export.dart';
 
 String calculateMD5(String input) {
   var bytes = utf8.encode(input); // Encode the input string to bytes
@@ -14,6 +14,12 @@ String getCustomContent(Map<String, dynamic> content) {
     case 'Mã:':
       return '#${content.entries.first.value}';
 
+    case 'Tiền vào:':
+      final number =
+          NumberFormat.decimalPattern().format(content.entries.first.value);
+      return '+ $numberđ';
+
+    case 'Tiền ra:':
     case 'Giảm giá:':
       final number =
           NumberFormat.decimalPattern().format(content.entries.first.value);
@@ -54,5 +60,16 @@ String getTitleStatus(String status) {
       return 'Đóng cửa';
     default:
       return 'undefine';
+  }
+}
+
+String getTitleTypeTransaction(TransactionType type) {
+  switch (type) {
+    case TransactionType.moneyin:
+      return 'Tiền vào';
+    case TransactionType.moneyout:
+      return 'Tiền ra';
+    default:
+      return 'Unknow!';
   }
 }

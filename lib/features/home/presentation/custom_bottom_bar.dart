@@ -29,7 +29,9 @@ class CustomBottomBar extends StatelessWidget {
             width: size.width * 0.09,
             height: size.width * 0.08,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(
+                AssetsConstants.defaultBorder,
+              ),
               color: tabsRouter.activeIndex == 0
                   ? AssetsConstants.whiteColor
                   : AssetsConstants.mainColor,
@@ -51,7 +53,9 @@ class CustomBottomBar extends StatelessWidget {
             width: size.width * 0.09,
             height: size.width * 0.08,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(
+                AssetsConstants.defaultBorder,
+              ),
               color: tabsRouter.activeIndex == 1
                   ? AssetsConstants.whiteColor
                   : AssetsConstants.mainColor,
@@ -73,7 +77,9 @@ class CustomBottomBar extends StatelessWidget {
             width: size.width * 0.09,
             height: size.width * 0.08,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(
+                AssetsConstants.defaultBorder,
+              ),
               color: tabsRouter.activeIndex == 2
                   ? AssetsConstants.whiteColor
                   : AssetsConstants.mainColor,
@@ -97,7 +103,9 @@ class CustomBottomBar extends StatelessWidget {
             width: size.width * 0.09,
             height: size.width * 0.08,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(
+                AssetsConstants.defaultBorder,
+              ),
               color: tabsRouter.activeIndex == 3
                   ? AssetsConstants.whiteColor
                   : AssetsConstants.mainColor,

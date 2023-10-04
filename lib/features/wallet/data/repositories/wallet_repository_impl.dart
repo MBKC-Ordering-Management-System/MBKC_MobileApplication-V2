@@ -2,6 +2,7 @@ import '../../../../models/request/paging_model.dart';
 import '../../../../models/response/success_model.dart';
 import '../../../../utils/commons/functions/delay_util.dart';
 import '../../../../utils/dummy_data/wallet_dummy_data.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/resources/remote_base_repository.dart';
 import '../../domain/models/banking_account_model.dart';
 import '../../domain/models/request/account_banking_request.dart';
@@ -27,12 +28,30 @@ class WalletRepositoryImpl extends RemoteBaseRepository
   @override
   Future<List<TransactionModel>> getTransactions({
     required PagingModel request,
+    required TransactionType type,
   }) async {
     await delay(addDelay);
-    return WalletDummyData.transactionsGenerate
-        .skip((request.pageNumber - 1) * request.pageSize)
-        .take(request.pageSize)
-        .toList();
+    switch (type) {
+      case TransactionType.all:
+        return WalletDummyData.transactionsGenerate
+            .skip((request.pageNumber - 1) * request.pageSize)
+            .take(request.pageSize)
+            .toList();
+
+      case TransactionType.moneyin:
+      case TransactionType.moneyout:
+        return WalletDummyData.transactionsGenerate
+            .where((item) => item.type == type)
+            .skip((request.pageNumber - 1) * request.pageSize)
+            .take(request.pageSize)
+            .toList();
+
+      default:
+        return WalletDummyData.transactionsGenerate
+            .skip((request.pageNumber - 1) * request.pageSize)
+            .take(request.pageSize)
+            .toList();
+    }
   }
 
   @override

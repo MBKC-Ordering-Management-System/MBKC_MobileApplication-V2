@@ -142,7 +142,7 @@ class ProductScreen extends HookConsumerWidget {
               children: [
                 InkWell(
                   onTap: () {
-                    showCustomBottomSheet(context: context);
+                    showCustomBottomSheet(context: context, size: size);
                   },
                   child: const FilterSortBox(content: 'Loại'),
                 ),

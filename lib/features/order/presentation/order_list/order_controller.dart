@@ -34,6 +34,7 @@ class OrderController extends _$OrderController {
 
     if (state.hasError) {
       handleAPIError(stateError: state.error!, context: context);
+      return [];
     }
 
     return orders;

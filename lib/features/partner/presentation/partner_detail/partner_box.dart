@@ -17,12 +17,12 @@ class PartnerBox extends StatelessWidget {
       width: size.width * 1,
       decoration: BoxDecoration(
         color: colorPartner,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
       ),
       child: Row(
         children: [
           ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
             child: Image.asset(
               getLogoPartner(type),
               width: size.width * 0.16,

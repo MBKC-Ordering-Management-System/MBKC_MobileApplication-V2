@@ -38,7 +38,7 @@ class PartnerDetailScreen extends StatelessWidget {
           width: size.width * 0.9,
           decoration: BoxDecoration(
             border: Border.all(color: AssetsConstants.subtitleColor),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
             color: AssetsConstants.whiteColor,
           ),
           child: FittedBox(

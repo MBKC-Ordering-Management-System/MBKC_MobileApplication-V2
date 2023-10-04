@@ -38,7 +38,9 @@ class ProfileBox extends StatelessWidget {
                 height: size.height * 0.115,
                 width: size.width * 0.21,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.circular(60),
+                  borderRadius: BorderRadius.circular(
+                    AssetsConstants.defaultBorder + 50.0,
+                  ),
                   child: Hero(
                     tag: profile.storeId,
                     child: profile.logo.isEmpty

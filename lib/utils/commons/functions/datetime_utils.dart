@@ -24,3 +24,9 @@ DateTime stringToDateTime(String time) {
     throw Exception('Exception when parsing from String to Datetime');
   }
 }
+
+String getDateTimeNow() {
+  DateTime now = DateTime.now();
+  DateFormat formatter = DateFormat('dd/MM/yyyy');
+  return formatter.format(now);
+}

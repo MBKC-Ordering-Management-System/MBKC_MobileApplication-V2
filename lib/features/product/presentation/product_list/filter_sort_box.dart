@@ -17,7 +17,9 @@ class FilterSortBox extends StatelessWidget {
       width: size.width * 0.24,
       height: size.height * 0.04,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(
+          AssetsConstants.defaultBorder + 10.0,
+        ),
         border: Border.all(
           color: AssetsConstants.mainColor,
           width: 2,

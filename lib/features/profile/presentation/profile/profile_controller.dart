@@ -18,9 +18,9 @@ class ProfileController extends _$ProfileController {
     BuildContext context,
   ) async {
     ProfileModel? profile;
+
     state = const AsyncLoading();
     final profileRepository = ref.read(profileRepositoryProvider);
-
     state = await AsyncValue.guard(
       () async {
         profile = await profileRepository.getProfile();

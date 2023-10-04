@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
+import '../../../../utils/providers/common_provider.dart';
 import '../../domain/repositories/order_repository.dart';
 
 part 'confirm_order_controller.g.dart';
@@ -20,11 +21,13 @@ class ConfirmOrderController extends _$ConfirmOrderController {
     BuildContext context,
   ) async {
     state = const AsyncLoading();
+    ref.read(modifyProfiver.notifier).update((state) => true);
     final orderRepository = ref.read(orderRepositoryProvider);
 
     state = await AsyncValue.guard(
       () async {
         await orderRepository.confirmOrder(id);
+        ref.read(modifyProfiver.notifier).update((state) => false);
         showSnackBar(
           context: context,
           content: 'Xác nhận thành công',

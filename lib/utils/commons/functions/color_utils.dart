@@ -31,3 +31,14 @@ Color getColorPartner(PartnerType type) {
       return AssetsConstants.beaminColor;
   }
 }
+
+Color getColorTransaction(TransactionType type) {
+  switch (type) {
+    case TransactionType.moneyin:
+      return AssetsConstants.transactionIn;
+    case TransactionType.moneyout:
+      return AssetsConstants.transactionOut;
+    default:
+      return AssetsConstants.transactionIn;
+  }
+}

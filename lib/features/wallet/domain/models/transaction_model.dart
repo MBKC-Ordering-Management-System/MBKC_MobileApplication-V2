@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import '../../../../utils/enums/transaction_type_enum.dart';
 
 class TransactionModel {
@@ -7,6 +8,7 @@ class TransactionModel {
   final int balance;
   final String from;
   final String to;
+  final String date;
   final TransactionType type;
   final String status;
   final String content;
@@ -17,6 +19,7 @@ class TransactionModel {
     required this.balance,
     required this.from,
     required this.to,
+    required this.date,
     required this.type,
     required this.status,
     required this.content,
@@ -30,6 +33,7 @@ class TransactionModel {
     result.addAll({'balance': balance});
     result.addAll({'from': from});
     result.addAll({'to': to});
+    result.addAll({'date': date});
     result.addAll({'type': type.type});
     result.addAll({'status': status});
     result.addAll({'content': content});
@@ -44,6 +48,7 @@ class TransactionModel {
       balance: map['balance']?.toInt() ?? 0,
       from: map['from'] ?? '',
       to: map['to'] ?? '',
+      date: map['date'] ?? '',
       type: (map['type'] as int).toTransactionTypeEnum(),
       status: map['status'] ?? '',
       content: map['content'] ?? '',

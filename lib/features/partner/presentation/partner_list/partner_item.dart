@@ -56,7 +56,7 @@ class PartnerItem extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: AssetsConstants.warningColor,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
         ),
         child: const Row(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -77,14 +77,14 @@ class PartnerItem extends StatelessWidget {
           border: Border.all(
             color: AssetsConstants.subtitleColor,
           ),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
         ),
         child: ListTile(
           onTap: () {
             context.router.push(PartnerDetailScreenRoute(partner: partner));
           },
           leading: ClipRRect(
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
             child: Image.asset(getLogoPartner(partner.type)),
           ),
           title: LabelText(

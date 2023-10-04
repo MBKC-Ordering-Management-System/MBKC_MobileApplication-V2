@@ -1,21 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../utils/commons/widgets/widgets_common_export.dart';
-import '../../../../utils/constants/asset_constant.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../functions/functions_common_export.dart';
+import 'widgets_common_export.dart';
+import '../../constants/asset_constant.dart';
 
-class TransactionSearchBox extends StatelessWidget {
-  const TransactionSearchBox({
+class SearchTimeBox extends HookConsumerWidget {
+  const SearchTimeBox({
     super.key,
-    required this.from,
-    required this.to,
+    required this.title,
+    required this.icon,
+    required this.contentColor,
+    required this.backGroundColor,
+    required this.borderColor,
   });
-  final ValueNotifier<String> from;
-  final ValueNotifier<String> to;
+  final String title;
+  final Color contentColor;
+  final Color backGroundColor;
+  final Color borderColor;
+  final IconData icon;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
+    final dateFrom = useState(getDateTimeNow());
+    final dateTo = useState(getDateTimeNow());
 
     return Container(
       width: size.width * 1,
@@ -25,19 +36,22 @@ class TransactionSearchBox extends StatelessWidget {
         vertical: AssetsConstants.defaultPadding - 15.0,
       ),
       decoration: BoxDecoration(
-        color: AssetsConstants.mainColor,
+        color: backGroundColor,
         borderRadius: BorderRadius.circular(10),
+        border: Border.all(
+          color: borderColor,
+        ),
       ),
       child: Column(
         children: [
           Row(
             children: [
-              const Icon(Icons.insert_chart_outlined),
+              Icon(icon, color: contentColor),
               SizedBox(width: size.width * 0.05),
-              const LabelText(
-                content: 'Tra cứu giao dịch',
+              LabelText(
+                content: title,
                 size: AssetsConstants.defaultFontSize - 10.0,
-                color: AssetsConstants.whiteColor,
+                color: contentColor,
                 fontWeight: FontWeight.bold,
               ),
             ],
@@ -47,7 +61,7 @@ class TransactionSearchBox extends StatelessWidget {
             height: 1,
             decoration: BoxDecoration(
               border: Border.all(
-                color: AssetsConstants.whiteColor,
+                color: contentColor,
               ),
             ),
           ),
@@ -58,18 +72,18 @@ class TransactionSearchBox extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const LabelText(
+                  LabelText(
                     content: 'Từ ngày',
                     size: AssetsConstants.defaultFontSize - 10.0,
-                    color: AssetsConstants.whiteColor,
+                    color: contentColor,
                     fontWeight: FontWeight.w600,
                   ),
                   Row(
                     children: [
                       LabelText(
-                        content: from.value,
+                        content: dateFrom.value,
                         size: AssetsConstants.defaultFontSize - 10.0,
-                        color: AssetsConstants.whiteColor,
+                        color: contentColor,
                       ),
                       const Icon(Icons.keyboard_arrow_down_rounded),
                     ],
@@ -79,18 +93,18 @@ class TransactionSearchBox extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const LabelText(
+                  LabelText(
                     content: 'Đến ngày',
                     size: AssetsConstants.defaultFontSize - 10.0,
-                    color: AssetsConstants.whiteColor,
+                    color: contentColor,
                     fontWeight: FontWeight.w600,
                   ),
                   Row(
                     children: [
                       LabelText(
-                        content: to.value,
+                        content: dateTo.value,
                         size: AssetsConstants.defaultFontSize - 10.0,
-                        color: AssetsConstants.whiteColor,
+                        color: contentColor,
                       ),
                       const Icon(Icons.keyboard_arrow_down_rounded),
                     ],
@@ -99,9 +113,9 @@ class TransactionSearchBox extends StatelessWidget {
               ),
               InkWell(
                 onTap: () {},
-                child: const FaIcon(
+                child: FaIcon(
                   FontAwesomeIcons.magnifyingGlass,
-                  color: AssetsConstants.whiteColor,
+                  color: contentColor,
                   size: AssetsConstants.defaultFontSize - 6.0,
                 ),
               ),

@@ -8,6 +8,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Color? backButtonColor;
   final Color? backgroundColor;
   final bool? centerTitle;
+  final VoidCallback? onCallBackFirst;
+  final VoidCallback? onCallBackSecond;
+  final IconData? iconFirst;
+  final IconData? iconSecond;
 
   const CustomAppBar({
     super.key,
@@ -15,6 +19,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backButtonColor = AssetsConstants.blackColor,
     this.centerTitle = true,
     this.backgroundColor = AssetsConstants.mainColor,
+    this.onCallBackFirst,
+    this.onCallBackSecond,
+    this.iconFirst,
+    this.iconSecond,
   });
 
   @override
@@ -31,6 +39,24 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         color: AssetsConstants.whiteColor,
         fontWeight: FontWeight.w600,
       ),
+      actions: [
+        if (iconFirst != null)
+          IconButton(
+            onPressed: onCallBackFirst,
+            icon: Icon(
+              iconFirst,
+              color: AssetsConstants.whiteColor,
+            ),
+          ),
+        if (iconSecond != null)
+          IconButton(
+            onPressed: onCallBackSecond,
+            icon: Icon(
+              iconSecond,
+              color: AssetsConstants.whiteColor,
+            ),
+          ),
+      ],
     );
   }
 

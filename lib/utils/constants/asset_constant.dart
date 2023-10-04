@@ -32,6 +32,9 @@ class AssetsConstants {
   static const accountBankingContent = Color(0xff061B64);
   static const transactionBackgroundColor = Color(0xffFDF7D5);
   static const transactionContent = Color(0xff906D2E);
+  static const backgroundInactive = Color(0xffE6E6E6);
+  static const transactionIn = Color(0xff53905F);
+  static const transactionOut = Color(0xffE58E74);
 
   // Images
   static const String appLogo = 'assets/images/mbkc_logo.jpg';
@@ -43,10 +46,13 @@ class AssetsConstants {
   static const String shopeeLogo = 'assets/images/shopee_avt.jpg';
   static const String beaminLogo = 'assets/images/beamin_avt.jpg';
 
+  // lottie
+  static const String lottieLoading = 'assets/lotties/animation_lnb6dx3w.json';
+
   // Sizes
   static const double defaultPadding = 20.0;
   static const double defaultFontSize = 25.0;
-  static const double defaultBorder = 2.0;
+  static const double defaultBorder = 10.0;
   static const double defaultMargin = 10.0;
 
   // Title

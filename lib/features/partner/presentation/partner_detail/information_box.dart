@@ -33,7 +33,7 @@ class InformationBox extends HookWidget {
         width: size.width * 1,
         decoration: BoxDecoration(
           color: getColorPartner(type),
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

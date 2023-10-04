@@ -12,6 +12,7 @@ class WalletDummyData {
       balance: faker.randomGenerator.integer(120000, min: 10000),
       from: faker.person.name(),
       to: faker.person.name(),
+      date: '04/10/2023',
       type: index % 2 == 0 ? TransactionType.moneyin : TransactionType.moneyout,
       status: index % 2 == 0 ? 'Thành công' : 'Thất bại',
       content: 'Hôm qua em đẹp lắm',

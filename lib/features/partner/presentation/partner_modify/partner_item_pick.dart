@@ -37,7 +37,7 @@ class PartnerItemPick extends StatelessWidget {
         visualDensity:
             const VisualDensity(vertical: AssetsConstants.defaultFontSize - 29),
         leading: ClipRRect(
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
           child: Image.asset(
             getLogoPartner(partnerTypeStatic),
             height: size.height * 0.1,
