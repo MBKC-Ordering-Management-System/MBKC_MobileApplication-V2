@@ -19,7 +19,9 @@ import '../../features/profile/domain/models/profile_model.dart';
 import '../../features/profile/presentation/profile/profile_screen.dart';
 import '../../features/order/domain/models/order_model.dart';
 import '../../features/profile/presentation/profile_detail/profile_detail_screen.dart';
+import '../../features/wallet/domain/models/transaction_model.dart';
 import '../../features/wallet/presentation/banking_account_list/banking_account_screen.dart';
+import '../../features/wallet/presentation/transaction_detail.dart/transaction_detail_screen.dart';
 import '../../features/wallet/presentation/transaction_list/transaction_screen.dart';
 import '../../features/wallet/presentation/wallet_balance/wallet_screen.dart';
 import '../../tabview_screen.dart';
@@ -76,6 +78,7 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: WalletScreenRoute.page),
         AutoRoute(page: BankingAccountScreenRoute.page),
         AutoRoute(page: TransactionScreenRoute.page),
+        AutoRoute(page: TransactionDetailScreenRoute.page),
       ];
 }
 

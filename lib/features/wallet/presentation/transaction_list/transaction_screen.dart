@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import '../../../../configs/routes/app_router.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
@@ -72,6 +73,7 @@ class TransactionScreen extends HookConsumerWidget {
       if (isFirstLoad.value) {
         isFirstLoad.value = !isFirstLoad.value;
       }
+
       transactions.value = accountsData;
       isFetchingData.value = false;
       return;
@@ -144,7 +146,9 @@ class TransactionScreen extends HookConsumerWidget {
         },
       );
 
-      return scrollController.dispose;
+      return () {
+        scrollController.dispose;
+      };
     }, const []);
 
     return Scaffold(
@@ -248,25 +252,37 @@ class TransactionScreen extends HookConsumerWidget {
                                   height: size.height * 0.5,
                                 ),
                               )
-                            : Expanded(
-                                child: ListView.builder(
-                                  controller: scrollController,
-                                  itemCount: transactions.value.length + 1,
-                                  itemBuilder: (_, index) {
-                                    if (index == transactions.value.length) {
-                                      if (state.isLoading) {
-                                        return const CustomCircular();
-                                      }
-                                      return isLastPage.value
-                                          ? const NoMoreContent()
-                                          : Container();
-                                    }
-                                    return TransactionItem(
-                                      transaction: transactions.value[index],
-                                    );
-                                  },
-                                ),
-                              ),
+                            : transactions.value.isEmpty
+                                ? const EmptyBox(title: 'Không có giao dịch')
+                                : Expanded(
+                                    child: ListView.builder(
+                                      controller: scrollController,
+                                      itemCount: transactions.value.length + 1,
+                                      itemBuilder: (_, index) {
+                                        if (index ==
+                                            transactions.value.length) {
+                                          if (state.isLoading) {
+                                            return const CustomCircular();
+                                          }
+                                          return isLastPage.value
+                                              ? const NoMoreContent()
+                                              : Container();
+                                        }
+                                        return InkWell(
+                                          onTap: () => context.router.push(
+                                            TransactionDetailScreenRoute(
+                                              transaction:
+                                                  transactions.value[index],
+                                            ),
+                                          ),
+                                          child: TransactionItem(
+                                            transaction:
+                                                transactions.value[index],
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
                       ],
                     ),
                   ),

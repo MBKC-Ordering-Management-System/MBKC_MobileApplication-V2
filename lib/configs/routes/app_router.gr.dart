@@ -142,6 +142,16 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const TabViewScreen(),
       );
     },
+    TransactionDetailScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<TransactionDetailScreenRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: TransactionDetailScreen(
+          key: args.key,
+          transaction: args.transaction,
+        ),
+      );
+    },
     TransactionScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -573,6 +583,45 @@ class TabViewScreenRoute extends PageRouteInfo<void> {
   static const String name = 'TabViewScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TransactionDetailScreen]
+class TransactionDetailScreenRoute
+    extends PageRouteInfo<TransactionDetailScreenRouteArgs> {
+  TransactionDetailScreenRoute({
+    Key? key,
+    required TransactionModel transaction,
+    List<PageRouteInfo>? children,
+  }) : super(
+          TransactionDetailScreenRoute.name,
+          args: TransactionDetailScreenRouteArgs(
+            key: key,
+            transaction: transaction,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'TransactionDetailScreenRoute';
+
+  static const PageInfo<TransactionDetailScreenRouteArgs> page =
+      PageInfo<TransactionDetailScreenRouteArgs>(name);
+}
+
+class TransactionDetailScreenRouteArgs {
+  const TransactionDetailScreenRouteArgs({
+    this.key,
+    required this.transaction,
+  });
+
+  final Key? key;
+
+  final TransactionModel transaction;
+
+  @override
+  String toString() {
+    return 'TransactionDetailScreenRouteArgs{key: $key, transaction: $transaction}';
+  }
 }
 
 /// generated route for

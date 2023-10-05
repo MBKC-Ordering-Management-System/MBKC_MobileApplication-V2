@@ -35,11 +35,13 @@ class TransactionItem extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              LabelText(
-                content: transaction.content,
-                size: AssetsConstants.defaultFontSize - 10.0,
-                fontWeight: FontWeight.w600,
-                maxLine: 1,
+              Expanded(
+                child: LabelText(
+                  content: transaction.content,
+                  size: AssetsConstants.defaultFontSize - 10.0,
+                  fontWeight: FontWeight.w600,
+                  maxLine: 1,
+                ),
               ),
               LabelText(
                 content: transaction.type == TransactionType.moneyin

@@ -130,7 +130,10 @@ class SearchTimeBox extends StatelessWidget {
                             size: AssetsConstants.defaultFontSize - 10.0,
                             color: contentColor,
                           ),
-                          const Icon(Icons.keyboard_arrow_down_rounded),
+                          const Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: AssetsConstants.blackColor,
+                          ),
                         ],
                       ),
                     ],
@@ -154,7 +157,10 @@ class SearchTimeBox extends StatelessWidget {
                             size: AssetsConstants.defaultFontSize - 10.0,
                             color: contentColor,
                           ),
-                          const Icon(Icons.keyboard_arrow_down_rounded),
+                          const Icon(
+                            Icons.keyboard_arrow_down_rounded,
+                            color: AssetsConstants.blackColor,
+                          ),
                         ],
                       ),
                     ],

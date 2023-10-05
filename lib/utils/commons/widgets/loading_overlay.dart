@@ -22,10 +22,10 @@ class LoadingOverlay extends HookWidget {
         child,
         if (isLoading)
           const Opacity(
-            opacity: 0.8,
+            opacity: 0.9,
             child: ModalBarrier(
               dismissible: false,
-              color: AssetsConstants.blackColor,
+              color: AssetsConstants.whiteColor,
             ),
           ),
         if (isLoading)

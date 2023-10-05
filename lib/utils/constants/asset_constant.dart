@@ -47,9 +47,9 @@ class AssetsConstants {
   static const String beaminLogo = 'assets/images/beamin_avt.jpg';
 
   // lottie
-  static const String lottieLoading = 'assets/lotties/animation_lnb6dx3w.json';
+  static const String lottieLoading = 'assets/lotties/animation_lncnticn.json';
   static const String lottieLoadingTrans =
-      'assets/lotties/animation_lncnticn.json';
+      'assets/lotties/animation_lncxa19j.json';
 
   // Sizes
   static const double defaultPadding = 20.0;
