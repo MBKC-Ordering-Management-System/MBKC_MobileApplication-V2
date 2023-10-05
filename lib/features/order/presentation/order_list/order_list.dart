@@ -114,6 +114,22 @@ class OrderList extends HookConsumerWidget {
       ),
     );
 
+    // handle search by date
+    ref.listen<bool>(
+      searchByDate,
+      (_, state) => fetchData(
+        ordertype: ref.read(orderType),
+        getDatatype: GetDataType.fetchdata,
+        ref: ref,
+        context: context,
+        pageNumber: pageNumber,
+        isLastPage: isLastPage,
+        isLoadMoreLoading: isLoadMoreLoading,
+        orders: orders,
+        isFetchingData: isFetchingData,
+      ),
+    );
+
     // first load
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {

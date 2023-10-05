@@ -1,6 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../features/order/presentation/order_list/order_screen.dart';
 import '../../constants/asset_constant.dart';
+import '../../enums/enums_export.dart';
 import 'label_text.dart';
 import 'search_time_box.dart';
 
@@ -54,12 +57,23 @@ showCustomBottomSheet({
                 )
               ],
             ),
-            const SearchTimeBox(
-              borderColor: AssetsConstants.borderColor,
-              title: 'Tra cứu đơn hàng',
-              icon: Icons.shopping_bag_rounded,
-              contentColor: AssetsConstants.blackColor,
-              backGroundColor: AssetsConstants.whiteColor,
+            Consumer(
+              builder: (_, ref, __) => SearchTimeBox(
+                searchType: SearchDateType.ordersearch,
+                dateFrom: ref.watch(orderDateFrom),
+                dateTo: ref.watch(orderDateTo),
+                borderColor: AssetsConstants.borderColor,
+                title: 'Tra cứu đơn hàng',
+                icon: Icons.shopping_bag_rounded,
+                contentColor: AssetsConstants.blackColor,
+                backGroundColor: AssetsConstants.whiteColor,
+                onCallBack: () {
+                  ref
+                      .read(searchByDate.notifier)
+                      .update((state) => !ref.read(searchByDate));
+                  context.router.pop();
+                },
+              ),
             ),
           ],
         ),

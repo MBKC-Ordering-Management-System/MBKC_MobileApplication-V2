@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../features/order/presentation/order_list/order_screen.dart';
+import '../../../features/wallet/presentation/transaction_list/transaction_screen.dart';
+import '../../enums/enums_export.dart';
 import '../functions/functions_common_export.dart';
 import 'widgets_common_export.dart';
 import '../../constants/asset_constant.dart';
 
-class SearchTimeBox extends HookConsumerWidget {
+class SearchTimeBox extends StatelessWidget {
   const SearchTimeBox({
     super.key,
     required this.title,
@@ -14,19 +16,59 @@ class SearchTimeBox extends HookConsumerWidget {
     required this.contentColor,
     required this.backGroundColor,
     required this.borderColor,
+    required this.onCallBack,
+    required this.dateFrom,
+    required this.dateTo,
+    required this.searchType,
   });
   final String title;
   final Color contentColor;
   final Color backGroundColor;
   final Color borderColor;
   final IconData icon;
+  final VoidCallback onCallBack;
+  final String dateFrom;
+  final String dateTo;
+  final SearchDateType searchType;
+
+  // pick dateTime
+  void pickDateFrom({
+    required WidgetRef ref,
+    required BuildContext context,
+  }) async {
+    var time = await dateTimePicker(context);
+    if (time == '') {
+      return;
+    }
+
+    if (searchType == SearchDateType.ordersearch) {
+      ref.read(orderDateFrom.notifier).update((state) => time);
+    } else {
+      ref.read(transactionDateFrom.notifier).update((state) => time);
+    }
+  }
+
+  // pick dateTime
+  void pickDateTo({
+    required WidgetRef ref,
+    required BuildContext context,
+  }) async {
+    var time = await dateTimePicker(context);
+    if (time == '') {
+      return;
+    }
+
+    if (searchType == SearchDateType.ordersearch) {
+      ref.read(orderDateTo.notifier).update((state) => time);
+    } else {
+      ref.read(transactionDateTo.notifier).update((state) => time);
+    }
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final dateFrom = useState(getDateTimeNow());
-    final dateTo = useState(getDateTimeNow());
 
     return Container(
       width: size.width * 1,
@@ -66,60 +108,68 @@ class SearchTimeBox extends HookConsumerWidget {
             ),
           ),
           SizedBox(height: size.height * 0.01),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LabelText(
-                    content: 'Từ ngày',
-                    size: AssetsConstants.defaultFontSize - 10.0,
-                    color: contentColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  Row(
+          Consumer(
+            builder: (_, ref, __) => Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                InkWell(
+                  onTap: () => pickDateFrom(ref: ref, context: context),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       LabelText(
-                        content: dateFrom.value,
+                        content: 'Từ ngày',
                         size: AssetsConstants.defaultFontSize - 10.0,
                         color: contentColor,
+                        fontWeight: FontWeight.w600,
                       ),
-                      const Icon(Icons.keyboard_arrow_down_rounded),
+                      Row(
+                        children: [
+                          LabelText(
+                            content: dateFrom,
+                            size: AssetsConstants.defaultFontSize - 10.0,
+                            color: contentColor,
+                          ),
+                          const Icon(Icons.keyboard_arrow_down_rounded),
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  LabelText(
-                    content: 'Đến ngày',
-                    size: AssetsConstants.defaultFontSize - 10.0,
-                    color: contentColor,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  Row(
-                    children: [
-                      LabelText(
-                        content: dateTo.value,
-                        size: AssetsConstants.defaultFontSize - 10.0,
-                        color: contentColor,
-                      ),
-                      const Icon(Icons.keyboard_arrow_down_rounded),
-                    ],
-                  ),
-                ],
-              ),
-              InkWell(
-                onTap: () {},
-                child: FaIcon(
-                  FontAwesomeIcons.magnifyingGlass,
-                  color: contentColor,
-                  size: AssetsConstants.defaultFontSize - 6.0,
                 ),
-              ),
-            ],
+                InkWell(
+                  onTap: () => pickDateTo(ref: ref, context: context),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LabelText(
+                        content: 'Đến ngày',
+                        size: AssetsConstants.defaultFontSize - 10.0,
+                        color: contentColor,
+                        fontWeight: FontWeight.w600,
+                      ),
+                      Row(
+                        children: [
+                          LabelText(
+                            content: dateTo,
+                            size: AssetsConstants.defaultFontSize - 10.0,
+                            color: contentColor,
+                          ),
+                          const Icon(Icons.keyboard_arrow_down_rounded),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+                InkWell(
+                  onTap: () => onCallBack(),
+                  child: FaIcon(
+                    FontAwesomeIcons.magnifyingGlass,
+                    color: contentColor,
+                    size: AssetsConstants.defaultFontSize - 6.0,
+                  ),
+                ),
+              ],
+            ),
           )
         ],
       ),

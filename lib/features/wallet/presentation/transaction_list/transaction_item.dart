@@ -29,7 +29,7 @@ class TransactionItem extends StatelessWidget {
         children: [
           LabelText(
             content:
-                '${transaction.date} - ${getTitleTypeTransaction(transaction.type)} - ${transaction.id}',
+                '${transaction.date} - ${getTitleTypeTransaction(transaction.type)}',
             size: AssetsConstants.defaultFontSize - 10.0,
           ),
           Row(

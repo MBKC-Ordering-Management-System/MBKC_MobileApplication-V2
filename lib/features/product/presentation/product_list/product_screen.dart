@@ -4,11 +4,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../models/product_model.dart';
 import '../../../../models/request/paging_model.dart';
-import '../../../../utils/commons/widgets/custom_bottom_sheet.dart';
 import '../../../../utils/commons/widgets/empty_box.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-//import '../../../../utils/enums/searching_type_enum.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import 'filter_sort_box.dart';
 import 'product_controller.dart';
@@ -141,9 +139,7 @@ class ProductScreen extends HookConsumerWidget {
             Row(
               children: [
                 InkWell(
-                  onTap: () {
-                    showCustomBottomSheet(context: context, size: size);
-                  },
+                  onTap: () {},
                   child: const FilterSortBox(content: 'Loại'),
                 ),
                 SizedBox(width: size.width * 0.03),

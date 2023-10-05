@@ -48,6 +48,8 @@ class AssetsConstants {
 
   // lottie
   static const String lottieLoading = 'assets/lotties/animation_lnb6dx3w.json';
+  static const String lottieLoadingTrans =
+      'assets/lotties/animation_lncnticn.json';
 
   // Sizes
   static const double defaultPadding = 20.0;

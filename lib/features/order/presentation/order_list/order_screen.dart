@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../utils/commons/functions/datetime_utils.dart';
 import '../../../../utils/commons/widgets/custom_bottom_sheet.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
@@ -23,6 +24,18 @@ final orderType = StateProvider.autoDispose<OrderStatusType>(
 
 final refresh = StateProvider.autoDispose<bool>(
   (ref) => false,
+);
+
+final searchByDate = StateProvider.autoDispose<bool>(
+  (ref) => false,
+);
+
+final orderDateFrom = StateProvider.autoDispose<String>(
+  (ref) => getDateTimeNow(),
+);
+
+final orderDateTo = StateProvider.autoDispose<String>(
+  (ref) => getDateTimeNow(),
 );
 
 @RoutePage()
