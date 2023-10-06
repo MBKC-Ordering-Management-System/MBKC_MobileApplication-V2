@@ -1,6 +1,6 @@
 import 'dart:io' show HttpStatus;
 import 'package:dio/dio.dart';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 import 'package:retrofit/retrofit.dart';
 
 abstract class RemoteBaseRepository {
@@ -19,6 +19,11 @@ abstract class RemoteBaseRepository {
         );
       }
     } on DioException catch (_) {
+      rethrow;
+    } catch (e) {
+      if (kDebugMode) {
+        print(e.toString());
+      }
       rethrow;
     }
   }

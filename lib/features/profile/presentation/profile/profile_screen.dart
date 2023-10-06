@@ -25,10 +25,10 @@ class ProfileScreen extends HookConsumerWidget {
     required BuildContext context,
     required ValueNotifier<ProfileModel?> profile,
   }) async {
-    final profileData =
-        await ref.read(profileControllerProvider.notifier).getProfile(context);
-
-    profile.value = profileData;
+    await ref.read(profileControllerProvider.notifier).getProfile(
+          context: context,
+          profile: profile,
+        );
   }
 
   // confirm email
@@ -37,7 +37,7 @@ class ProfileScreen extends HookConsumerWidget {
     required WidgetRef ref,
     required String email,
   }) async {
-    await ref.read(enterEmailControllerProvider.notifier).checkEmail(
+    await ref.watch(enterEmailControllerProvider.notifier).checkEmail(
           email: email,
           context: context,
           type: VerificationOTPType.changepassword,
@@ -82,7 +82,10 @@ class ProfileScreen extends HookConsumerWidget {
       body: state.isLoading
           ? const HomeShimmer(amount: 3)
           : profile.value == null
-              ? const EmptyBox(title: 'Sai thông tin')
+              ? const Align(
+                  alignment: Alignment.topCenter,
+                  child: EmptyBox(title: 'Sai thông tin'),
+                )
               : Column(
                   children: [
                     ProfileBox(profile: profile.value!),

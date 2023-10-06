@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../domain/models/order_model.dart';
 import '../../../../models/request/paging_model.dart';
-import '../../../../utils/enums/order_status_type.dart';
 import '../../domain/repositories/order_repository.dart';
 
 part 'order_controller.g.dart';
@@ -33,7 +33,11 @@ class OrderController extends _$OrderController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      handleAPIError(
+        statusCode: StatusCodeType.badrequest.type,
+        stateError: state.error!,
+        context: context,
+      );
       return [];
     }
 

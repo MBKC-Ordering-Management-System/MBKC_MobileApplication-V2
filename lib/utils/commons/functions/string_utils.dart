@@ -54,14 +54,14 @@ String getTitlePartner(PartnerType type) {
 
 String getTitleStatus(String status) {
   switch (status) {
-    case 'active':
+    case 'Active':
       return 'Hoạt động';
-    case 'inactive':
+    case 'Inactive':
       return 'Dừng hoạt động';
-    case 'deactive':
+    case 'Deactive':
       return 'Đóng cửa';
     default:
-      return 'undefine';
+      return 'Undefine';
   }
 }
 

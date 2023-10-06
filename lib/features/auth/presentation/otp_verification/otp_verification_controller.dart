@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../configs/routes/app_router.dart';
@@ -6,6 +7,7 @@ import '../../../../utils/commons/functions/api_utils.dart';
 import '../../../../utils/commons/widgets/snack_bar.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
+import '../../../../utils/extensions/extensions_export.dart';
 import '../../domain/models/request/email_verify_request.dart';
 import '../../domain/models/request/otp_verify_request.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -41,7 +43,12 @@ class OtpVerificationController extends _$OtpVerificationController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      final statusCode = (state.error as DioException).onStatusDio();
+      handleAPIError(
+        statusCode: statusCode,
+        stateError: state.error!,
+        context: context,
+      );
     }
   }
 
@@ -74,7 +81,12 @@ class OtpVerificationController extends _$OtpVerificationController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      final statusCode = (state.error as DioException).onStatusDio();
+      handleAPIError(
+        statusCode: statusCode,
+        stateError: state.error!,
+        context: context,
+      );
     }
   }
 }

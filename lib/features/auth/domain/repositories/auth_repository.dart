@@ -25,7 +25,7 @@ abstract class AuthRepository {
   Future<void> signOut();
 }
 
-@Riverpod(keepAlive: true)
+@Riverpod(keepAlive: false)
 AuthRepository authRepository(AuthRepositoryRef ref) {
   final authSource = ref.read(authSourceProvider);
   return AuthRepositoryImpl(authSource);

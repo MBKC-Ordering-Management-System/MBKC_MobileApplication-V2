@@ -50,7 +50,8 @@ class SignInScreen extends HookConsumerWidget with Validations {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final username = useTextEditingController(text: 'mbkcAd01@gmail.com');
+    final username =
+        useTextEditingController(text: 'thanhlhse150023@fpt.edu.vn');
     final password = useTextEditingController(text: '12345678');
     final state = ref.watch(signInControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
@@ -115,7 +116,7 @@ class SignInScreen extends HookConsumerWidget with Validations {
                         TextInput(
                           textController: username,
                           hintText: 'Tài khoản',
-                          onValidate: (val) => emailRegexErrorText(val),
+                          onValidate: (val) => '',
                           autoFocus: true,
                         ),
                         SizedBox(height: size.height * 0.02),

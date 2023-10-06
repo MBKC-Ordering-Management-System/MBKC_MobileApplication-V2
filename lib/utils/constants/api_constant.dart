@@ -1,6 +1,9 @@
 class APIConstants {
   static const baseUrl = 'https://mbkc.azurewebsites.net/api/v1';
   static const contentType = 'application/json';
+  static const contentHeader = 'Content-Type';
+  static const authHeader = 'Authorization';
+  static const prefixToken = 'bearer ';
 
   // auth
   static const login = '/authentications/login';
@@ -11,7 +14,10 @@ class APIConstants {
   // statistical
   // order
   // product
+
   // profile
+  static const getProfile = '/stores/profile';
+
   // error
   static const Map<String, String> errorTrans = {
     'Email does not exist in the system.':

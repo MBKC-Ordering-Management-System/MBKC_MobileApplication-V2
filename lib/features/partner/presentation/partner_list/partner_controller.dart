@@ -5,6 +5,7 @@ import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/snack_bar.dart';
 import '../../../../utils/constants/asset_constant.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../domain/models/partner_model.dart';
 import '../../domain/repositories/partner_repository.dart';
 
@@ -33,7 +34,11 @@ class PartnerController extends _$PartnerController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      handleAPIError(
+        statusCode: StatusCodeType.badrequest.type,
+        stateError: state.error!,
+        context: context,
+      );
     }
 
     return partners;
@@ -65,7 +70,11 @@ class PartnerController extends _$PartnerController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      handleAPIError(
+        statusCode: StatusCodeType.badrequest.type,
+        stateError: state.error!,
+        context: context,
+      );
     }
   }
 }

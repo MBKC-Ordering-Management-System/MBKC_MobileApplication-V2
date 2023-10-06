@@ -1,6 +1,13 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../../utils/commons/functions/api_utils.dart';
+import '../../../../configs/routes/app_router.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/constants/api_constant.dart';
+import '../../../../utils/enums/enums_export.dart';
+import '../../../../utils/extensions/extensions_export.dart';
+import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../domain/models/profile_model.dart';
 import '../../domain/repositories/profile_repository.dart';
 
@@ -14,23 +21,48 @@ class ProfileController extends _$ProfileController {
   }
 
   // get profile
-  Future<ProfileModel?> getProfile(
-    BuildContext context,
-  ) async {
-    ProfileModel? profile;
-
+  Future<void> getProfile({
+    required BuildContext context,
+    required ValueNotifier<ProfileModel?> profile,
+  }) async {
     state = const AsyncLoading();
     final profileRepository = ref.read(profileRepositoryProvider);
+    final authRepository = ref.read(authRepositoryProvider);
+    final token = await SharedPreferencesUtils.getInstance('user_token');
+
     state = await AsyncValue.guard(
       () async {
-        profile = await profileRepository.getProfile();
+        profile.value = await profileRepository.getProfile(
+          APIConstants.prefixToken + token!.accessToken,
+        );
       },
     );
 
+    // access expired || other error
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
-    }
+      state = await AsyncValue.guard(
+        () async {
+          final statusCode = (state.error as DioException).onStatusDio();
 
-    return profile;
+          await handleAPIError(
+            statusCode: statusCode,
+            stateError: state.error!,
+            context: context,
+            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+          );
+
+          if (statusCode != StatusCodeType.unauthentication.type) {
+            return;
+          }
+
+          await getProfile(context: context, profile: profile);
+        },
+      );
+
+      // if refresh token expired
+      if (state.hasError) {
+        context.router.replaceAll([SignInScreenRoute()]);
+      }
+    }
   }
 }

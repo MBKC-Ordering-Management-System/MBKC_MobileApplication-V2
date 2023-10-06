@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../models/product_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../domain/repositories/product_repository.dart';
 
 part 'product_controller.g.dart';
@@ -30,7 +31,11 @@ class ProductController extends _$ProductController {
     );
 
     if (state.hasError) {
-      await handleAPIError(stateError: state.error!, context: context);
+      await handleAPIError(
+        statusCode: StatusCodeType.badrequest.type,
+        stateError: state.error!,
+        context: context,
+      );
     }
 
     return products;

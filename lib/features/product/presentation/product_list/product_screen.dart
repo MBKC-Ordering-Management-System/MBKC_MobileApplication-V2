@@ -123,8 +123,18 @@ class ProductScreen extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: AssetsConstants.whiteColor,
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: 'Sản Phẩm',
+        iconFirst: Icons.refresh_rounded,
+        onCallBackFirst: () => fetchData(
+          ref: ref,
+          context: context,
+          pageNumber: pageNumber,
+          isLastPage: isLastPage,
+          isShowNoMoreData: isShowNoMoreData,
+          isLoadMoreLoading: isLoadMoreLoading,
+          products: products,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(

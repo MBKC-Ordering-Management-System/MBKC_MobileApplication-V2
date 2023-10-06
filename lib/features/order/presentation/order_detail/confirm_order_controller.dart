@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../domain/repositories/order_repository.dart';
 
@@ -39,7 +40,11 @@ class ConfirmOrderController extends _$ConfirmOrderController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      handleAPIError(
+        statusCode: StatusCodeType.badrequest.type,
+        stateError: state.error!,
+        context: context,
+      );
       return false;
     }
 

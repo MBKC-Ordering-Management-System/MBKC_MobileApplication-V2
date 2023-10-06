@@ -20,31 +20,31 @@ abstract class AuthSource {
   @POST(APIConstants.login)
   Future<HttpResponse<AccountReponse>> signIn(
     @Body() SignInRequest request,
-    @Header("Content-Type") String contentType,
+    @Header(APIConstants.contentHeader) String contentType,
   );
 
   @POST(APIConstants.reGenerateToken)
   Future<HttpResponse<TokenModel>> generateToken(
     @Body() TokenModel request,
-    @Header("Content-Type") String contentType,
+    @Header(APIConstants.contentHeader) String contentType,
   );
 
   @PUT(APIConstants.resetPassword)
   Future<HttpResponse<SuccessModel>> changePassword(
     @Body() ChangePasswordRequest request,
-    @Header("Content-Type") String contentType,
+    @Header(APIConstants.contentHeader) String contentType,
   );
 
   @POST(APIConstants.verifyEmail)
   Future<HttpResponse<SuccessModel>> verifyEmail(
     @Body() EmailVerifyRequest request,
-    @Header("Content-Type") String contentType,
+    @Header(APIConstants.contentHeader) String contentType,
   );
 
   @POST(APIConstants.otpVerification)
   Future<HttpResponse<SuccessModel>> verifyOTPCode(
     @Body() OTPVerifyRequest request,
-    @Header("Content-Type") String contentType,
+    @Header(APIConstants.contentHeader) String contentType,
   );
 }
 

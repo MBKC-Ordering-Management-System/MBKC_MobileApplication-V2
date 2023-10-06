@@ -32,7 +32,11 @@ class TransactionController extends _$TransactionController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      handleAPIError(
+        statusCode: StatusCodeType.badrequest.type,
+        stateError: state.error!,
+        context: context,
+      );
       return [];
     }
 

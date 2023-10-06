@@ -19,6 +19,9 @@ class ProfileDetailScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
+            leading: const BackButton(
+              color: AssetsConstants.blackColor,
+            ),
             expandedHeight: size.height * 0.26,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
@@ -56,7 +59,7 @@ class ProfileDetailScreen extends StatelessWidget {
                       SizedBox(height: size.height * 0.01),
                       FieldBox(
                         title: 'Địa chỉ',
-                        content: profile.kitchenCenter.address,
+                        content: profile.kitchenCenter!.address,
                       ),
                       SizedBox(height: size.height * 0.01),
                       FieldBox(
@@ -76,13 +79,12 @@ class ProfileDetailScreen extends StatelessWidget {
                       SizedBox(height: size.height * 0.01),
                       FieldBox(
                         title: 'Bếp trung tâm',
-                        content: profile.kitchenCenter.name,
+                        content: profile.kitchenCenter!.name,
                       ),
                       SizedBox(height: size.height * 0.01),
                       FieldBox(
                         title: 'Email chủ bếp trung tâm',
-                        content:
-                            profile.kitchenCenter.kitchenCenterManagerEmail,
+                        content: profile.kitchenCenter!.name,
                       ),
                     ],
                   ),

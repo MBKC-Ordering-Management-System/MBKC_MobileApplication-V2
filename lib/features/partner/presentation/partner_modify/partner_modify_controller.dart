@@ -4,7 +4,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/snack_bar.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/modify_type.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../domain/models/request/partner_request.dart';
 import '../../domain/repositories/partner_repository.dart';
 
@@ -60,7 +60,11 @@ class PartnerModifyController extends _$PartnerModifyController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      handleAPIError(
+        statusCode: StatusCodeType.badrequest.type,
+        stateError: state.error!,
+        context: context,
+      );
     }
   }
 }

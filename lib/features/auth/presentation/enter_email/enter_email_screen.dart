@@ -32,7 +32,7 @@ class EnterEmailScreen extends HookConsumerWidget with Validations {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final email = useTextEditingController(text: 'mbkcAd011@gmail.com');
+    final email = useTextEditingController(text: 'thanhlhse150023@fpt.edu.vn');
     final state = ref.watch(enterEmailControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
 
@@ -69,7 +69,7 @@ class EnterEmailScreen extends HookConsumerWidget with Validations {
                   child: TextInput(
                     textController: email,
                     hintText: 'Email',
-                    onValidate: (val) => emailRegexErrorText(val),
+                    onValidate: (val) => '',
                     autoFocus: true,
                   ),
                 )

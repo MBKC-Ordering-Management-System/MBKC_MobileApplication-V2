@@ -4,6 +4,7 @@ import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../domain/models/banking_account_model.dart';
 import '../../domain/repositories/wallet_repository.dart';
 
@@ -32,7 +33,11 @@ class BankingAccountController extends _$BankingAccountController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      handleAPIError(
+        statusCode: StatusCodeType.badrequest.type,
+        stateError: state.error!,
+        context: context,
+      );
     }
 
     return accounts;
@@ -53,7 +58,11 @@ class BankingAccountController extends _$BankingAccountController {
     );
 
     if (state.hasError) {
-      handleAPIError(stateError: state.error!, context: context);
+      handleAPIError(
+        statusCode: StatusCodeType.badrequest.type,
+        stateError: state.error!,
+        context: context,
+      );
       return false;
     }
 
