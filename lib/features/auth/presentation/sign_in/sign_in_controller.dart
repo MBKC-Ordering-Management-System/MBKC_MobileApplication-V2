@@ -3,9 +3,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../configs/routes/app_router.dart';
+import '../../../../models/response/error_detail_model.dart';
+import '../../../../models/response/error_model.dart';
 import '../../../../models/token_model.dart';
 import '../../../../models/user_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../domain/models/request/sign_in_request.dart';
@@ -36,11 +39,36 @@ class SignInController extends _$SignInController {
       () async {
         final user = await authRepository.signIn(request: request);
 
+        // check role user
+        if (user.roleName != 'Store') {
+          final error = ErrorModel(
+            statusCode: StatusCodeType.unauthentication.type,
+            message: [
+              ErrorDetailModel(
+                fieldNameError: 'account',
+                descriptionError: [
+                  'You are not allowed to access this function!'
+                ],
+              ),
+            ],
+          );
+
+          throw DioException(
+            requestOptions: RequestOptions(),
+            response: Response(
+              requestOptions: RequestOptions(),
+              statusCode: StatusCodeType.forbidden.type,
+              data: error.toJson(),
+            ),
+          );
+        }
+
         final userModel = UserModel(
           id: user.accountId,
           email: user.email,
           role: user.roleName,
         );
+
         ref.read(authProvider.notifier).update((state) => userModel);
 
         final token = TokenModel(

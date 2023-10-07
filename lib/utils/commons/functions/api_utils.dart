@@ -20,6 +20,7 @@ Future<void> handleAPIError({
     case StatusCodeType.conflict:
     case StatusCodeType.notfound:
     case StatusCodeType.badrequest:
+    case StatusCodeType.forbidden:
       showExceptionAlertDialog(
         context: context,
         title: 'Thông báo',

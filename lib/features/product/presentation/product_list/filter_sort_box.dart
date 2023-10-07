@@ -14,7 +14,7 @@ class FilterSortBox extends StatelessWidget {
     // init
     final size = MediaQuery.sizeOf(context);
     return Container(
-      width: size.width * 0.24,
+      width: size.width * 0.28,
       height: size.height * 0.04,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
@@ -22,7 +22,7 @@ class FilterSortBox extends StatelessWidget {
         ),
         border: Border.all(
           color: AssetsConstants.mainColor,
-          width: 2,
+          width: 1.5,
         ),
       ),
       child: Row(

@@ -30,5 +30,7 @@ class APIConstants {
     'Email has not been previously authenticated.': 'Email chưa được xác thực',
     'Email is not yet authenticated with the previously sent OTP code.':
         'Email chưa được xác thực bằng mã OTP',
+    'You are not allowed to access this function!':
+        'Bạn không có quyền truy cập hệ thống',
   };
 }

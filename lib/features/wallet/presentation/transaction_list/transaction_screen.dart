@@ -31,7 +31,7 @@ final transactionDateTo = StateProvider.autoDispose<String>(
 class TransactionScreen extends HookConsumerWidget {
   const TransactionScreen({super.key});
 
-  // handle refresh
+  // fetch data
   Future<void> fetchData({
     required GetDataType getDatatype,
     required WidgetRef ref,

@@ -5,7 +5,8 @@ class ProductDummyData {
   static final productsGenerate = List.generate(
     50,
     (index) => ProductModel(
-      image: 'assets/images/product_${index + 1}.png',
+      image:
+          'assets/images/product_${faker.randomGenerator.integer(10, min: 1)}.png',
       productId: index,
       code: faker.guid.random.toString().toUpperCase(),
       name: faker.food.cuisine(),

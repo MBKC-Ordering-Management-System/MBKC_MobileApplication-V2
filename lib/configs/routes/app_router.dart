@@ -47,14 +47,14 @@ class AppRouter extends _$AppRouter {
         // auth
         AutoRoute(
           page: SignInScreenRoute.page,
-          initial: true,
+          // initial: true,
         ),
         AutoRoute(page: EnterEmailScreenRoute.page),
         AutoRoute(page: OTPVerificationScreenRoute.page),
         AutoRoute(page: ChangePasswordScreenRoute.page),
         AutoRoute(
           page: TabViewScreenRoute.page,
-          // initial: true,
+          initial: true,
           children: [
             AutoRoute(page: HomeScreenRoute.page),
             AutoRoute(page: OrderScreenRoute.page),

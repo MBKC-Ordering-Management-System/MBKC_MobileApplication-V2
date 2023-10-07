@@ -18,7 +18,9 @@ class ProductRepositoryImpl extends RemoteBaseRepository
     switch (typeSearch) {
       case SearchingType.search:
         return ProductDummyData.productsGenerate
-            .where((item) => item.name.contains(request.searchContent!))
+            .where((item) => item.name
+                .toLowerCase()
+                .contains(request.searchContent!.toLowerCase()))
             .skip((request.pageNumber - 1) * request.pageSize)
             .take(request.pageSize)
             .toList();

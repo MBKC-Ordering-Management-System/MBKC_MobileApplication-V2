@@ -7,9 +7,11 @@ class SearchBox extends StatelessWidget {
   const SearchBox({
     super.key,
     required this.controller,
+    required this.onCallBack,
   });
 
   final TextEditingController controller;
+  final Function(String val) onCallBack;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +35,7 @@ class SearchBox extends StatelessWidget {
         ),
         height: size.height * 0.05,
         child: TextField(
+          onChanged: (val) => onCallBack(val),
           controller: controller,
           style: const TextStyle(
             fontSize: AssetsConstants.defaultFontSize - 12.0,
@@ -87,6 +90,7 @@ class SearchBox extends StatelessWidget {
                     child: IconButton(
                       onPressed: () {
                         controller.clear();
+                        onCallBack('');
                       },
                       icon: const Icon(
                         Icons.cancel_rounded,
