@@ -14,6 +14,7 @@ import '../../features/partner/domain/models/partner_model.dart';
 import '../../features/partner/presentation/partner_detail/partner_detail_screen.dart';
 import '../../features/partner/presentation/partner_list/partner_screen.dart';
 import '../../features/partner/presentation/partner_modify/partner_modify_screen.dart';
+import '../../features/product/presentation/product_detail/product_detail_screen.dart';
 import '../../features/product/presentation/product_list/product_screen.dart';
 import '../../features/profile/domain/models/profile_model.dart';
 import '../../features/profile/presentation/profile/profile_screen.dart';
@@ -24,6 +25,9 @@ import '../../features/wallet/presentation/banking_account_list/banking_account_
 import '../../features/wallet/presentation/transaction_detail.dart/transaction_detail_screen.dart';
 import '../../features/wallet/presentation/transaction_list/transaction_screen.dart';
 import '../../features/wallet/presentation/wallet_balance/wallet_screen.dart';
+import '../../features/product/domain/models/product_model.dart';
+import '../../models/token_model.dart';
+import '../../models/user_model.dart';
 import '../../tabview_screen.dart';
 import '../../utils/enums/modify_type.dart';
 import '../../utils/enums/verification_otp_type.dart';
@@ -47,14 +51,14 @@ class AppRouter extends _$AppRouter {
         // auth
         AutoRoute(
           page: SignInScreenRoute.page,
-          // initial: true,
+          initial: true,
         ),
         AutoRoute(page: EnterEmailScreenRoute.page),
         AutoRoute(page: OTPVerificationScreenRoute.page),
         AutoRoute(page: ChangePasswordScreenRoute.page),
         AutoRoute(
           page: TabViewScreenRoute.page,
-          initial: true,
+          // initial: true,
           children: [
             AutoRoute(page: HomeScreenRoute.page),
             AutoRoute(page: OrderScreenRoute.page),
@@ -79,6 +83,9 @@ class AppRouter extends _$AppRouter {
         AutoRoute(page: BankingAccountScreenRoute.page),
         AutoRoute(page: TransactionScreenRoute.page),
         AutoRoute(page: TransactionDetailScreenRoute.page),
+
+        // product
+        AutoRoute(page: ProductDetailScreenRoute.page),
       ];
 }
 

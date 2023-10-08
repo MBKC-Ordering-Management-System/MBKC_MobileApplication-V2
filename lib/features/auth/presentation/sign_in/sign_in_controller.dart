@@ -40,9 +40,9 @@ class SignInController extends _$SignInController {
         final user = await authRepository.signIn(request: request);
 
         // check role user
-        if (user.roleName != 'Store') {
+        if (user.roleName != 'Store Manager') {
           final error = ErrorModel(
-            statusCode: StatusCodeType.unauthentication.type,
+            statusCode: StatusCodeType.forbidden.type,
             message: [
               ErrorDetailModel(
                 fieldNameError: 'account',
@@ -58,7 +58,7 @@ class SignInController extends _$SignInController {
             response: Response(
               requestOptions: RequestOptions(),
               statusCode: StatusCodeType.forbidden.type,
-              data: error.toJson(),
+              data: error.toMap(),
             ),
           );
         }
@@ -69,14 +69,24 @@ class SignInController extends _$SignInController {
           role: user.roleName,
         );
 
+        // check first time log
+        if (user.isConfirmed == false) {
+          context.router.push(
+            ChangePasswordScreenRoute(
+              email: user.email,
+              verifyType: VerificationOTPType.firsttimelog,
+              token: TokenModel(
+                accessToken: user.tokens.accessToken,
+                refreshToken: user.tokens.refreshToken,
+              ),
+              user: userModel,
+            ),
+          );
+          return;
+        }
+
         ref.read(authProvider.notifier).update((state) => userModel);
-
-        final token = TokenModel(
-          accessToken: user.tokens.accessToken,
-          refreshToken: user.tokens.refreshToken,
-        );
-        await SharedPreferencesUtils.setInstance(token, 'user_token');
-
+        await SharedPreferencesUtils.setInstance(user.tokens, 'user_token');
         context.router.replaceAll([const HomeScreenRoute()]);
       },
     );

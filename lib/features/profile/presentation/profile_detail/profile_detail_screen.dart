@@ -12,7 +12,7 @@ class ProfileDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // inti
+    // intit
     final size = MediaQuery.sizeOf(context);
 
     return Scaffold(

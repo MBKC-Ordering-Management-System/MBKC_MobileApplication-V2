@@ -43,7 +43,6 @@ class ProfileController extends _$ProfileController {
       state = await AsyncValue.guard(
         () async {
           final statusCode = (state.error as DioException).onStatusDio();
-
           await handleAPIError(
             statusCode: statusCode,
             stateError: state.error!,

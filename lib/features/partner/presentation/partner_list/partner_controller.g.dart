@@ -6,7 +6,7 @@ part of 'partner_controller.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$partnerControllerHash() => r'8b0f2870ef7a88a543c582936d44dbca61f7a498';
+String _$partnerControllerHash() => r'0eaccd217c40cf9bc240992ebe03993ffd21991d';
 
 /// See also [PartnerController].
 @ProviderFor(PartnerController)

@@ -15,7 +15,6 @@ Future<void> handleAPIError({
 }) async {
   final error = (stateError as DioException).response!.data;
   final errorModel = ErrorModel.fromMap(error);
-
   switch (statusCode.toStatusCodeTypeEnum()) {
     case StatusCodeType.conflict:
     case StatusCodeType.notfound:

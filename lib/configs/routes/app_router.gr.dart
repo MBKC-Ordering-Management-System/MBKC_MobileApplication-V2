@@ -29,6 +29,8 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           email: args.email,
           verifyType: args.verifyType,
+          token: args.token,
+          user: args.user,
         ),
       );
     },
@@ -104,6 +106,16 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const PartnerScreen(),
+      );
+    },
+    ProductDetailScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<ProductDetailScreenRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: ProductDetailScreen(
+          key: args.key,
+          product: args.product,
+        ),
       );
     },
     ProductScreenRoute.name: (routeData) {
@@ -189,6 +201,8 @@ class ChangePasswordScreenRoute
     Key? key,
     required String email,
     required VerificationOTPType verifyType,
+    TokenModel? token,
+    UserModel? user,
     List<PageRouteInfo>? children,
   }) : super(
           ChangePasswordScreenRoute.name,
@@ -196,6 +210,8 @@ class ChangePasswordScreenRoute
             key: key,
             email: email,
             verifyType: verifyType,
+            token: token,
+            user: user,
           ),
           initialChildren: children,
         );
@@ -211,6 +227,8 @@ class ChangePasswordScreenRouteArgs {
     this.key,
     required this.email,
     required this.verifyType,
+    this.token,
+    this.user,
   });
 
   final Key? key;
@@ -219,9 +237,13 @@ class ChangePasswordScreenRouteArgs {
 
   final VerificationOTPType verifyType;
 
+  final TokenModel? token;
+
+  final UserModel? user;
+
   @override
   String toString() {
-    return 'ChangePasswordScreenRouteArgs{key: $key, email: $email, verifyType: $verifyType}';
+    return 'ChangePasswordScreenRouteArgs{key: $key, email: $email, verifyType: $verifyType, token: $token, user: $user}';
   }
 }
 
@@ -473,6 +495,45 @@ class PartnerScreenRoute extends PageRouteInfo<void> {
   static const String name = 'PartnerScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ProductDetailScreen]
+class ProductDetailScreenRoute
+    extends PageRouteInfo<ProductDetailScreenRouteArgs> {
+  ProductDetailScreenRoute({
+    Key? key,
+    required ProductModel product,
+    List<PageRouteInfo>? children,
+  }) : super(
+          ProductDetailScreenRoute.name,
+          args: ProductDetailScreenRouteArgs(
+            key: key,
+            product: product,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'ProductDetailScreenRoute';
+
+  static const PageInfo<ProductDetailScreenRouteArgs> page =
+      PageInfo<ProductDetailScreenRouteArgs>(name);
+}
+
+class ProductDetailScreenRouteArgs {
+  const ProductDetailScreenRouteArgs({
+    this.key,
+    required this.product,
+  });
+
+  final Key? key;
+
+  final ProductModel product;
+
+  @override
+  String toString() {
+    return 'ProductDetailScreenRouteArgs{key: $key, product: $product}';
+  }
 }
 
 /// generated route for

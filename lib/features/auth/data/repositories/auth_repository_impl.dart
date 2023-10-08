@@ -3,6 +3,7 @@ import '../../../../models/response/success_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/resources/remote_base_repository.dart';
+import '../../domain/models/request/change_first_time_request.dart';
 import '../../domain/models/request/change_password_request.dart';
 import '../../domain/models/request/email_verify_request.dart';
 import '../../domain/models/request/otp_verify_request.dart';
@@ -54,6 +55,22 @@ class AuthRepositoryImpl extends RemoteBaseRepository
     return getDataOf(
       request: () =>
           _authSource.verifyOTPCode(request, APIConstants.contentType),
+    );
+  }
+
+  @override
+  Future<SuccessModel> changeFirstTime({
+    required ChangeFirstTimeRequest request,
+    required int id,
+    required String accessToken,
+  }) {
+    return getDataOf(
+      request: () => _authSource.changeFirstTime(
+        request,
+        APIConstants.contentType,
+        accessToken,
+        id,
+      ),
     );
   }
 

@@ -5,6 +5,7 @@ import '../../../../models/token_model.dart';
 import '../../../../models/response/success_model.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/providers/common_provider.dart';
+import '../../domain/models/request/change_first_time_request.dart';
 import '../../domain/models/request/change_password_request.dart';
 import '../../domain/models/request/email_verify_request.dart';
 import '../../domain/models/request/otp_verify_request.dart';
@@ -45,6 +46,14 @@ abstract class AuthSource {
   Future<HttpResponse<SuccessModel>> verifyOTPCode(
     @Body() OTPVerifyRequest request,
     @Header(APIConstants.contentHeader) String contentType,
+  );
+
+  @PUT('${APIConstants.changeFirstTime}/{id}')
+  Future<HttpResponse<SuccessModel>> changeFirstTime(
+    @Body() ChangeFirstTimeRequest request,
+    @Header(APIConstants.contentHeader) String contentType,
+    @Header(APIConstants.authHeader) String accessToken,
+    @Path('id') int id,
   );
 }
 

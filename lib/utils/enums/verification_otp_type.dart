@@ -1,6 +1,7 @@
 enum VerificationOTPType {
   changepassword('changepassword'),
-  forgotpassword('forgotpassword');
+  forgotpassword('forgotpassword'),
+  firsttimelog('firsttimelog');
 
   final String type;
   const VerificationOTPType(this.type);

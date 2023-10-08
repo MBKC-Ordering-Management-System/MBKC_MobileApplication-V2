@@ -1,10 +1,12 @@
 import 'dart:convert';
+
 import '../../../../../models/token_model.dart';
 
 class AccountReponse {
   final int accountId;
   final String email;
   final String roleName;
+  final bool isConfirmed;
   final TokenModel tokens;
 
   AccountReponse({
@@ -12,6 +14,7 @@ class AccountReponse {
     required this.email,
     required this.roleName,
     required this.tokens,
+    required this.isConfirmed,
   });
 
   Map<String, dynamic> toMap() {
@@ -20,6 +23,7 @@ class AccountReponse {
     result.addAll({'accountId': accountId});
     result.addAll({'email': email});
     result.addAll({'roleName': roleName});
+    result.addAll({'isConfirmed': isConfirmed});
     result.addAll({'tokens': tokens.toMap()});
 
     return result;
@@ -30,6 +34,7 @@ class AccountReponse {
       accountId: map['accountId']?.toInt() ?? 0,
       email: map['email'] ?? '',
       roleName: map['roleName'] ?? '',
+      isConfirmed: map['isConfirmed'] ?? false,
       tokens: TokenModel.fromMap(map['tokens']),
     );
   }

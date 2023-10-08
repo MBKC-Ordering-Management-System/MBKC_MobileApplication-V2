@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:intl/intl.dart';
 import '../../enums/enums_export.dart';
+import '../../enums/product_type_enum.dart';
 
 String calculateMD5(String input) {
   var bytes = utf8.encode(input); // Encode the input string to bytes
@@ -71,6 +72,21 @@ String getTitleTypeTransaction(TransactionType type) {
       return 'Tiền vào';
     case TransactionType.moneyout:
       return 'Tiền ra';
+    default:
+      return 'Unknow!';
+  }
+}
+
+String getTitleProductType(ProductType type) {
+  switch (type) {
+    case ProductType.single:
+      return 'Đơn';
+    case ProductType.parent:
+      return 'Cha';
+    case ProductType.child:
+      return 'Con';
+    case ProductType.extra:
+      return 'Thêm';
     default:
       return 'Unknow!';
   }

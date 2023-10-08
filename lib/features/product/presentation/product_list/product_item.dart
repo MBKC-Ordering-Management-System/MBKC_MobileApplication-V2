@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../../../models/product_model.dart';
+import '../../domain/models/product_model.dart';
 import '../../../../utils/commons/widgets/label_text.dart';
 import '../../../../utils/constants/asset_constant.dart';
 
@@ -31,9 +31,15 @@ class ProductItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(
                 AssetsConstants.defaultBorder,
               ),
-              child: Image.asset(
-                product.image,
-                fit: BoxFit.cover,
+              child: Hero(
+                tag: product.productId.toString() + product.code,
+                child: product.image.isEmpty
+                    ? Image.asset(AssetsConstants.defaultAvatar)
+                    : FadeInImage(
+                        placeholder:
+                            const AssetImage(AssetsConstants.welcomeImage),
+                        image: NetworkImage(product.image),
+                      ),
               ),
             ),
           ),

@@ -7,7 +7,7 @@ part of 'banking_account_controller.dart';
 // **************************************************************************
 
 String _$bankingAccountControllerHash() =>
-    r'57da033bd737696bbe99460027d1d3c999424485';
+    r'a5bc0eb87ed9f3db4fffc5a3280c69668423cba0';
 
 /// See also [BankingAccountController].
 @ProviderFor(BankingAccountController)

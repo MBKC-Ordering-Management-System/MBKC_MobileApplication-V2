@@ -3,6 +3,7 @@ import '../../../../models/token_model.dart';
 import '../../../../models/response/success_model.dart';
 import '../../data/remote/auth_source.dart';
 import '../../data/repositories/auth_repository_impl.dart';
+import '../models/request/change_first_time_request.dart';
 import '../models/request/change_password_request.dart';
 import '../models/request/email_verify_request.dart';
 import '../models/request/otp_verify_request.dart';
@@ -21,6 +22,12 @@ abstract class AuthRepository {
   Future<SuccessModel> verifyEmail({required EmailVerifyRequest request});
 
   Future<SuccessModel> verifyOTPCode({required OTPVerifyRequest request});
+
+  Future<SuccessModel> changeFirstTime({
+    required ChangeFirstTimeRequest request,
+    required int id,
+    required String accessToken,
+  });
 
   Future<void> signOut();
 }

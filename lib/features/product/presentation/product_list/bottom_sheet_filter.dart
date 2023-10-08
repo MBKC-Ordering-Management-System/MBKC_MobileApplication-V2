@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/product_type_enum.dart';
@@ -82,7 +83,7 @@ bottomSheetFilter({
                   children: [
                     RadioListTile(
                       title: LabelText(
-                        content: ProductType.single.type,
+                        content: getTitleProductType(ProductType.single),
                         size: AssetsConstants.defaultFontSize - 10.0,
                       ),
                       value: options[0],
@@ -98,7 +99,7 @@ bottomSheetFilter({
                     ),
                     RadioListTile(
                       title: LabelText(
-                        content: ProductType.parent.type,
+                        content: getTitleProductType(ProductType.parent),
                         size: AssetsConstants.defaultFontSize - 10.0,
                       ),
                       value: options[1],
@@ -114,7 +115,7 @@ bottomSheetFilter({
                     ),
                     RadioListTile(
                       title: LabelText(
-                        content: ProductType.child.type,
+                        content: getTitleProductType(ProductType.child),
                         size: AssetsConstants.defaultFontSize - 10.0,
                       ),
                       value: options[2],
@@ -130,7 +131,7 @@ bottomSheetFilter({
                     ),
                     RadioListTile(
                       title: LabelText(
-                        content: ProductType.extra.type,
+                        content: getTitleProductType(ProductType.extra),
                         size: AssetsConstants.defaultFontSize - 10.0,
                       ),
                       value: options[3],

@@ -1,8 +1,8 @@
 enum ProductType {
-  single('Đơn'),
-  parent('Cha'),
-  child('Con'),
-  extra('Thêm');
+  single('single'),
+  parent('parent'),
+  child('child'),
+  extra('extra');
 
   final String type;
   const ProductType(this.type);

@@ -7,7 +7,7 @@ part of 'enter_email_controller.dart';
 // **************************************************************************
 
 String _$enterEmailControllerHash() =>
-    r'0dccf2817e2b858027fd06b1a961d9e411f79891';
+    r'0248f8867b99a4254f605bd4e94d1a111b4daab5';
 
 /// See also [EnterEmailController].
 @ProviderFor(EnterEmailController)

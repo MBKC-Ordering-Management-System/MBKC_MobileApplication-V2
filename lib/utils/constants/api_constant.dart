@@ -11,9 +11,11 @@ class APIConstants {
   static const resetPassword = '/authentications/password-resetation';
   static const verifyEmail = '/verifications/email-verification';
   static const otpVerification = '/verifications/otp-verification';
+  static const changeFirstTime = '/accounts';
   // statistical
   // order
   // product
+  static const getproducts = '/products';
 
   // profile
   static const getProfile = '/stores/profile';
