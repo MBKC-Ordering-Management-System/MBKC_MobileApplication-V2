@@ -3,30 +3,29 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../configs/routes/app_router.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../domain/models/product_model.dart';
-import '../../../../models/request/paging_model.dart';
-import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../../../utils/enums/enums_export.dart';
 import '../../domain/repositories/product_repository.dart';
 
-part 'product_controller.g.dart';
+part 'product_detail_controller.g.dart';
 
 @riverpod
-class ProductController extends _$ProductController {
+class ProductDetailController extends _$ProductDetailController {
   @override
   FutureOr<void> build() {
     // nothing to do
   }
 
-  // get products
-  Future<List<ProductModel>> getProducts(
-    PagingModel request,
+  // get product detail
+  Future<ProductModel?> getProductDetail(
     BuildContext context,
+    int productId,
   ) async {
-    List<ProductModel> products = [];
+    ProductModel? product;
     state = const AsyncLoading();
     final productRepository = ref.read(productRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
@@ -34,12 +33,10 @@ class ProductController extends _$ProductController {
 
     state = await AsyncValue.guard(
       () async {
-        final response = await productRepository.getProducts(
-          request: request,
+        product = await productRepository.getProductDetail(
+          productId: productId,
           accessToken: APIConstants.prefixToken + token!.accessToken,
         );
-
-        products = response.products;
       },
     );
 
@@ -58,7 +55,7 @@ class ProductController extends _$ProductController {
             return;
           }
 
-          products = await getProducts(request, context);
+          product = await getProductDetail(context, productId);
         },
       );
 
@@ -68,6 +65,6 @@ class ProductController extends _$ProductController {
       }
     }
 
-    return products;
+    return product;
   }
 }

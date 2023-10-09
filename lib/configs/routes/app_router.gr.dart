@@ -113,8 +113,8 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: ProductDetailScreen(
+          args.productId,
           key: args.key,
-          product: args.product,
         ),
       );
     },
@@ -502,14 +502,14 @@ class PartnerScreenRoute extends PageRouteInfo<void> {
 class ProductDetailScreenRoute
     extends PageRouteInfo<ProductDetailScreenRouteArgs> {
   ProductDetailScreenRoute({
+    required int productId,
     Key? key,
-    required ProductModel product,
     List<PageRouteInfo>? children,
   }) : super(
           ProductDetailScreenRoute.name,
           args: ProductDetailScreenRouteArgs(
+            productId: productId,
             key: key,
-            product: product,
           ),
           initialChildren: children,
         );
@@ -522,17 +522,17 @@ class ProductDetailScreenRoute
 
 class ProductDetailScreenRouteArgs {
   const ProductDetailScreenRouteArgs({
+    required this.productId,
     this.key,
-    required this.product,
   });
+
+  final int productId;
 
   final Key? key;
 
-  final ProductModel product;
-
   @override
   String toString() {
-    return 'ProductDetailScreenRouteArgs{key: $key, product: $product}';
+    return 'ProductDetailScreenRouteArgs{productId: $productId, key: $key}';
   }
 }
 

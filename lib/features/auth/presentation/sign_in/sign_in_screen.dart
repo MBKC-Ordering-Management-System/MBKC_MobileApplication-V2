@@ -20,14 +20,6 @@ import '../../../../utils/resources/validations.dart';
 class SignInScreen extends HookConsumerWidget with Validations {
   SignInScreen({super.key});
 
-  // unfocus
-  void unfocus(BuildContext context) {
-    FocusScopeNode currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
-  }
-
   // handle submit
   void submit({
     required GlobalKey<FormState> formKey,
@@ -36,8 +28,8 @@ class SignInScreen extends HookConsumerWidget with Validations {
     required String username,
     required String password,
   }) async {
-    unfocus(context);
     if (formKey.currentState!.validate()) {
+      unfocus(context);
       await ref.read(signInControllerProvider.notifier).signIn(
             username,
             password,

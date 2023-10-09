@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../models/token_model.dart';
 import '../../../../models/user_model.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
@@ -32,6 +33,7 @@ class ChangePasswordScreen extends HookConsumerWidget with Validations {
     required String password,
   }) async {
     if (formKey.currentState!.validate()) {
+      unfocus(context);
       await ref.read(changePasswordControllerProvider.notifier).changePassword(
             email: email,
             password: password,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/commons/widgets/widgets_common_export.dart';
-import '../../../../utils/constants/asset_constant.dart';
+import 'widgets_common_export.dart';
+import '../../constants/asset_constant.dart';
 
 class FieldBox extends StatelessWidget {
   const FieldBox({super.key, required this.title, required this.content});

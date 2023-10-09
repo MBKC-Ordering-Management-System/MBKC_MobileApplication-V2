@@ -31,16 +31,13 @@ class ProductItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(
                 AssetsConstants.defaultBorder,
               ),
-              child: Hero(
-                tag: product.productId.toString() + product.code,
-                child: product.image.isEmpty
-                    ? Image.asset(AssetsConstants.defaultAvatar)
-                    : FadeInImage(
-                        placeholder:
-                            const AssetImage(AssetsConstants.welcomeImage),
-                        image: NetworkImage(product.image),
-                      ),
-              ),
+              child: product.image.isEmpty
+                  ? Image.asset(AssetsConstants.defaultAvatar)
+                  : FadeInImage(
+                      placeholder:
+                          const AssetImage(AssetsConstants.welcomeImage),
+                      image: NetworkImage(product.image),
+                    ),
             ),
           ),
           SizedBox(width: size.width * 0.03),

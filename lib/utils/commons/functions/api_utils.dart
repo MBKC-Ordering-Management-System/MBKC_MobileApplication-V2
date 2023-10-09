@@ -56,6 +56,8 @@ Future<void> reGenerateToken(
   AuthRepository authRepository,
   BuildContext context,
 ) async {
+  // ignore: avoid_print
+  print('re-authen');
   final tokenRequest = await SharedPreferencesUtils.getInstance('user_token');
   if (tokenRequest != null) {
     final tokenResponse = await authRepository.generateToken(

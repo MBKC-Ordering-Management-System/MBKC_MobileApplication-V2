@@ -3,206 +3,170 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:math' as math;
+import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../domain/models/product_model.dart';
 import '../../../../utils/constants/asset_constant.dart';
+import 'information_tab.dart';
+import 'product_child_tab.dart';
+import 'product_detail_controller.dart';
+import 'product_detail_shimmer.dart';
 
 @RoutePage()
 class ProductDetailScreen extends HookConsumerWidget {
-  const ProductDetailScreen({super.key, required this.product});
-  final ProductModel product;
+  const ProductDetailScreen(this.productId, {super.key});
+  final int productId;
+
+  // fetch data
+  Future<void> fetchData({
+    required WidgetRef ref,
+    required BuildContext context,
+    required ValueNotifier<ProductModel?> product,
+  }) async {
+    final productData = await ref
+        .read(productDetailControllerProvider.notifier)
+        .getProductDetail(context, productId);
+
+    product.value = productData;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // intit
     final size = MediaQuery.sizeOf(context);
+    final product = useState<ProductModel?>(null);
     final tabController = useTabController(
-      initialLength: 3,
+      initialLength: 2,
     );
+    final state = ref.watch(productDetailControllerProvider);
+
+    // fetch data
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await fetchData(ref: ref, context: context, product: product);
+      });
+
+      return () {
+        tabController.dispose;
+      };
+    }, const []);
 
     return Scaffold(
       backgroundColor: Colors.white,
       extendBodyBehindAppBar: true,
       body: SafeArea(
-        child: Stack(
-          children: [
-            DefaultTabController(
-              length: 2,
-              child: NestedScrollView(
-                headerSliverBuilder: (context, value) {
-                  return [
-                    SliverAppBar(
-                      expandedHeight: size.height * 0.4,
-                      flexibleSpace: FlexibleSpaceBar(
-                        background: Hero(
-                          tag: product.productId.toString() + product.code,
-                          child: product.image.isEmpty
-                              ? Image.asset(AssetsConstants.defaultAvatar)
-                              : FadeInImage(
-                                  placeholder: const AssetImage(
-                                      AssetsConstants.welcomeImage),
-                                  image: NetworkImage(product.image),
+        child: state.isLoading
+            ? const ProductDetailShimmer()
+            : product.value == null
+                ? const Align(
+                    alignment: Alignment.topCenter,
+                    child: EmptyBox(title: 'Sai thông tin'),
+                  )
+                : Stack(
+                    children: [
+                      DefaultTabController(
+                        length: 2,
+                        child: NestedScrollView(
+                          headerSliverBuilder: (context, value) {
+                            return [
+                              SliverAppBar(
+                                leading: IconButton(
+                                  onPressed: () => context.router.pop(),
+                                  icon: Stack(
+                                    children: [
+                                      Container(
+                                        height: size.height * 0.1,
+                                        width: size.width * 0.2,
+                                        decoration: BoxDecoration(
+                                          color: AssetsConstants.black_20
+                                              .withOpacity(0.4),
+                                          borderRadius: BorderRadius.circular(
+                                            AssetsConstants.defaultBorder + 20,
+                                          ),
+                                        ),
+                                      ),
+                                      const Center(
+                                        child: Icon(
+                                          Icons.arrow_back,
+                                          color: AssetsConstants.whiteColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                        ),
-                      ),
-                    ),
-                    SliverPersistentHeader(
-                      pinned: true,
-                      delegate: _SliverAppBarDelegate(
-                        minHeight: size.height * 0.06,
-                        maxHeight: size.height * 0.06,
-                        child: Container(
-                          color: Colors.green[200],
-                          child: TabBar(
-                            controller: tabController,
-                            tabs: const [
-                              Tab(
-                                child: Text(
-                                  'TITLE1',
-                                  style: TextStyle(
-                                    color: Colors.black,
+                                expandedHeight: size.height * 0.36,
+                                flexibleSpace: FlexibleSpaceBar(
+                                  background: product.value!.image.isEmpty
+                                      ? Image.asset(
+                                          AssetsConstants.defaultAvatar)
+                                      : FadeInImage(
+                                          fit: BoxFit.cover,
+                                          placeholder: const AssetImage(
+                                            AssetsConstants.welcomeImage,
+                                          ),
+                                          image: NetworkImage(
+                                            product.value!.image,
+                                          ),
+                                        ),
+                                ),
+                              ),
+                              SliverPersistentHeader(
+                                pinned: true,
+                                delegate: _SliverAppBarDelegate(
+                                  minHeight: size.height * 0.06,
+                                  maxHeight: size.height * 0.06,
+                                  child: Container(
+                                    color: AssetsConstants.whiteColor,
+                                    child: TabBar(
+                                      indicatorColor: AssetsConstants.mainColor,
+                                      dividerColor: AssetsConstants.borderColor,
+                                      controller: tabController,
+                                      tabs: const [
+                                        Tab(
+                                          child: LabelText(
+                                            content: 'Thông tin',
+                                            size: AssetsConstants
+                                                    .defaultFontSize -
+                                                10.0,
+                                            color: AssetsConstants.mainColor,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Tab(
+                                          child: LabelText(
+                                            content: 'Sản phẩm con',
+                                            size: AssetsConstants
+                                                    .defaultFontSize -
+                                                10.0,
+                                            color: AssetsConstants.mainColor,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              Tab(
-                                child: Text(
-                                  'TITLE2',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                              Tab(
-                                child: Text(
-                                  'TITLE3',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ];
-                },
-                body: TabBarView(
-                  controller: tabController,
-                  children: [
-                    SingleChildScrollView(
-                      child: Container(
-                        padding: const EdgeInsets.only(
-                          bottom: AssetsConstants.defaultPadding + 580,
-                        ),
-                        child: Column(
-                          children: [
-                            // RoundedPicture(),
-                            const Icon(
-                              Icons.favorite,
-                              color: Colors.pink,
-                              size: 150.0,
-                              semanticLabel:
-                                  'Text to announce in accessibility modes',
+                            ];
+                          },
+                          body: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: AssetsConstants.defaultPadding - 10.0,
                             ),
-                            const FittedBox(
-                              child: Text("Hello World",
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
-                                      fontSize: 40)),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: TabBarView(
+                              controller: tabController,
                               children: [
-                                RichText(
-                                  text: const TextSpan(
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 20),
-                                      text: 'Info1:  ',
-                                      children: [
-                                        TextSpan(
-                                          text: "123",
-                                          style: TextStyle(),
-                                        ),
-                                      ]),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                RichText(
-                                  text: const TextSpan(
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 20),
-                                      text: 'Info2:  ',
-                                      children: [
-                                        TextSpan(
-                                          text: "abcd",
-                                          style: TextStyle(),
-                                        ),
-                                      ]),
-                                ),
-                                const SizedBox(
-                                  height: 20,
-                                ),
-                                RichText(
-                                  text: const TextSpan(
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.black,
-                                          fontSize: 20),
-                                      text: 'Info3:  ',
-                                      children: [
-                                        TextSpan(
-                                          text: "xyz",
-                                          style: TextStyle(),
-                                        ),
-                                      ]),
+                                InformationTab(product: product.value!),
+                                ProductChildTab(
+                                  productsChild:
+                                      product.value!.childrenProducts,
                                 ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    SingleChildScrollView(
-                      child: Container(
-                        padding: const EdgeInsets.only(bottom: 600),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.only(bottom: 600),
-                              child: const Center(
-                                child: Text("TITLE2"),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SingleChildScrollView(
-                      child: Container(
-                        padding: const EdgeInsets.only(bottom: 600),
-                        child: Column(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.only(bottom: 600),
-                              child: const Center(
-                                child: Text("TITLE3"),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
+                    ],
+                  ),
       ),
     );
   }

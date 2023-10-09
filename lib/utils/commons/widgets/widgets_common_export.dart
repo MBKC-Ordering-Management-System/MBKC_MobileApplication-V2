@@ -5,6 +5,7 @@ export './custom_button.dart';
 export './custom_circular.dart';
 export './custom_outline_button.dart';
 export './empty_box.dart';
+export './field_box.dart';
 export './error_message_widget.dart';
 export './home_shimmer.dart';
 export './label_text.dart';

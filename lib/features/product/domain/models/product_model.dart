@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import '../../../../utils/enums/product_type_enum.dart';
 import '../../../profile/domain/models/brand_model.dart';
 
 class ProductModel {
@@ -9,7 +11,7 @@ class ProductModel {
   final int sellingPrice;
   final int discountPrice;
   final int historicalPrice;
-  final String type;
+  final ProductType type;
   final String image;
   final String status;
   final String? size;
@@ -50,7 +52,7 @@ class ProductModel {
     result.addAll({'sellingPrice': sellingPrice});
     result.addAll({'discountPrice': discountPrice});
     result.addAll({'historicalPrice': historicalPrice});
-    result.addAll({'type': type});
+    result.addAll({'type': type.type});
     result.addAll({'image': image});
     result.addAll({'status': status});
     if (size != null) {
@@ -78,7 +80,7 @@ class ProductModel {
       sellingPrice: map['sellingPrice']?.toInt() ?? 0,
       discountPrice: map['discountPrice']?.toInt() ?? 0,
       historicalPrice: map['historicalPrice']?.toInt() ?? 0,
-      type: map['type'] ?? '',
+      type: (map['type'] as String).toProductTypeEnum(),
       image: map['image'] ?? '',
       status: map['status'] ?? '',
       size: map['size'],

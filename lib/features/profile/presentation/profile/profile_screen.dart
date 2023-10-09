@@ -14,6 +14,7 @@ import '../../domain/models/profile_model.dart';
 import 'action_box.dart';
 import 'profile_box.dart';
 import 'profile_controller.dart';
+import 'profile_shimmer.dart';
 
 @RoutePage()
 class ProfileScreen extends HookConsumerWidget {
@@ -80,7 +81,7 @@ class ProfileScreen extends HookConsumerWidget {
         title: 'Tài Khoản',
       ),
       body: state.isLoading
-          ? const HomeShimmer(amount: 3)
+          ? const ProfileShimmer()
           : profile.value == null
               ? const Align(
                   alignment: Alignment.topCenter,

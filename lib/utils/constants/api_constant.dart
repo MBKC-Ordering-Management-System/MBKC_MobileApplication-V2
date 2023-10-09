@@ -15,7 +15,7 @@ class APIConstants {
   // statistical
   // order
   // product
-  static const getproducts = '/products';
+  static const product = '/products';
 
   // profile
   static const getProfile = '/stores/profile';

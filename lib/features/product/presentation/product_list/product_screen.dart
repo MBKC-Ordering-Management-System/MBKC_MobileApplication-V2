@@ -99,7 +99,7 @@ class ProductScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await fetchData(
-          filterContent: ref.read(optionFilterProvider)?.type.toUpperCase(),
+          filterContent: ref.read(optionFilterProvider)?.type,
           searchContent: searchContent.text.trim(),
           getDatatype: GetDataType.fetchdata,
           ref: ref,
@@ -116,7 +116,7 @@ class ProductScreen extends HookConsumerWidget {
       scrollController.onScrollEndsListener(
         () async {
           await fetchData(
-            filterContent: ref.read(optionFilterProvider)?.type.toUpperCase(),
+            filterContent: ref.read(optionFilterProvider)?.type,
             searchContent: searchContent.text.trim(),
             getDatatype: GetDataType.loadmore,
             ref: ref,
@@ -140,7 +140,7 @@ class ProductScreen extends HookConsumerWidget {
         title: 'Sản Phẩm',
         iconFirst: Icons.refresh_rounded,
         onCallBackFirst: () => fetchData(
-          filterContent: ref.read(optionFilterProvider)?.type.toUpperCase(),
+          filterContent: ref.read(optionFilterProvider)?.type,
           searchContent: searchContent.text.trim(),
           getDatatype: GetDataType.fetchdata,
           ref: ref,
@@ -170,8 +170,7 @@ class ProductScreen extends HookConsumerWidget {
                       context: context,
                       size: size,
                       onCallback: () => fetchData(
-                        filterContent:
-                            ref.read(optionFilterProvider)?.type.toUpperCase(),
+                        filterContent: ref.read(optionFilterProvider)?.type,
                         getDatatype: GetDataType.fetchdata,
                         ref: ref,
                         context: context,
@@ -198,8 +197,7 @@ class ProductScreen extends HookConsumerWidget {
                     context: context,
                     size: size,
                     onCallback: () => fetchData(
-                      filterContent:
-                          ref.read(optionFilterProvider)?.type.toUpperCase(),
+                      filterContent: ref.read(optionFilterProvider)?.type,
                       getDatatype: GetDataType.fetchdata,
                       ref: ref,
                       context: context,
@@ -223,8 +221,7 @@ class ProductScreen extends HookConsumerWidget {
               controller: searchContent,
               onCallBack: (val) {
                 fetchData(
-                  filterContent:
-                      ref.read(optionFilterProvider)?.type.toUpperCase(),
+                  filterContent: ref.read(optionFilterProvider)?.type,
                   searchContent: searchContent.text.trim(),
                   getDatatype: GetDataType.fetchdata,
                   ref: ref,
@@ -275,7 +272,8 @@ class ProductScreen extends HookConsumerWidget {
                             return InkWell(
                               onTap: () => context.router.push(
                                 ProductDetailScreenRoute(
-                                    product: products.value[index]),
+                                  productId: products.value[index].productId,
+                                ),
                               ),
                               child: ProductItem(
                                 product: products.value[index],

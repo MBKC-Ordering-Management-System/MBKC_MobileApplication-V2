@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../domain/models/profile_model.dart';
-import 'field_box.dart';
+import '../../../../utils/commons/widgets/field_box.dart';
 
 @RoutePage()
 class ProfileDetailScreen extends StatelessWidget {
@@ -19,8 +19,28 @@ class ProfileDetailScreen extends StatelessWidget {
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
-            leading: const BackButton(
-              color: AssetsConstants.blackColor,
+            leading: IconButton(
+              onPressed: () => context.router.pop(),
+              icon: Stack(
+                children: [
+                  Container(
+                    height: size.height * 0.1,
+                    width: size.width * 0.2,
+                    decoration: BoxDecoration(
+                      color: AssetsConstants.black_20.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(
+                        AssetsConstants.defaultBorder + 20,
+                      ),
+                    ),
+                  ),
+                  const Center(
+                    child: Icon(
+                      Icons.arrow_back,
+                      color: AssetsConstants.whiteColor,
+                    ),
+                  ),
+                ],
+              ),
             ),
             expandedHeight: size.height * 0.26,
             pinned: true,

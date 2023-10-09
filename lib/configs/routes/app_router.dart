@@ -25,7 +25,6 @@ import '../../features/wallet/presentation/banking_account_list/banking_account_
 import '../../features/wallet/presentation/transaction_detail.dart/transaction_detail_screen.dart';
 import '../../features/wallet/presentation/transaction_list/transaction_screen.dart';
 import '../../features/wallet/presentation/wallet_balance/wallet_screen.dart';
-import '../../features/product/domain/models/product_model.dart';
 import '../../models/token_model.dart';
 import '../../models/user_model.dart';
 import '../../tabview_screen.dart';
