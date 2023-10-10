@@ -183,59 +183,41 @@ class OrderList extends HookConsumerWidget {
                   orders: orders,
                   isFetchingData: isFetchingData,
                 ),
-                child: const SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: EmptyBox(title: 'Đơn hàng đang trống'),
-                ),
+                child: const EmptyBox(title: 'Đơn hàng đang trống'),
               )
             : Expanded(
-                child: RefreshIndicator(
-                  backgroundColor: AssetsConstants.revenueBackground,
-                  color: AssetsConstants.mainColor,
-                  onRefresh: () async => fetchData(
-                    ordertype: ref.read(orderType),
-                    getDatatype: GetDataType.fetchdata,
-                    ref: ref,
-                    context: context,
-                    pageNumber: pageNumber,
-                    isLastPage: isLastPage,
-                    isLoadMoreLoading: isLoadMoreLoading,
-                    orders: orders,
-                    isFetchingData: isFetchingData,
+                child: ListView.builder(
+                  itemCount: orders.value.length + 1,
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  controller: scrollController,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AssetsConstants.defaultPadding - 10.0,
                   ),
-                  child: ListView.builder(
-                    itemCount: orders.value.length + 1,
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    controller: scrollController,
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AssetsConstants.defaultPadding - 10.0,
-                    ),
-                    itemBuilder: (_, index) {
-                      if (index == orders.value.length) {
-                        if (state.isLoading) {
-                          return const CustomCircular();
-                        }
-                        return isLastPage.value
-                            ? const NoMoreContent()
-                            : Container();
+                  itemBuilder: (_, index) {
+                    if (index == orders.value.length) {
+                      if (state.isLoading) {
+                        return const CustomCircular();
                       }
-                      return OrderItem(
-                        order: orders.value[index],
-                        orderType: orders.value[index].status,
-                        onCallback: () => fetchData(
-                          ordertype: ref.read(orderType),
-                          getDatatype: GetDataType.fetchdata,
-                          ref: ref,
-                          context: context,
-                          pageNumber: pageNumber,
-                          isLastPage: isLastPage,
-                          isLoadMoreLoading: isLoadMoreLoading,
-                          orders: orders,
-                          isFetchingData: isFetchingData,
-                        ),
-                      );
-                    },
-                  ),
+                      return isLastPage.value
+                          ? const NoMoreContent()
+                          : Container();
+                    }
+                    return OrderItem(
+                      order: orders.value[index],
+                      orderType: orders.value[index].status,
+                      onCallback: () => fetchData(
+                        ordertype: ref.read(orderType),
+                        getDatatype: GetDataType.fetchdata,
+                        ref: ref,
+                        context: context,
+                        pageNumber: pageNumber,
+                        isLastPage: isLastPage,
+                        isLoadMoreLoading: isLoadMoreLoading,
+                        orders: orders,
+                        isFetchingData: isFetchingData,
+                      ),
+                    );
+                  },
                 ),
               );
   }

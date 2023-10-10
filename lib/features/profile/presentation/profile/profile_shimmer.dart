@@ -24,7 +24,7 @@ class ProfileShimmer extends StatelessWidget {
                 highlightColor: Colors.grey[100]!,
                 child: Container(
                   height: size.height * 0.1,
-                  width: size.width * 0.2,
+                  width: size.width * 0.18,
                   decoration: BoxDecoration(
                     color: AssetsConstants.whiteColor,
                     borderRadius: BorderRadius.circular(
@@ -37,7 +37,7 @@ class ProfileShimmer extends StatelessWidget {
                 baseColor: Colors.grey[300]!,
                 highlightColor: Colors.grey[100]!,
                 child: Container(
-                  height: size.height * 0.06,
+                  height: size.height * 0.05,
                   width: size.width * 0.3,
                   decoration: BoxDecoration(
                     color: AssetsConstants.whiteColor,
@@ -47,7 +47,81 @@ class ProfileShimmer extends StatelessWidget {
                   ),
                 ),
               ),
+              Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  height: size.height * 0.04,
+                  width: size.width * 0.1,
+                  decoration: BoxDecoration(
+                    color: AssetsConstants.whiteColor,
+                    borderRadius: BorderRadius.circular(
+                      AssetsConstants.defaultBorder,
+                    ),
+                  ),
+                ),
+              ),
             ],
+          ),
+          SizedBox(height: size.height * 0.02),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              height: size.height * 0.08,
+              width: size.width * 1,
+              decoration: BoxDecoration(
+                color: AssetsConstants.whiteColor,
+                borderRadius: BorderRadius.circular(
+                  AssetsConstants.defaultBorder,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: size.height * 0.02),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              height: size.height * 0.08,
+              width: size.width * 1,
+              decoration: BoxDecoration(
+                color: AssetsConstants.whiteColor,
+                borderRadius: BorderRadius.circular(
+                  AssetsConstants.defaultBorder,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: size.height * 0.02),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              height: size.height * 0.08,
+              width: size.width * 1,
+              decoration: BoxDecoration(
+                color: AssetsConstants.whiteColor,
+                borderRadius: BorderRadius.circular(
+                  AssetsConstants.defaultBorder,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(height: size.height * 0.02),
+          Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              height: size.height * 0.08,
+              width: size.width * 1,
+              decoration: BoxDecoration(
+                color: AssetsConstants.whiteColor,
+                borderRadius: BorderRadius.circular(
+                  AssetsConstants.defaultBorder,
+                ),
+              ),
+            ),
           ),
         ],
       ),

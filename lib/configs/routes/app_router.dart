@@ -1,4 +1,3 @@
-// ignore_for_file: unused_field
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -30,6 +29,7 @@ import '../../models/user_model.dart';
 import '../../tabview_screen.dart';
 import '../../utils/enums/modify_type.dart';
 import '../../utils/enums/verification_otp_type.dart';
+import 'guard/auth_guard.dart';
 
 part 'app_router.gr.dart';
 
@@ -50,16 +50,19 @@ class AppRouter extends _$AppRouter {
         // auth
         AutoRoute(
           page: SignInScreenRoute.page,
-          initial: true,
+          // initial: true,
         ),
         AutoRoute(page: EnterEmailScreenRoute.page),
         AutoRoute(page: OTPVerificationScreenRoute.page),
         AutoRoute(page: ChangePasswordScreenRoute.page),
         AutoRoute(
           page: TabViewScreenRoute.page,
-          // initial: true,
+          initial: true,
+          guards: [AuthGuard(ref: _ref)],
           children: [
-            AutoRoute(page: HomeScreenRoute.page),
+            AutoRoute(
+              page: HomeScreenRoute.page,
+            ),
             AutoRoute(page: OrderScreenRoute.page),
             AutoRoute(page: ProductScreenRoute.page),
             AutoRoute(page: ProfileScreenRoute.page),

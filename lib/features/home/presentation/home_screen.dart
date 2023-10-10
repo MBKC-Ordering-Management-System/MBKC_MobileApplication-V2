@@ -51,54 +51,50 @@ class HomeScreen extends HookConsumerWidget {
 
     return Scaffold(
       backgroundColor: AssetsConstants.whiteColor,
-      appBar: const CustomAppBar(title: 'Trang Chủ'),
+      appBar: CustomAppBar(
+        title: 'Trang Chủ',
+        iconFirst: Icons.refresh_rounded,
+        onCallBackFirst: () => fetchData(
+          ref: ref,
+          isLoading: isLoading,
+          statistical: statistical,
+        ),
+      ),
       body: isLoading.value
           ? const Center(
               child: HomeShimmer(amount: 2),
             )
-          : RefreshIndicator(
-              color: AssetsConstants.mainColor,
-              backgroundColor: AssetsConstants.revenueBackground,
-              onRefresh: () => fetchData(
-                ref: ref,
-                isLoading: isLoading,
-                statistical: statistical,
+          : Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: AssetsConstants.defaultPadding - 6.0,
               ),
-              child: SingleChildScrollView(
-                physics: const AlwaysScrollableScrollPhysics(),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: AssetsConstants.defaultPadding - 6.0,
+              child: Column(
+                children: [
+                  SizedBox(height: size.height * 0.02),
+                  StatisticalCard(
+                    backgroundColor: AssetsConstants.revenueBackground,
+                    contentColor: AssetsConstants.mainColor,
+                    icon: const Icon(
+                      Icons.wallet_rounded,
+                      color: AssetsConstants.mainColor,
+                      size: AssetsConstants.defaultFontSize - 6.0,
+                    ),
+                    title: '${statistical.value?.totalRevenue}đ',
+                    subtitle: 'Doanh thu trong tuần',
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(height: size.height * 0.02),
-                      StatisticalCard(
-                        backgroundColor: AssetsConstants.revenueBackground,
-                        contentColor: AssetsConstants.mainColor,
-                        icon: const Icon(
-                          Icons.wallet_rounded,
-                          color: AssetsConstants.mainColor,
-                          size: AssetsConstants.defaultFontSize - 6.0,
-                        ),
-                        title: '${statistical.value?.totalRevenue}đ',
-                        subtitle: 'Doanh thu trong tuần',
-                      ),
-                      SizedBox(height: size.height * 0.02),
-                      StatisticalCard(
-                        backgroundColor: AssetsConstants.totalOrderBackground,
-                        contentColor: AssetsConstants.totalOrderContent,
-                        icon: const Icon(
-                          Icons.shopping_bag,
-                          color: AssetsConstants.totalOrderContent,
-                          size: AssetsConstants.defaultFontSize - 6.0,
-                        ),
-                        title: '${statistical.value?.totalOrder}',
-                        subtitle: 'Tổng số đơn hàng trong tuần',
-                      ),
-                    ],
+                  SizedBox(height: size.height * 0.02),
+                  StatisticalCard(
+                    backgroundColor: AssetsConstants.totalOrderBackground,
+                    contentColor: AssetsConstants.totalOrderContent,
+                    icon: const Icon(
+                      Icons.shopping_bag,
+                      color: AssetsConstants.totalOrderContent,
+                      size: AssetsConstants.defaultFontSize - 6.0,
+                    ),
+                    title: '${statistical.value?.totalOrder}',
+                    subtitle: 'Tổng số đơn hàng trong tuần',
                   ),
-                ),
+                ],
               ),
             ),
     );

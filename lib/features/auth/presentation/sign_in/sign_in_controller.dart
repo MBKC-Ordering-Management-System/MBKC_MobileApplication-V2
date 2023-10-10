@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../configs/routes/app_router.dart';
@@ -92,6 +93,9 @@ class SignInController extends _$SignInController {
     );
 
     if (state.hasError) {
+      if (kDebugMode) {
+        print(state.error);
+      }
       final statusCode = (state.error as DioException).onStatusDio();
       handleAPIError(
         statusCode: statusCode,
