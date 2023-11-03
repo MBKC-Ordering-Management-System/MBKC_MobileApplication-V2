@@ -53,7 +53,7 @@ class ChangePasswordController extends _$ChangePasswordController {
           );
 
           ref.read(authProvider.notifier).update((state) => user);
-          await SharedPreferencesUtils.setInstance(token, 'user_token');
+          await SharedPreferencesUtils.setInstance(user, 'user_token');
           context.router.replaceAll([const HomeScreenRoute()]);
         } else {
           await authRepository.changePassword(request: request);

@@ -1,14 +1,14 @@
 import 'dart:convert';
+import 'token_model.dart';
 
 class UserModel {
   final int id;
   final String email;
-  final String role;
-
+  final TokenModel token;
   UserModel({
     required this.id,
     required this.email,
-    required this.role,
+    required this.token,
   });
 
   Map<String, dynamic> toMap() {
@@ -16,7 +16,7 @@ class UserModel {
 
     result.addAll({'id': id});
     result.addAll({'email': email});
-    result.addAll({'role': role});
+    result.addAll({'token': token.toMap()});
 
     return result;
   }
@@ -25,7 +25,7 @@ class UserModel {
     return UserModel(
       id: map['id']?.toInt() ?? 0,
       email: map['email'] ?? '',
-      role: map['role'] ?? '',
+      token: TokenModel.fromMap(map['token']),
     );
   }
 

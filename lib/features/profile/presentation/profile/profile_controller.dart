@@ -28,12 +28,12 @@ class ProfileController extends _$ProfileController {
     state = const AsyncLoading();
     final profileRepository = ref.read(profileRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
-    final token = await SharedPreferencesUtils.getInstance('user_token');
+    final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
         profile.value = await profileRepository.getProfile(
-          APIConstants.prefixToken + token!.accessToken,
+          APIConstants.prefixToken + user!.token.accessToken,
         );
       },
     );

@@ -30,13 +30,14 @@ class ProductController extends _$ProductController {
     state = const AsyncLoading();
     final productRepository = ref.read(productRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
-    final token = await SharedPreferencesUtils.getInstance('user_token');
+    final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
         final response = await productRepository.getProducts(
           request: request,
-          accessToken: APIConstants.prefixToken + token!.accessToken,
+          accessToken: APIConstants.prefixToken + user!.token.accessToken,
+          storeId: user.id,
         );
 
         products = response.products;

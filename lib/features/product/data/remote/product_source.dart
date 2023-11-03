@@ -20,6 +20,7 @@ abstract class ProductSource {
     @Query('productType') String? productType,
     @Query('currentPage') int currentPage,
     @Query('itemsPerPage') int itemsPerPage,
+    @Query('idStore') int storeId,
   );
 
   @GET('${APIConstants.product}/{id}')

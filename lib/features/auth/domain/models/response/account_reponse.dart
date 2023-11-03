@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import '../../../../../models/token_model.dart';
 
 class AccountReponse {

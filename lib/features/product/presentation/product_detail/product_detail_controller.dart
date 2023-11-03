@@ -29,13 +29,13 @@ class ProductDetailController extends _$ProductDetailController {
     state = const AsyncLoading();
     final productRepository = ref.read(productRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
-    final token = await SharedPreferencesUtils.getInstance('user_token');
+    final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
         product = await productRepository.getProductDetail(
           productId: productId,
-          accessToken: APIConstants.prefixToken + token!.accessToken,
+          accessToken: APIConstants.prefixToken + user!.token.accessToken,
         );
       },
     );

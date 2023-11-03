@@ -9,9 +9,11 @@ import '../../../../models/response/error_model.dart';
 import '../../../../models/token_model.dart';
 import '../../../../models/user_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../../utils/providers/common_provider.dart';
+import '../../../profile/domain/repositories/profile_repository.dart';
 import '../../domain/models/request/sign_in_request.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -31,6 +33,7 @@ class SignInController extends _$SignInController {
   ) async {
     state = const AsyncLoading();
     final authRepository = ref.read(authRepositoryProvider);
+    final profileRepository = ref.read(profileRepositoryProvider);
     final request = SignInRequest(
       email: username,
       password: calculateMD5(password),
@@ -64,10 +67,14 @@ class SignInController extends _$SignInController {
           );
         }
 
+        final profile = await profileRepository.getProfile(
+          APIConstants.prefixToken + user.tokens.accessToken,
+        );
+
         final userModel = UserModel(
-          id: user.accountId,
+          id: profile.storeId,
           email: user.email,
-          role: user.roleName,
+          token: user.tokens,
         );
 
         // check first time log
@@ -87,7 +94,7 @@ class SignInController extends _$SignInController {
         }
 
         ref.read(authProvider.notifier).update((state) => userModel);
-        await SharedPreferencesUtils.setInstance(user.tokens, 'user_token');
+        await SharedPreferencesUtils.setInstance(userModel, 'user_token');
         context.router.replaceAll([const HomeScreenRoute()]);
       },
     );

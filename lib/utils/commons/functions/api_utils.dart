@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import '../../../models/token_model.dart';
+import '../../../models/user_model.dart';
 import 'functions_common_export.dart';
 import '../../../features/auth/domain/repositories/auth_repository.dart';
 import '../../../models/response/error_model.dart';
@@ -58,12 +60,22 @@ Future<void> reGenerateToken(
 ) async {
   // ignore: avoid_print
   print('re-authen');
-  final tokenRequest = await SharedPreferencesUtils.getInstance('user_token');
-  if (tokenRequest != null) {
+  final user = await SharedPreferencesUtils.getInstance('user_token');
+  if (user != null) {
     final tokenResponse = await authRepository.generateToken(
-      request: tokenRequest,
+      request: user.token,
     );
 
-    await SharedPreferencesUtils.setInstance(tokenResponse, 'user_token');
+    final userNew = UserModel(
+      id: user.id,
+      email: user.email,
+      token: TokenModel(
+        accessToken: tokenResponse.accessToken,
+        refreshToken: tokenResponse.refreshToken,
+      ),
+    );
+
+    await SharedPreferencesUtils.clearInstance('user_token');
+    await SharedPreferencesUtils.setInstance(userNew, 'user_token');
   }
 }

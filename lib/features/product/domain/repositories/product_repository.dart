@@ -11,6 +11,7 @@ abstract class ProductRepository {
   Future<ProductListResponse> getProducts({
     required PagingModel request,
     required String accessToken,
+    required int storeId,
   });
 
   Future<ProductModel> getProductDetail({
