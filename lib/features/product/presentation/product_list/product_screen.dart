@@ -32,9 +32,9 @@ class ProductScreen extends HookConsumerWidget {
     required ValueNotifier<bool> isLoadMoreLoading,
     required ValueNotifier<List<ProductModel>> products,
     required ValueNotifier<bool> isFetchingData,
-    required ValueNotifier<bool> isFirstLoad,
     required String? searchContent,
     required String? filterContent,
+    required String? sortContent,
   }) async {
     if (getDatatype == GetDataType.loadmore && isFetchingData.value) {
       return;
@@ -58,6 +58,7 @@ class ProductScreen extends HookConsumerWidget {
                 pageNumber: pageNumber.value,
                 searchContent: searchContent,
                 filterContent: filterContent,
+                sortContent: sortContent,
               ),
               context,
             );
@@ -65,11 +66,6 @@ class ProductScreen extends HookConsumerWidget {
     isLastPage.value = productsData.length < 10;
     if (getDatatype == GetDataType.fetchdata) {
       isLoadMoreLoading.value = true;
-      // here
-      if (isFirstLoad.value) {
-        isFirstLoad.value = !isFirstLoad.value;
-      }
-
       products.value = productsData;
       isFetchingData.value = false;
       return;
@@ -87,7 +83,6 @@ class ProductScreen extends HookConsumerWidget {
     final scrollController = useScrollController();
     final state = ref.watch(productControllerProvider);
     final isFetchingData = useState(true);
-    final isFirstLoad = useState(true);
 
     // searching
     final searchContent = useTextEditingController();
@@ -100,6 +95,7 @@ class ProductScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await fetchData(
           filterContent: ref.read(optionFilterProvider)?.type,
+          sortContent: ref.read(optionSortProvider)?.type,
           searchContent: searchContent.text.trim(),
           getDatatype: GetDataType.fetchdata,
           ref: ref,
@@ -109,7 +105,6 @@ class ProductScreen extends HookConsumerWidget {
           isLoadMoreLoading: isLoadMoreLoading,
           products: products,
           isFetchingData: isFetchingData,
-          isFirstLoad: isFirstLoad,
         );
       });
 
@@ -117,6 +112,7 @@ class ProductScreen extends HookConsumerWidget {
         () async {
           await fetchData(
             filterContent: ref.read(optionFilterProvider)?.type,
+            sortContent: ref.read(optionSortProvider)?.type,
             searchContent: searchContent.text.trim(),
             getDatatype: GetDataType.loadmore,
             ref: ref,
@@ -126,7 +122,6 @@ class ProductScreen extends HookConsumerWidget {
             isLoadMoreLoading: isLoadMoreLoading,
             products: products,
             isFetchingData: isFetchingData,
-            isFirstLoad: isFirstLoad,
           );
         },
       );
@@ -141,6 +136,7 @@ class ProductScreen extends HookConsumerWidget {
         iconFirst: Icons.refresh_rounded,
         onCallBackFirst: () => fetchData(
           filterContent: ref.read(optionFilterProvider)?.type,
+          sortContent: ref.read(optionSortProvider)?.type,
           searchContent: searchContent.text.trim(),
           getDatatype: GetDataType.fetchdata,
           ref: ref,
@@ -150,7 +146,6 @@ class ProductScreen extends HookConsumerWidget {
           isLoadMoreLoading: isLoadMoreLoading,
           products: products,
           isFetchingData: isFetchingData,
-          isFirstLoad: isFirstLoad,
         ),
       ),
       body: Padding(
@@ -171,6 +166,7 @@ class ProductScreen extends HookConsumerWidget {
                       size: size,
                       onCallback: () => fetchData(
                         filterContent: ref.read(optionFilterProvider)?.type,
+                        sortContent: ref.read(optionSortProvider)?.type,
                         getDatatype: GetDataType.fetchdata,
                         ref: ref,
                         context: context,
@@ -179,7 +175,6 @@ class ProductScreen extends HookConsumerWidget {
                         isLoadMoreLoading: isLoadMoreLoading,
                         products: products,
                         isFetchingData: isFetchingData,
-                        isFirstLoad: isFirstLoad,
                         searchContent: searchContent.text.trim(),
                       ),
                     ),
@@ -198,6 +193,7 @@ class ProductScreen extends HookConsumerWidget {
                     size: size,
                     onCallback: () => fetchData(
                       filterContent: ref.read(optionFilterProvider)?.type,
+                      sortContent: ref.read(optionSortProvider)?.type,
                       getDatatype: GetDataType.fetchdata,
                       ref: ref,
                       context: context,
@@ -206,12 +202,13 @@ class ProductScreen extends HookConsumerWidget {
                       isLoadMoreLoading: isLoadMoreLoading,
                       products: products,
                       isFetchingData: isFetchingData,
-                      isFirstLoad: isFirstLoad,
                       searchContent: searchContent.text.trim(),
                     ),
                   ),
                   child: FilterSortBox(
-                    content: ref.watch(optionSortProvider)?.type ?? 'Giá',
+                    content: ref.watch(optionSortProvider) != null
+                        ? getTitleSortType(ref.watch(optionSortProvider)!)
+                        : 'Giá',
                   ),
                 ),
               ],
@@ -222,6 +219,7 @@ class ProductScreen extends HookConsumerWidget {
               onCallBack: (val) {
                 fetchData(
                   filterContent: ref.read(optionFilterProvider)?.type,
+                  sortContent: ref.read(optionSortProvider)?.type,
                   searchContent: searchContent.text.trim(),
                   getDatatype: GetDataType.fetchdata,
                   ref: ref,
@@ -231,7 +229,6 @@ class ProductScreen extends HookConsumerWidget {
                   isLoadMoreLoading: isLoadMoreLoading,
                   products: products,
                   isFetchingData: isFetchingData,
-                  isFirstLoad: isFirstLoad,
                 );
               },
             ),

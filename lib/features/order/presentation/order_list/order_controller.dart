@@ -1,7 +1,13 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../../configs/routes/app_router.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
+import '../../../../utils/extensions/extensions_export.dart';
+import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../domain/models/order_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../domain/repositories/order_repository.dart';
@@ -17,28 +23,49 @@ class OrderController extends _$OrderController {
 
   // get orders
   Future<List<OrderModel>> getOrders(
-    int pageNum,
-    OrderStatusType orderType,
+    PagingModel request,
     BuildContext context,
   ) async {
     List<OrderModel> orders = [];
     state = const AsyncLoading();
     final orderRepository = ref.read(orderRepositoryProvider);
-    final request = PagingModel(pageNumber: pageNum);
+    final authRepository = ref.read(authRepositoryProvider);
+    final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
-        orders = await orderRepository.getOrders(request, orderType);
+        final response = await orderRepository.getOrders(
+          request: request,
+          accessToken: APIConstants.prefixToken + user!.token.accessToken,
+        );
+
+        orders = response.orders;
       },
     );
 
     if (state.hasError) {
-      handleAPIError(
-        statusCode: StatusCodeType.badrequest.type,
-        stateError: state.error!,
-        context: context,
+      state = await AsyncValue.guard(
+        () async {
+          final statusCode = (state.error as DioException).onStatusDio();
+          await handleAPIError(
+            statusCode: statusCode,
+            stateError: state.error!,
+            context: context,
+            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+          );
+
+          if (statusCode != StatusCodeType.unauthentication.type) {
+            return;
+          }
+
+          orders = await getOrders(request, context);
+        },
       );
-      return [];
+
+      // if refresh token expired
+      if (state.hasError) {
+        context.router.replaceAll([SignInScreenRoute()]);
+      }
     }
 
     return orders;

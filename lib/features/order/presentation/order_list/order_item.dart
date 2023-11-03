@@ -3,11 +3,12 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../configs/routes/app_router.dart';
+import '../../../../utils/enums/order_system_status_type.dart';
 import '../../domain/models/order_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/order_status_type.dart';
+import '../../../../utils/enums/order_partner_status_type.dart';
 import '../order_detail/confirm_order_controller.dart';
 import 'order_detail_item.dart';
 
@@ -15,12 +16,10 @@ class OrderItem extends ConsumerWidget {
   const OrderItem({
     super.key,
     required this.order,
-    required this.orderType,
     required this.onCallback,
   });
 
   final OrderModel order;
-  final OrderStatusType orderType;
   final VoidCallback onCallback;
 
   // change status
@@ -32,7 +31,32 @@ class OrderItem extends ConsumerWidget {
     final result = await showAlertDialog(
       context: context,
       title: 'Xác nhận',
-      content: 'Bạn muốn xác nhận đơn hàng đã hoàn thành ?',
+      content:
+          'Bạn muốn xác nhận đơn hàng #${order.id} từ đối tác ${order.partner!.name} đã hoàn thành ?',
+      cancelActionText: 'Hủy',
+    );
+    if (result != null && result) {
+      final result = await ref
+          .read(confirmOrderControllerProvider.notifier)
+          .confirmOrder(id, context);
+
+      if (result) {
+        onCallback();
+      }
+    }
+  }
+
+  // change status
+  void cancelOrder({
+    required int id,
+    required BuildContext context,
+    required WidgetRef ref,
+  }) async {
+    final result = await showAlertDialog(
+      context: context,
+      title: 'Xác nhận',
+      content:
+          'Bạn muốn hủy đơn #${order.id} từ đối tác ${order.partner!.name} không?',
       cancelActionText: 'Hủy',
     );
     if (result != null && result) {
@@ -84,16 +108,16 @@ class OrderItem extends ConsumerWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           LabelText(
-                            content: '#${order.orderid} • ${order.partner}',
+                            content: '#${order.id} • ${order.partner!.name}',
                             size: AssetsConstants.defaultFontSize - 12.0,
                             fontWeight: FontWeight.w600,
                           ),
                           LabelText(
-                            content: '${order.totalItem} món',
+                            content: '${order.orderDetails!.length} món',
                             size: AssetsConstants.defaultFontSize - 14.0,
                             fontWeight: FontWeight.w600,
                           ),
-                          if (order.note.isNotEmpty)
+                          if (order.note!.isNotEmpty)
                             LabelText(
                               color: AssetsConstants.skipText,
                               content: '> ${order.note}',
@@ -106,12 +130,14 @@ class OrderItem extends ConsumerWidget {
                     customButtonOrder(
                       width: size.width * 0.22,
                       height: size.height * 0.035,
-                      content: order.status.type,
+                      content: order.systemStatus!.toOrderSystemTypeEnum().type,
                       size: AssetsConstants.defaultFontSize - 18.0,
                       onCallBack: () {},
-                      backgroundColor: getColorOrderStatus(orderType),
+                      backgroundColor: getColorOrderStatus(
+                          order.partnerOrderStatus!.toOrderPartnerTypeEnum()),
                       contentColor: AssetsConstants.whiteColor,
                     ),
+                    SizedBox(width: size.width * 0.01),
                   ],
                 ),
                 SizedBox(height: size.height * 0.01),
@@ -121,33 +147,49 @@ class OrderItem extends ConsumerWidget {
                   color: AssetsConstants.subtitleColor,
                 ),
                 SizedBox(height: size.height * 0.005),
-                ...order.orderDetails
-                    .map(
-                      (e) => Container(
-                        margin: const EdgeInsets.only(
-                          bottom: AssetsConstants.defaultMargin - 8.0,
-                        ),
-                        child: OrderDetailItem(orderDetail: e),
+                ...order.orderDetails!.map((e) => Container(
+                      margin: const EdgeInsets.only(
+                        bottom: AssetsConstants.defaultMargin - 8.0,
                       ),
-                    )
-                    .toList(),
+                      child: OrderDetailItem(orderDetail: e),
+                    )),
                 SizedBox(height: size.height * 0.01),
               ],
             ),
           ),
-          if (orderType == OrderStatusType.preparing)
-            CustomButton(
-              size: AssetsConstants.defaultFontSize - 14.0,
-              content: 'Hoàn thành'.toUpperCase(),
-              onCallback: () => changeStatus(
-                id: order.orderid,
-                context: context,
-                ref: ref,
-              ),
-              isActive: true,
-              width: size.width * 0.90,
-              height: size.height * 0.035,
+          if (order.systemStatus!.toOrderPartnerTypeEnum() ==
+                  OrderPartnerStatusType.preparing &&
+              order.partnerOrderStatus!.toOrderSystemTypeEnum() ==
+                  OrderSystemStatusType.instore) ...[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CustomButton(
+                  size: AssetsConstants.defaultFontSize - 14.0,
+                  content: 'Hoàn thành'.toUpperCase(),
+                  onCallback: () => changeStatus(
+                    id: order.id!,
+                    context: context,
+                    ref: ref,
+                  ),
+                  isActive: true,
+                  width: size.width * 0.8,
+                  height: size.height * 0.035,
+                ),
+                InkWell(
+                  onTap: () => cancelOrder(
+                    id: order.id!,
+                    context: context,
+                    ref: ref,
+                  ),
+                  child: const Icon(
+                    Icons.delete,
+                    color: AssetsConstants.warningColor,
+                  ),
+                ),
+              ],
             ),
+          ],
           SizedBox(height: size.height * 0.005),
         ],
       ),

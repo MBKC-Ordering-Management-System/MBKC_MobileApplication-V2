@@ -1,6 +1,6 @@
 enum SortType {
-  asc('Tăng dần'),
-  desc('Giảm dần');
+  asc('sellingprice_asc'),
+  desc('sellingprice_desc');
 
   final String type;
   const SortType(this.type);

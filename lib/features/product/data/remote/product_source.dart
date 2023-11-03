@@ -16,7 +16,7 @@ abstract class ProductSource {
   Future<HttpResponse<ProductListResponse>> getProducts(
     @Header(APIConstants.contentHeader) String contentType,
     @Header(APIConstants.authHeader) String accessToken,
-    @Query('searchName') String? searchName,
+    @Query('searchValue') String? searchName,
     @Query('productType') String? productType,
     @Query('currentPage') int currentPage,
     @Query('itemsPerPage') int itemsPerPage,

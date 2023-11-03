@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'product_source.dart';
+part of 'order_source.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'product_source.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _ProductSource implements ProductSource {
-  _ProductSource(
+class _OrderSource implements OrderSource {
+  _OrderSource(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,22 +21,20 @@ class _ProductSource implements ProductSource {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<ProductListResponse>> getProducts(
+  Future<HttpResponse<OrderListResponse>> getOrders(
     String contentType,
     String accessToken,
-    String? searchName,
-    String? productType,
+    String? orderSystemStatus,
+    String? orderPartnerStatus,
     int currentPage,
     int itemsPerPage,
-    int storeId,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'searchValue': searchName,
-      r'productType': productType,
+      r'systemStatus': orderSystemStatus,
+      r'partnerStatus': orderPartnerStatus,
       r'currentPage': currentPage,
       r'itemsPerPage': itemsPerPage,
-      r'idStore': storeId,
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{
@@ -46,7 +44,7 @@ class _ProductSource implements ProductSource {
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<ProductListResponse>>(Options(
+        _setStreamType<HttpResponse<OrderListResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -54,7 +52,7 @@ class _ProductSource implements ProductSource {
     )
             .compose(
               _dio.options,
-              '/products',
+              '/orders',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -63,44 +61,7 @@ class _ProductSource implements ProductSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ProductListResponse.fromMap(_result.data!);
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<ProductModel>> getProductDetail(
-    String contentType,
-    String accessToken,
-    int id,
-  ) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'Content-Type': contentType,
-      r'Authorization': accessToken,
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<ProductModel>>(Options(
-      method: 'GET',
-      headers: _headers,
-      extra: _extra,
-      contentType: contentType,
-    )
-            .compose(
-              _dio.options,
-              '/products/${id}',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = ProductModel.fromMap(_result.data!);
+    final value = OrderListResponse.fromMap(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
@@ -140,20 +101,19 @@ class _ProductSource implements ProductSource {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$productSourceHash() => r'b8db50c1c794459cbf6295aa9628c59549537f0d';
+String _$orderSourceHash() => r'05e6c1ae3c655f97edcb8a0bb736c2f208ab0180';
 
-/// See also [productSource].
-@ProviderFor(productSource)
-final productSourceProvider = AutoDisposeProvider<ProductSource>.internal(
-  productSource,
-  name: r'productSourceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$productSourceHash,
+/// See also [orderSource].
+@ProviderFor(orderSource)
+final orderSourceProvider = AutoDisposeProvider<OrderSource>.internal(
+  orderSource,
+  name: r'orderSourceProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$orderSourceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef ProductSourceRef = AutoDisposeProviderRef<ProductSource>;
+typedef OrderSourceRef = AutoDisposeProviderRef<OrderSource>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

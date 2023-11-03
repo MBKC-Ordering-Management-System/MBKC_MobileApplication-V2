@@ -3,6 +3,7 @@ import 'package:crypto/crypto.dart';
 import 'package:intl/intl.dart';
 import '../../enums/enums_export.dart';
 import '../../enums/product_type_enum.dart';
+import '../../enums/sort_type_enum.dart';
 
 String calculateMD5(String input) {
   var bytes = utf8.encode(input); // Encode the input string to bytes
@@ -90,6 +91,17 @@ String getTitleProductType(ProductType type) {
       return 'Con';
     case ProductType.extra:
       return 'Thêm';
+    default:
+      return 'Unknow!';
+  }
+}
+
+String getTitleSortType(SortType type) {
+  switch (type) {
+    case SortType.asc:
+      return 'Tăng dần';
+    case SortType.desc:
+      return 'Giảm dần';
     default:
       return 'Unknow!';
   }

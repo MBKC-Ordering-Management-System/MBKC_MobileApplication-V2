@@ -11,6 +11,7 @@ class ProductRepositoryImpl extends RemoteBaseRepository
   final bool addDelay;
   final ProductSource _productSource;
   ProductRepositoryImpl(this._productSource, {this.addDelay = true});
+
   @override
   Future<ProductListResponse> getProducts({
     required PagingModel request,

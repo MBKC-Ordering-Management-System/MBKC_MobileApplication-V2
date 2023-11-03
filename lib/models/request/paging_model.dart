@@ -4,6 +4,7 @@ class PagingModel {
   final String? searchContent;
   final String? sortContent;
   final String? filterContent;
+  final String? filterSystemContent;
 
   PagingModel({
     this.pageNumber = 1,
@@ -11,5 +12,6 @@ class PagingModel {
     this.searchContent,
     this.sortContent,
     this.filterContent,
+    this.filterSystemContent,
   });
 }

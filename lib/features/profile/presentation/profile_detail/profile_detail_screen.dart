@@ -104,7 +104,8 @@ class ProfileDetailScreen extends StatelessWidget {
                       SizedBox(height: size.height * 0.01),
                       FieldBox(
                         title: 'Email chủ bếp trung tâm',
-                        content: profile.kitchenCenter!.name,
+                        content:
+                            profile.kitchenCenter!.kitchenCenterManagerEmail,
                       ),
                     ],
                   ),

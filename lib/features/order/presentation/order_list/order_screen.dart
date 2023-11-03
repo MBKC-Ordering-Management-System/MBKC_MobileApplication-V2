@@ -2,29 +2,16 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/datetime_utils.dart';
 import '../../../../utils/commons/widgets/custom_bottom_sheet.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/order_status_type.dart';
+import '../../../../utils/enums/enums_export.dart';
+import '../../../../utils/extensions/extensions_export.dart';
+import '../../domain/models/order_model.dart';
 import 'order_controller.dart';
-import 'order_list.dart';
-
-final List<OrderStatusType> items = [
-  OrderStatusType.preparing,
-  OrderStatusType.ready,
-  OrderStatusType.delivering,
-  OrderStatusType.delivered,
-  OrderStatusType.cancelled,
-];
-
-final orderType = StateProvider.autoDispose<OrderStatusType>(
-  (ref) => OrderStatusType.preparing,
-);
-
-final refresh = StateProvider.autoDispose<bool>(
-  (ref) => false,
-);
+import 'order_item.dart';
 
 final searchByDate = StateProvider.autoDispose<bool>(
   (ref) => false,
@@ -42,15 +29,107 @@ final orderDateTo = StateProvider.autoDispose<String>(
 class OrderScreen extends HookConsumerWidget {
   const OrderScreen({super.key});
 
-  // hanle filter
+  // fetch data
+  Future<void> fetchData({
+    required GetDataType getDatatype,
+    required WidgetRef ref,
+    required BuildContext context,
+    required ValueNotifier<int> pageNumber,
+    required ValueNotifier<bool> isLastPage,
+    required ValueNotifier<bool> isLoadMoreLoading,
+    required ValueNotifier<List<OrderModel>> orders,
+    required ValueNotifier<bool> isFetchingData,
+    required String? filterSystemContent,
+    required String? filterPartnerContent,
+  }) async {
+    if (getDatatype == GetDataType.loadmore && isFetchingData.value) {
+      return;
+    }
+
+    if (getDatatype == GetDataType.fetchdata) {
+      pageNumber.value = 0;
+      isLastPage.value = false;
+      isLoadMoreLoading.value = false;
+    }
+
+    if (isLastPage.value) {
+      return;
+    }
+
+    isFetchingData.value = true;
+    pageNumber.value = pageNumber.value + 1;
+    final ordersData =
+        await ref.read(orderControllerProvider.notifier).getOrders(
+              PagingModel(
+                pageNumber: pageNumber.value,
+                filterSystemContent: "",
+                filterContent: "",
+              ),
+              context,
+            );
+
+    isLastPage.value = ordersData.length < 10;
+    if (getDatatype == GetDataType.fetchdata) {
+      isLoadMoreLoading.value = true;
+      orders.value = ordersData;
+      isFetchingData.value = false;
+      return;
+    }
+
+    isFetchingData.value = false;
+    orders.value = orders.value + ordersData;
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final isFirstLoad = useState(true);
-    final nowIndex = items.indexOf(ref.watch(orderType));
+    final orders = useState<List<OrderModel>>([]);
+    final scrollController = useScrollController();
     final state = ref.watch(orderControllerProvider);
+    final isFetchingData = useState(true);
+
+    // searching
+    final pageNumber = useState(0);
+    final isLastPage = useState(false);
+    final isLoadMoreLoading = useState(false);
+
+    // first load
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        fetchData(
+          filterSystemContent: "",
+          filterPartnerContent: "",
+          getDatatype: GetDataType.fetchdata,
+          ref: ref,
+          context: context,
+          pageNumber: pageNumber,
+          isLastPage: isLastPage,
+          isLoadMoreLoading: isLoadMoreLoading,
+          orders: orders,
+          isFetchingData: isFetchingData,
+        );
+      });
+
+      scrollController.onScrollEndsListener(
+        () {
+          fetchData(
+            filterSystemContent: "",
+            filterPartnerContent: "",
+            getDatatype: GetDataType.loadmore,
+            ref: ref,
+            context: context,
+            pageNumber: pageNumber,
+            isLastPage: isLastPage,
+            isLoadMoreLoading: isLoadMoreLoading,
+            orders: orders,
+            isFetchingData: isFetchingData,
+          );
+        },
+      );
+
+      return scrollController.dispose;
+    }, const []);
 
     // UI
     return Scaffold(
@@ -58,8 +137,18 @@ class OrderScreen extends HookConsumerWidget {
         title: 'Đơn Hàng',
         iconFirst: Icons.refresh_rounded,
         iconSecond: Icons.filter_list_alt,
-        onCallBackFirst: () =>
-            ref.read(refresh.notifier).update((state) => !ref.read(refresh)),
+        onCallBackFirst: () => fetchData(
+          filterSystemContent: "",
+          filterPartnerContent: "",
+          getDatatype: GetDataType.fetchdata,
+          ref: ref,
+          context: context,
+          pageNumber: pageNumber,
+          isLastPage: isLastPage,
+          isLoadMoreLoading: isLoadMoreLoading,
+          orders: orders,
+          isFetchingData: isFetchingData,
+        ),
         onCallBackSecond: () => showCustomBottomSheet(
           context: context,
           size: size,
@@ -67,63 +156,48 @@ class OrderScreen extends HookConsumerWidget {
       ),
       body: Column(
         children: [
-          (state.isLoading && isFirstLoad.value)
-              ? const TabViewShimmer(amount: 3)
-              : Container(
-                  decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: AssetsConstants.subtitleColor.withOpacity(0.2),
-                        spreadRadius: 1,
-                        blurRadius: 1,
-                      ),
-                    ],
-                  ),
-                  height: size.height * 0.06,
-                  width: double.infinity,
-                  child: ListView.builder(
-                    physics: const BouncingScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    itemCount: items.length,
-                    itemBuilder: (_, index) => GestureDetector(
-                      onTap: () => ref.read(orderType.notifier).update(
-                            (state) => items[index],
-                          ),
-                      child: AnimatedContainer(
-                        duration: const Duration(microseconds: 2000),
-                        margin: const EdgeInsets.all(
-                          AssetsConstants.defaultMargin - 4.0,
+          SizedBox(height: size.height * 0.02),
+          (state.isLoading && isLoadMoreLoading.value == false)
+              ? const Center(
+                  child: HomeShimmer(amount: 4),
+                )
+              : orders.value.isEmpty
+                  ? const EmptyBox(title: 'Đơn hàng đang trống')
+                  : Expanded(
+                      child: ListView.builder(
+                        itemCount: orders.value.length + 1,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        controller: scrollController,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AssetsConstants.defaultPadding - 10.0,
                         ),
-                        width: size.width * 0.25,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(
-                            width: 2,
-                            color: nowIndex == index
-                                ? AssetsConstants.mainColor
-                                : AssetsConstants.mainColor,
-                          ),
-                          color: nowIndex == index
-                              ? AssetsConstants.mainColor
-                              : AssetsConstants.whiteColor,
-                        ),
-                        child: Align(
-                          child: LabelText(
-                            color: nowIndex == index
-                                ? AssetsConstants.whiteColor
-                                : AssetsConstants.mainColor,
-                            content: items[index].type,
-                            size: AssetsConstants.defaultFontSize - 14.0,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
+                        itemBuilder: (_, index) {
+                          if (index == orders.value.length) {
+                            if (state.isLoading) {
+                              return const CustomCircular();
+                            }
+                            return isLastPage.value
+                                ? const NoMoreContent()
+                                : Container();
+                          }
+                          return OrderItem(
+                            order: orders.value[index],
+                            onCallback: () => fetchData(
+                              filterSystemContent: "",
+                              filterPartnerContent: "",
+                              getDatatype: GetDataType.fetchdata,
+                              ref: ref,
+                              context: context,
+                              pageNumber: pageNumber,
+                              isLastPage: isLastPage,
+                              isLoadMoreLoading: isLoadMoreLoading,
+                              orders: orders,
+                              isFetchingData: isFetchingData,
+                            ),
+                          );
+                        },
                       ),
                     ),
-                  ),
-                ),
-          OrderList(
-            isFirstLoad: isFirstLoad,
-          ),
         ],
       ),
     );

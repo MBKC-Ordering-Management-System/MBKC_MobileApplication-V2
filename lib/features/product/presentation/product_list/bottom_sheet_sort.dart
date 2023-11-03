@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/sort_type_enum.dart';
@@ -80,7 +81,7 @@ bottomSheetSort({
                   children: [
                     RadioListTile(
                       title: LabelText(
-                        content: SortType.asc.type,
+                        content: getTitleSortType(SortType.asc),
                         size: AssetsConstants.defaultFontSize - 10.0,
                       ),
                       value: options[0],
@@ -96,7 +97,7 @@ bottomSheetSort({
                     ),
                     RadioListTile(
                       title: LabelText(
-                        content: SortType.desc.type,
+                        content: getTitleSortType(SortType.desc),
                         size: AssetsConstants.defaultFontSize - 10.0,
                       ),
                       value: options[1],

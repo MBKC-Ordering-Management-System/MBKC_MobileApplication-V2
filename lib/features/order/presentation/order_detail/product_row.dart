@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../domain/models/order_detail_model.dart';
+import '../../domain/models/order_detail.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
@@ -9,7 +9,7 @@ class ProductRow extends StatelessWidget {
     super.key,
     required this.orderDetails,
   });
-  final List<OrderDetailModel> orderDetails;
+  final List<OrderDetail> orderDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,7 @@ class ProductDetail extends StatelessWidget {
     super.key,
     required this.orderDetail,
   });
-  final OrderDetailModel orderDetail;
+  final OrderDetail orderDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class ProductDetail extends StatelessWidget {
                   flex: 3,
                   child: LabelText(
                     content:
-                        '${orderDetail.quantity}X  ${orderDetail.productName}',
+                        '${orderDetail.quantity}X  ${orderDetail.product!.name}',
                     size: AssetsConstants.defaultFontSize - 13.0,
                     fontWeight: FontWeight.w600,
                     color: AssetsConstants.mainColor,
@@ -69,7 +69,7 @@ class ProductDetail extends StatelessWidget {
                     alignment: Alignment.topRight,
                     child: LabelText(
                       content:
-                          getCustomContent({'Giá:': orderDetail.totalPrice}),
+                          getCustomContent({'Giá:': orderDetail.sellingPrice}),
                       size: AssetsConstants.defaultFontSize - 13.0,
                       fontWeight: FontWeight.w600,
                     ),
@@ -84,13 +84,11 @@ class ProductDetail extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ...orderDetail.extra
-                      .map((e) => LabelText(
-                            content: e,
-                            size: AssetsConstants.defaultFontSize - 14.0,
-                            fontWeight: FontWeight.w600,
-                          ))
-                      .toList(),
+                  ...orderDetail.extraOrderDetails!.map((e) => LabelText(
+                        content: e.toString(),
+                        size: AssetsConstants.defaultFontSize - 14.0,
+                        fontWeight: FontWeight.w600,
+                      )),
                 ],
               ),
             ),

@@ -12,8 +12,12 @@ class APIConstants {
   static const verifyEmail = '/verifications/email-verification';
   static const otpVerification = '/verifications/otp-verification';
   static const changeFirstTime = '/accounts';
+
   // statistical
+
   // order
+  static const order = '/orders';
+
   // product
   static const product = '/products';
 

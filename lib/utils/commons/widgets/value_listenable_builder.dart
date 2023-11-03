@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 class ValueListenableBuilder1<A> extends StatelessWidget {
   const ValueListenableBuilder1({
     required this.first,
-    Key? key,
+    super.key,
     required this.builder,
     this.child,
-  }) : super(key: key);
+  });
 
   final ValueListenable<A> first;
   final Widget? child;
@@ -30,10 +30,10 @@ class ValueListenableBuilder2<A, B> extends StatelessWidget {
   const ValueListenableBuilder2({
     required this.first,
     required this.second,
-    Key? key,
+    super.key,
     required this.builder,
     this.child,
-  }) : super(key: key);
+  });
 
   final ValueListenable<A> first;
   final ValueListenable<B> second;
@@ -61,10 +61,10 @@ class ValueListenableBuilder3<A, B, C> extends StatelessWidget {
     required this.first,
     required this.second,
     required this.third,
-    Key? key,
+    super.key,
     required this.builder,
     this.child,
-  }) : super(key: key);
+  });
 
   final ValueListenable<A> first;
   final ValueListenable<B> second;
@@ -101,9 +101,9 @@ class ValueListenableBuilder6<A, B, C, D, E, F> extends StatelessWidget {
     required this.fifth,
     required this.sixth,
     required this.builder,
-    Key? key,
+    super.key,
     this.child,
-  }) : super(key: key);
+  });
 
   final ValueListenable<A> first;
   final ValueListenable<B> second;

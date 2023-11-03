@@ -57,10 +57,10 @@ class NormalRow extends StatelessWidget {
                           ),
                           child: Center(
                             child: LabelText(
-                              content:
-                                  (e.entries.first.value as OrderStatusType)
-                                      .type
-                                      .toUpperCase(),
+                              content: (e.entries.first.value
+                                      as OrderPartnerStatusType)
+                                  .type
+                                  .toUpperCase(),
                               size: AssetsConstants.defaultFontSize - 14.0,
                               fontWeight: FontWeight.w600,
                               color: AssetsConstants.whiteColor,

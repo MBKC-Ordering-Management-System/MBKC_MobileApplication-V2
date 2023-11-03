@@ -1,7 +1,7 @@
-// ignore_for_file: unused_field
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../utils/commons/functions/shared_preferences_utils.dart';
+import '../../../utils/providers/common_provider.dart';
 import '../app_router.dart';
 
 class AuthGuard extends AutoRouteGuard {
@@ -10,9 +10,10 @@ class AuthGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) async {
-    final token = await SharedPreferencesUtils.getInstance('user_token');
+    final userData = await SharedPreferencesUtils.getInstance('user_token');
 
-    if (token != null) {
+    if (userData != null) {
+      _ref.read(authProvider.notifier).update((state) => userData);
       resolver.next();
     } else {
       router.replaceAll([SignInScreenRoute()]);

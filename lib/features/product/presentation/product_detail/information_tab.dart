@@ -38,11 +38,11 @@ class InformationTab extends StatelessWidget {
           ),
           SizedBox(height: size.height * 0.01),
           FieldBox(title: 'Loại', content: getTitleProductType(product.type)),
-          if (product.size != null) ...[
+          if (product.size != null && product.size!.isNotEmpty) ...[
             SizedBox(height: size.height * 0.01),
             FieldBox(
-              title: 'Loại',
-              content: getTitleProductType(product.type),
+              title: 'Kích cỡ',
+              content: product.size!,
             ),
           ],
           SizedBox(height: size.height * 0.01),

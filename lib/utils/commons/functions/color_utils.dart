@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 import '../../constants/asset_constant.dart';
 import '../../enums/enums_export.dart';
 
-Color getColorOrderStatus(OrderStatusType orderType) {
+Color getColorOrderStatus(OrderPartnerStatusType orderType) {
   switch (orderType) {
-    case OrderStatusType.preparing:
+    case OrderPartnerStatusType.preparing:
       return AssetsConstants.preparingColor;
-    case OrderStatusType.ready:
+    case OrderPartnerStatusType.ready:
       return AssetsConstants.mainColor;
-    case OrderStatusType.delivering:
+    case OrderPartnerStatusType.upcoming:
       return AssetsConstants.deliveringColor;
-    case OrderStatusType.delivered:
+    case OrderPartnerStatusType.completed:
       return AssetsConstants.deliveredColor;
-    case OrderStatusType.cancelled:
+    case OrderPartnerStatusType.cancelled:
       return AssetsConstants.subtitleColor;
     default:
       return AssetsConstants.preparingColor;

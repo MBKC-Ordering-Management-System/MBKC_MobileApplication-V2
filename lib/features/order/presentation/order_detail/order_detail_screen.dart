@@ -65,10 +65,10 @@ class OrderDetailScreen extends ConsumerWidget {
             children: [
               NormalRow(
                 content: [
-                  {'Mã:': order.orderid.toString()}
+                  {'Mã:': order.id.toString()}
                 ],
               ),
-              ProductRow(orderDetails: order.orderDetails),
+              ProductRow(orderDetails: order.orderDetails!),
               NormalRow(
                 content: [
                   {'Phương thức thanh toán:': order.paymentMethod}
@@ -78,25 +78,27 @@ class OrderDetailScreen extends ConsumerWidget {
                 content: [
                   {'Họ tên khách hàng:': order.customerName},
                   {'Số điện thoại:': order.customerPhone},
-                  {'Địa chỉ:': order.customerAddress},
+                  {'Địa chỉ:': order.address},
                 ],
               ),
               NormalRow(
                 content: [
-                  {'Tạm tính:': order.subtotal},
-                  {'Giảm giá:': order.discount},
-                  {'Tổng cộng:': order.finalTotal},
+                  {'Tạm tính:': order.subTotalPrice},
+                  {'Giảm giá:': order.totalDiscount},
+                  {'Tổng cộng:': order.finalTotalPrice},
                 ],
               ),
               NormalRow(
                 content: [
-                  {'Trạng thái:': order.status},
+                  {'Trạng thái:': order.systemStatus},
                 ],
               ),
             ],
           ),
         ),
-        bottomNavigationBar: order.status == OrderStatusType.preparing
+        bottomNavigationBar: order.partnerOrderStatus!
+                    .toOrderPartnerTypeEnum() ==
+                OrderPartnerStatusType.preparing
             ? Container(
                 margin: EdgeInsets.only(bottom: size.height * 0.04),
                 padding: const EdgeInsets.only(
@@ -107,9 +109,10 @@ class OrderDetailScreen extends ConsumerWidget {
                   width: size.width * 1,
                   height: size.height * 0.05,
                   content: 'Hoàn thành',
-                  onCallback: () => changeStatus(
-                      id: order.orderid, context: context, ref: ref),
-                  isActive: order.status == OrderStatusType.preparing,
+                  onCallback: () =>
+                      changeStatus(id: order.id!, context: context, ref: ref),
+                  isActive: order.orderPartnerId!.toOrderPartnerTypeEnum() ==
+                      OrderPartnerStatusType.preparing,
                   size: AssetsConstants.defaultFontSize - 10.0,
                 ),
               )

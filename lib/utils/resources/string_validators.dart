@@ -1,5 +1,3 @@
-/// This file contains some helper functions used for string validation.
-
 abstract class StringValidator {
   bool isValid(String value);
 }
