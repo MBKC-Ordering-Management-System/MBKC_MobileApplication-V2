@@ -6,33 +6,33 @@ import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
-import '../../domain/models/product_model.dart';
-import '../../domain/repositories/product_repository.dart';
+import '../../domain/models/order_model.dart';
+import '../../domain/repositories/order_repository.dart';
 
-part 'product_detail_controller.g.dart';
+part 'order_detail_controller.g.dart';
 
 @riverpod
-class ProductDetailController extends _$ProductDetailController {
+class OrderDetailController extends _$OrderDetailController {
   @override
   FutureOr<void> build() {
     // nothing to do
   }
 
   // get product detail
-  Future<ProductModel?> getProductDetail(
+  Future<OrderModel?> getOrderDetail(
     BuildContext context,
-    int productId,
+    int orderId,
   ) async {
-    ProductModel? product;
+    OrderModel? order;
     state = const AsyncLoading();
-    final productRepository = ref.read(productRepositoryProvider);
+    final orderRepository = ref.read(orderRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
-        product = await productRepository.getProductDetail(
-          productId: productId,
+        order = await orderRepository.getOrderDetail(
+          orderId: orderId,
           accessToken: APIConstants.prefixToken + user!.token.accessToken,
         );
       },
@@ -53,7 +53,7 @@ class ProductDetailController extends _$ProductDetailController {
             return;
           }
 
-          product = await getProductDetail(context, productId);
+          order = await getOrderDetail(context, orderId);
         },
       );
 
@@ -63,6 +63,6 @@ class ProductDetailController extends _$ProductDetailController {
       }
     }
 
-    return product;
+    return order;
   }
 }

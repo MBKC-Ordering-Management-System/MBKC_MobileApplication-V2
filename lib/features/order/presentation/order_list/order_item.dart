@@ -9,7 +9,7 @@ import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/order_partner_status_type.dart';
-import '../order_detail/confirm_order_controller.dart';
+import '../order_detail/modify_order_controller.dart';
 import 'order_detail_item.dart';
 
 class OrderItem extends ConsumerWidget {
@@ -37,7 +37,7 @@ class OrderItem extends ConsumerWidget {
     );
     if (result != null && result) {
       final result = await ref
-          .read(confirmOrderControllerProvider.notifier)
+          .read(modifyOrderControllerProvider.notifier)
           .confirmOrder(id, context);
 
       if (result) {
@@ -61,8 +61,8 @@ class OrderItem extends ConsumerWidget {
     );
     if (result != null && result) {
       final result = await ref
-          .read(confirmOrderControllerProvider.notifier)
-          .confirmOrder(id, context);
+          .read(modifyOrderControllerProvider.notifier)
+          .cancelOrder(id, context);
 
       if (result) {
         onCallback();
@@ -74,7 +74,7 @@ class OrderItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final state = ref.watch(confirmOrderControllerProvider);
+    final state = ref.watch(modifyOrderControllerProvider);
 
     return Container(
       padding: const EdgeInsets.all(AssetsConstants.defaultPadding - 15.0),
@@ -89,7 +89,7 @@ class OrderItem extends ConsumerWidget {
           InkWell(
             onTap: () {
               context.router
-                  .push(OrderDetailScreenRoute(order: order))
+                  .push(OrderDetailScreenRoute(orderId: order.id!))
                   .then((value) {
                 if (value != null && value == true) {
                   onCallback();
@@ -130,10 +130,23 @@ class OrderItem extends ConsumerWidget {
                     customButtonOrder(
                       width: size.width * 0.22,
                       height: size.height * 0.035,
-                      content: order.systemStatus!.toOrderSystemTypeEnum().type,
+                      content: getTitleSystemStatus(
+                          order.systemStatus!.toOrderSystemTypeEnum()),
                       size: AssetsConstants.defaultFontSize - 18.0,
                       onCallBack: () {},
-                      backgroundColor: getColorOrderStatus(
+                      backgroundColor: getColorOrderSystemStatus(
+                          order.systemStatus!.toOrderSystemTypeEnum()),
+                      contentColor: AssetsConstants.whiteColor,
+                    ),
+                    SizedBox(width: size.width * 0.02),
+                    customButtonOrder(
+                      width: size.width * 0.22,
+                      height: size.height * 0.035,
+                      content: getTitlePartnerStatus(
+                          order.partnerOrderStatus!.toOrderPartnerTypeEnum()),
+                      size: AssetsConstants.defaultFontSize - 18.0,
+                      onCallBack: () {},
+                      backgroundColor: getColorOrderPartnerStatus(
                           order.partnerOrderStatus!.toOrderPartnerTypeEnum()),
                       contentColor: AssetsConstants.whiteColor,
                     ),

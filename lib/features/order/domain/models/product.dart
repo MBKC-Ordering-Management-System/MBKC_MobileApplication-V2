@@ -13,7 +13,7 @@ class Product {
   final String? status;
   final String? size;
   final int? displayOrder;
-  final String? parentProductId;
+  final int? parentProductId;
   final List<Product>? childrenProducts;
   final int? categoryId;
   final String? categoryName;
@@ -108,7 +108,7 @@ class Product {
       status: map['status'],
       size: map['size'],
       displayOrder: map['displayOrder']?.toInt(),
-      parentProductId: map['parentProductId'],
+      parentProductId: map['parentProductId']?.toInt(),
       childrenProducts: map['childrenProducts'] != null
           ? List<Product>.from(
               map['childrenProducts']?.map((x) => Product.fromMap(x)))

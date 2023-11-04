@@ -7,6 +7,7 @@ export './custom_outline_button.dart';
 export './empty_box.dart';
 export './field_box.dart';
 export './error_message_widget.dart';
+export './filter_sort_box.dart';
 export './home_shimmer.dart';
 export './label_text.dart';
 export './loading_overlay.dart';

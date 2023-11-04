@@ -17,7 +17,6 @@ import '../../features/product/presentation/product_detail/product_detail_screen
 import '../../features/product/presentation/product_list/product_screen.dart';
 import '../../features/profile/domain/models/profile_model.dart';
 import '../../features/profile/presentation/profile/profile_screen.dart';
-import '../../features/order/domain/models/order_model.dart';
 import '../../features/profile/presentation/profile_detail/profile_detail_screen.dart';
 import '../../features/wallet/domain/models/transaction_model.dart';
 import '../../features/wallet/presentation/banking_account_list/banking_account_screen.dart';

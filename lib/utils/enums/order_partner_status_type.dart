@@ -1,9 +1,9 @@
 enum OrderPartnerStatusType {
-  preparing('Đang chuẩn bị'),
-  ready('Sẵn sàng'),
-  upcoming('Sắp tới'),
-  completed('Đã giao'),
-  cancelled('Đã hủy');
+  preparing('PREPARING'),
+  ready('READY'),
+  upcoming('UPCOMING'),
+  completed('COMPLETED'),
+  cancelled('CANCELLED');
 
   final String type;
   const OrderPartnerStatusType(this.type);

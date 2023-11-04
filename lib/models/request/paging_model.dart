@@ -5,6 +5,8 @@ class PagingModel {
   final String? sortContent;
   final String? filterContent;
   final String? filterSystemContent;
+  final String? searchDateFrom;
+  final String? searchDateTo;
 
   PagingModel({
     this.pageNumber = 1,
@@ -13,5 +15,7 @@ class PagingModel {
     this.sortContent,
     this.filterContent,
     this.filterSystemContent,
+    this.searchDateFrom,
+    this.searchDateTo,
   });
 }

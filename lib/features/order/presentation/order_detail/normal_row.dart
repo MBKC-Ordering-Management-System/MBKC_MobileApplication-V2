@@ -53,7 +53,7 @@ class NormalRow extends StatelessWidget {
                           width: size.width * 0.35,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: getColorOrderStatus(e.entries.first.value),
+                            color: AssetsConstants.blackColor,
                           ),
                           child: Center(
                             child: LabelText(

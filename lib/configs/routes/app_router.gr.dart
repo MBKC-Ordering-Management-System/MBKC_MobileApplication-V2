@@ -71,7 +71,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: OrderDetailScreen(
           key: args.key,
-          order: args.order,
+          orderId: args.orderId,
         ),
       );
     },
@@ -353,13 +353,13 @@ class OTPVerificationScreenRouteArgs {
 class OrderDetailScreenRoute extends PageRouteInfo<OrderDetailScreenRouteArgs> {
   OrderDetailScreenRoute({
     Key? key,
-    required OrderModel order,
+    required int orderId,
     List<PageRouteInfo>? children,
   }) : super(
           OrderDetailScreenRoute.name,
           args: OrderDetailScreenRouteArgs(
             key: key,
-            order: order,
+            orderId: orderId,
           ),
           initialChildren: children,
         );
@@ -373,16 +373,16 @@ class OrderDetailScreenRoute extends PageRouteInfo<OrderDetailScreenRouteArgs> {
 class OrderDetailScreenRouteArgs {
   const OrderDetailScreenRouteArgs({
     this.key,
-    required this.order,
+    required this.orderId,
   });
 
   final Key? key;
 
-  final OrderModel order;
+  final int orderId;
 
   @override
   String toString() {
-    return 'OrderDetailScreenRouteArgs{key: $key, order: $order}';
+    return 'OrderDetailScreenRouteArgs{key: $key, orderId: $orderId}';
   }
 }
 

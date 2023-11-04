@@ -12,7 +12,6 @@ import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import 'bottom_sheet_filter.dart';
 import 'bottom_sheet_sort.dart';
-import 'filter_sort_box.dart';
 import 'product_controller.dart';
 import 'product_item.dart';
 import 'product_shimmer.dart';
@@ -159,31 +158,29 @@ class ProductScreen extends HookConsumerWidget {
           children: [
             Row(
               children: [
-                Consumer(
-                  builder: (_, ref, __) => InkWell(
-                    onTap: () => bottomSheetFilter(
+                InkWell(
+                  onTap: () => bottomSheetFilter(
+                    context: context,
+                    size: size,
+                    onCallback: () => fetchData(
+                      filterContent: ref.read(optionFilterProvider)?.type,
+                      sortContent: ref.read(optionSortProvider)?.type,
+                      getDatatype: GetDataType.fetchdata,
+                      ref: ref,
                       context: context,
-                      size: size,
-                      onCallback: () => fetchData(
-                        filterContent: ref.read(optionFilterProvider)?.type,
-                        sortContent: ref.read(optionSortProvider)?.type,
-                        getDatatype: GetDataType.fetchdata,
-                        ref: ref,
-                        context: context,
-                        pageNumber: pageNumber,
-                        isLastPage: isLastPage,
-                        isLoadMoreLoading: isLoadMoreLoading,
-                        products: products,
-                        isFetchingData: isFetchingData,
-                        searchContent: searchContent.text.trim(),
-                      ),
+                      pageNumber: pageNumber,
+                      isLastPage: isLastPage,
+                      isLoadMoreLoading: isLoadMoreLoading,
+                      products: products,
+                      isFetchingData: isFetchingData,
+                      searchContent: searchContent.text.trim(),
                     ),
-                    child: FilterSortBox(
-                      content: ref.watch(optionFilterProvider) != null
-                          ? getTitleProductType(
-                              ref.watch(optionFilterProvider)!)
-                          : 'Loại',
-                    ),
+                  ),
+                  child: FilterSortBox(
+                    clickable: true,
+                    content: ref.watch(optionFilterProvider) != null
+                        ? getTitleProductType(ref.watch(optionFilterProvider)!)
+                        : 'Loại',
                   ),
                 ),
                 SizedBox(width: size.width * 0.03),
@@ -206,6 +203,7 @@ class ProductScreen extends HookConsumerWidget {
                     ),
                   ),
                   child: FilterSortBox(
+                    clickable: true,
                     content: ref.watch(optionSortProvider) != null
                         ? getTitleSortType(ref.watch(optionSortProvider)!)
                         : 'Giá',

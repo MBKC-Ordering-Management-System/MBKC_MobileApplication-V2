@@ -3,6 +3,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/providers/common_provider.dart';
+import '../../domain/models/order_model.dart';
 import '../../domain/models/response/order_list_response.dart';
 
 part 'order_source.g.dart';
@@ -17,8 +18,17 @@ abstract class OrderSource {
     @Header(APIConstants.authHeader) String accessToken,
     @Query('systemStatus') String? orderSystemStatus,
     @Query('partnerStatus') String? orderPartnerStatus,
+    @Query('searchDateFrom') String? dateFrom,
+    @Query('SearchDateTo') String? dateTo,
     @Query('currentPage') int currentPage,
     @Query('itemsPerPage') int itemsPerPage,
+  );
+
+  @GET('${APIConstants.order}/{id}')
+  Future<HttpResponse<OrderModel>> getProductDetail(
+    @Header(APIConstants.contentHeader) String contentType,
+    @Header(APIConstants.authHeader) String accessToken,
+    @Path('id') int id,
   );
 }
 

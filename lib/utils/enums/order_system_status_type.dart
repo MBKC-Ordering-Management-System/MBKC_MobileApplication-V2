@@ -1,8 +1,8 @@
 enum OrderSystemStatusType {
-  instore('Đang chuẩn bị'),
-  readydelivery('Sẵn sàng'),
-  completed('Đã giao'),
-  cancelled('Đã hủy');
+  instore('IN_STORE'),
+  readydelivery('READY_DELIVERY'),
+  completed('COMPLETED'),
+  cancelled('CANCELLED');
 
   final String type;
   const OrderSystemStatusType(this.type);

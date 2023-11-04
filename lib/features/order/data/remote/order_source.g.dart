@@ -26,6 +26,8 @@ class _OrderSource implements OrderSource {
     String accessToken,
     String? orderSystemStatus,
     String? orderPartnerStatus,
+    String? dateFrom,
+    String? dateTo,
     int currentPage,
     int itemsPerPage,
   ) async {
@@ -33,6 +35,8 @@ class _OrderSource implements OrderSource {
     final queryParameters = <String, dynamic>{
       r'systemStatus': orderSystemStatus,
       r'partnerStatus': orderPartnerStatus,
+      r'searchDateFrom': dateFrom,
+      r'SearchDateTo': dateTo,
       r'currentPage': currentPage,
       r'itemsPerPage': itemsPerPage,
     };
@@ -62,6 +66,43 @@ class _OrderSource implements OrderSource {
               baseUrl,
             ))));
     final value = OrderListResponse.fromMap(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<OrderModel>> getProductDetail(
+    String contentType,
+    String accessToken,
+    int id,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Authorization': accessToken,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<OrderModel>>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/orders/${id}',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = OrderModel.fromMap(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

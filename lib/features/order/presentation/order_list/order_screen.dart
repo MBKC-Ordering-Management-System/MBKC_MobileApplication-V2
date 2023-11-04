@@ -1,9 +1,10 @@
+// ignore_for_file: unused_local_variable
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../models/request/paging_model.dart';
-import '../../../../utils/commons/functions/datetime_utils.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/custom_bottom_sheet.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
@@ -41,6 +42,8 @@ class OrderScreen extends HookConsumerWidget {
     required ValueNotifier<bool> isFetchingData,
     required String? filterSystemContent,
     required String? filterPartnerContent,
+    required String? orderDateFrom,
+    required String? orderDateTo,
   }) async {
     if (getDatatype == GetDataType.loadmore && isFetchingData.value) {
       return;
@@ -62,8 +65,10 @@ class OrderScreen extends HookConsumerWidget {
         await ref.read(orderControllerProvider.notifier).getOrders(
               PagingModel(
                 pageNumber: pageNumber.value,
-                filterSystemContent: "",
-                filterContent: "",
+                filterSystemContent: filterSystemContent,
+                filterContent: filterPartnerContent,
+                searchDateFrom: orderDateFrom,
+                searchDateTo: orderDateTo,
               ),
               context,
             );
@@ -88,6 +93,10 @@ class OrderScreen extends HookConsumerWidget {
     final scrollController = useScrollController();
     final state = ref.watch(orderControllerProvider);
     final isFetchingData = useState(true);
+    final systemStatus = ref.watch(filterSystemStatus);
+    final partnerStatus = ref.watch(filterPartnerStatus);
+    final dateFrom = ref.watch(orderDateFrom);
+    final dateTo = ref.watch(orderDateTo);
 
     // searching
     final pageNumber = useState(0);
@@ -98,8 +107,10 @@ class OrderScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         fetchData(
-          filterSystemContent: "",
-          filterPartnerContent: "",
+          filterSystemContent: ref.read(filterSystemStatus).type,
+          filterPartnerContent: ref.read(filterPartnerStatus).type,
+          orderDateFrom: ref.read(orderDateFrom),
+          orderDateTo: ref.read(orderDateTo),
           getDatatype: GetDataType.fetchdata,
           ref: ref,
           context: context,
@@ -114,8 +125,10 @@ class OrderScreen extends HookConsumerWidget {
       scrollController.onScrollEndsListener(
         () {
           fetchData(
-            filterSystemContent: "",
-            filterPartnerContent: "",
+            filterSystemContent: ref.read(filterSystemStatus).type,
+            filterPartnerContent: ref.read(filterPartnerStatus).type,
+            orderDateFrom: ref.read(orderDateFrom),
+            orderDateTo: ref.read(orderDateTo),
             getDatatype: GetDataType.loadmore,
             ref: ref,
             context: context,
@@ -138,8 +151,10 @@ class OrderScreen extends HookConsumerWidget {
         iconFirst: Icons.refresh_rounded,
         iconSecond: Icons.filter_list_alt,
         onCallBackFirst: () => fetchData(
-          filterSystemContent: "",
-          filterPartnerContent: "",
+          filterSystemContent: ref.read(filterSystemStatus).type,
+          filterPartnerContent: ref.read(filterPartnerStatus).type,
+          orderDateFrom: ref.read(orderDateFrom),
+          orderDateTo: ref.read(orderDateTo),
           getDatatype: GetDataType.fetchdata,
           ref: ref,
           context: context,
@@ -150,6 +165,20 @@ class OrderScreen extends HookConsumerWidget {
           isFetchingData: isFetchingData,
         ),
         onCallBackSecond: () => showCustomBottomSheet(
+          onCallback: () => fetchData(
+            filterSystemContent: ref.read(filterSystemStatus).type,
+            filterPartnerContent: ref.read(filterPartnerStatus).type,
+            orderDateFrom: ref.read(orderDateFrom),
+            orderDateTo: ref.read(orderDateTo),
+            getDatatype: GetDataType.fetchdata,
+            ref: ref,
+            context: context,
+            pageNumber: pageNumber,
+            isLastPage: isLastPage,
+            isLoadMoreLoading: isLoadMoreLoading,
+            orders: orders,
+            isFetchingData: isFetchingData,
+          ),
           context: context,
           size: size,
         ),
@@ -162,7 +191,10 @@ class OrderScreen extends HookConsumerWidget {
                   child: HomeShimmer(amount: 4),
                 )
               : orders.value.isEmpty
-                  ? const EmptyBox(title: 'Đơn hàng đang trống')
+                  ? const Align(
+                      alignment: Alignment.topCenter,
+                      child: EmptyBox(title: 'Đơn hàng trống'),
+                    )
                   : Expanded(
                       child: ListView.builder(
                         itemCount: orders.value.length + 1,
@@ -183,8 +215,12 @@ class OrderScreen extends HookConsumerWidget {
                           return OrderItem(
                             order: orders.value[index],
                             onCallback: () => fetchData(
-                              filterSystemContent: "",
-                              filterPartnerContent: "",
+                              filterSystemContent:
+                                  ref.read(filterSystemStatus).type,
+                              filterPartnerContent:
+                                  ref.read(filterPartnerStatus).type,
+                              orderDateFrom: ref.read(orderDateFrom),
+                              orderDateTo: ref.read(orderDateTo),
                               getDatatype: GetDataType.fetchdata,
                               ref: ref,
                               context: context,

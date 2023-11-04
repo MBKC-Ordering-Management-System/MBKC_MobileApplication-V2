@@ -23,6 +23,7 @@ class OrderModel {
   final String? displayId;
   final String? address;
   final int? cutlery;
+  final int? totalQuantity;
   final String? partnerOrderStatus;
   final Partner? partner;
   final List<ShipperPayment>? shipperPayments;
@@ -48,6 +49,7 @@ class OrderModel {
     required this.displayId,
     required this.address,
     required this.cutlery,
+    required this.totalQuantity,
     required this.partnerOrderStatus,
     required this.partner,
     required this.shipperPayments,
@@ -112,6 +114,9 @@ class OrderModel {
     if (cutlery != null) {
       result.addAll({'cutlery': cutlery});
     }
+    if (totalQuantity != null) {
+      result.addAll({'totalQuantity': totalQuantity});
+    }
     if (partnerOrderStatus != null) {
       result.addAll({'partnerOrderStatus': partnerOrderStatus});
     }
@@ -152,6 +157,7 @@ class OrderModel {
       displayId: map['displayId'],
       address: map['address'],
       cutlery: map['cutlery']?.toInt(),
+      totalQuantity: map['totalQuantity']?.toInt(),
       partnerOrderStatus: map['partnerOrderStatus'],
       partner: map['partner'] != null ? Partner.fromMap(map['partner']) : null,
       shipperPayments: map['shipperPayments'] != null

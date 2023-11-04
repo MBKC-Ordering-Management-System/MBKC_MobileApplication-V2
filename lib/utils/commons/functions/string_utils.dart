@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:intl/intl.dart';
 import '../../enums/enums_export.dart';
+import '../../enums/order_system_status_type.dart';
 import '../../enums/product_type_enum.dart';
 import '../../enums/sort_type_enum.dart';
 
@@ -34,6 +35,7 @@ String getCustomContent(Map<String, dynamic> content) {
     case 'Số dư sau giao dịch':
     case 'Giá:':
     case 'Tạm tính:':
+    case 'Phí giao hàng:':
     case 'Tổng cộng:':
       final number =
           NumberFormat.decimalPattern().format(content.entries.first.value);
@@ -102,6 +104,50 @@ String getTitleSortType(SortType type) {
       return 'Tăng dần';
     case SortType.desc:
       return 'Giảm dần';
+    default:
+      return 'Unknow!';
+  }
+}
+
+String getTitleSystemStatus(OrderSystemStatusType type) {
+  switch (type) {
+    case OrderSystemStatusType.instore:
+      return 'Trong bếp';
+    case OrderSystemStatusType.readydelivery:
+      return 'Sẵn sàng giao';
+    case OrderSystemStatusType.completed:
+      return 'Đã giao';
+    case OrderSystemStatusType.cancelled:
+      return 'Đã hủy';
+    default:
+      return 'Unknow!';
+  }
+}
+
+String getTitlePartnerStatus(OrderPartnerStatusType type) {
+  switch (type) {
+    case OrderPartnerStatusType.preparing:
+      return 'Đang chuẩn bị';
+    case OrderPartnerStatusType.upcoming:
+      return 'Sắp tới';
+    case OrderPartnerStatusType.ready:
+      return 'Sẵn sàng';
+    case OrderPartnerStatusType.completed:
+      return 'Đã giao';
+    case OrderPartnerStatusType.cancelled:
+      return 'Đã hủy';
+    default:
+      return 'Unknow!';
+  }
+}
+
+String getTitlePaymentMethod(String type) {
+  switch (type) {
+    case 'Cash':
+      return 'Tiền mặt';
+    case 'Cashless':
+      return 'Chuyển khoản';
+
     default:
       return 'Unknow!';
   }

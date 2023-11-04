@@ -1,8 +1,9 @@
 import '../../../../models/response/success_model.dart';
 import '../../../../models/request/paging_model.dart';
-import '../../../../utils/commons/functions/delay_util.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/resources/remote_base_repository.dart';
+import '../../domain/models/order_model.dart';
 import '../../domain/models/response/order_list_response.dart';
 import '../../domain/repositories/order_repository.dart';
 import '../remote/order_source.dart';
@@ -24,6 +25,8 @@ class OrderRepositoryImpl extends RemoteBaseRepository
         accessToken,
         request.filterSystemContent,
         request.filterContent,
+        request.searchDateFrom,
+        request.searchDateTo,
         request.pageNumber,
         request.pageSize,
       ),
@@ -31,8 +34,34 @@ class OrderRepositoryImpl extends RemoteBaseRepository
   }
 
   @override
-  Future<SuccessModel> confirmOrder(int id) async {
+  Future<OrderModel> getOrderDetail({
+    required int orderId,
+    required String accessToken,
+  }) {
+    return getDataOf(
+      request: () => _orderSource.getProductDetail(
+        APIConstants.contentType,
+        accessToken,
+        orderId,
+      ),
+    );
+  }
+
+  @override
+  Future<SuccessModel> confirmOrder({
+    required int orderId,
+    required String accessToken,
+  }) async {
     await delay(addDelay);
-    return SuccessModel(message: 'Update successfully.');
+    return SuccessModel(message: "Confirm order successfully.");
+  }
+
+  @override
+  Future<SuccessModel> cancelOrder({
+    required int orderId,
+    required String accessToken,
+  }) async {
+    await delay(addDelay);
+    return SuccessModel(message: "Cancel order successfully.");
   }
 }
