@@ -34,6 +34,7 @@ String getCustomContent(Map<String, dynamic> content) {
     case 'Số tiền giao dịch':
     case 'Số dư sau giao dịch':
     case 'Giá:':
+    case 'Số tiền:':
     case 'Tạm tính:':
     case 'Phí giao hàng:':
     case 'Tổng cộng:':
@@ -129,7 +130,7 @@ String getTitlePartnerStatus(OrderPartnerStatusType type) {
     case OrderPartnerStatusType.preparing:
       return 'Đang chuẩn bị';
     case OrderPartnerStatusType.upcoming:
-      return 'Sắp tới';
+      return 'Đặt trước';
     case OrderPartnerStatusType.ready:
       return 'Sẵn sàng';
     case OrderPartnerStatusType.completed:

@@ -177,6 +177,34 @@ class OrderDetailScreen extends HookConsumerWidget {
                             {'Tổng cộng:': order.value!.finalTotalPrice},
                           ],
                         ),
+                        if (order.value!.partnerOrderStatus!
+                                .toOrderPartnerTypeEnum() ==
+                            OrderPartnerStatusType.completed)
+                          NormalRow(
+                            content: [
+                              {
+                                'Thanh toán của giao hàng':
+                                    order.value!.commission
+                              },
+                              {
+                                'Số tiền:':
+                                    order.value!.shipperPayments!.last.amount
+                              },
+                              {
+                                'Thời gian:': formatDateTime(order
+                                    .value!.shipperPayments!.last.createDate!)
+                              },
+                              {
+                                'Phương thức thanh toán:':
+                                    order.value!.subTotalPrice
+                              },
+                              {'Thanh toán bởi:': order.value!.subTotalPrice},
+                              {
+                                'Hình ảnh:':
+                                    order.value!.orderHistories.last.image
+                              },
+                            ],
+                          ),
                         NormalRow(
                           content: [
                             {
@@ -201,18 +229,22 @@ class OrderDetailScreen extends HookConsumerWidget {
                 : order.value!.partnerOrderStatus!.toOrderPartnerTypeEnum() ==
                         OrderPartnerStatusType.preparing
                     ? Container(
-                        margin: EdgeInsets.symmetric(
-                          vertical: size.height * 0.02,
+                        decoration: const BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              color: AssetsConstants.borderColor,
+                            ),
+                          ),
                         ),
-                        padding: const EdgeInsets.only(
-                          right: AssetsConstants.defaultPadding,
-                          left: AssetsConstants.defaultPadding,
+                        padding: const EdgeInsets.symmetric(
+                          vertical: AssetsConstants.defaultPadding - 6.0,
+                          horizontal: AssetsConstants.defaultPadding - 10.0,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomButton(
-                              width: size.width * 0.7,
+                              width: size.width * 0.75,
                               height: size.height * 0.05,
                               content: 'Hoàn thành',
                               onCallback: () => changeStatus(

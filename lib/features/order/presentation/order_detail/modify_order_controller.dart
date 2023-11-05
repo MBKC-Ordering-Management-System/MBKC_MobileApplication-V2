@@ -119,7 +119,7 @@ class ModifyOrderController extends _$ModifyOrderController {
             return;
           }
 
-          confirmOrder(id, context);
+          cancelOrder(id, context);
         },
       );
 

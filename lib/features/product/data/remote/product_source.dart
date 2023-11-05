@@ -17,6 +17,7 @@ abstract class ProductSource {
     @Header(APIConstants.contentHeader) String contentType,
     @Header(APIConstants.authHeader) String accessToken,
     @Query('searchValue') String? searchName,
+    @Query('sortBy') String? sortBy,
     @Query('productType') String? productType,
     @Query('currentPage') int currentPage,
     @Query('itemsPerPage') int itemsPerPage,

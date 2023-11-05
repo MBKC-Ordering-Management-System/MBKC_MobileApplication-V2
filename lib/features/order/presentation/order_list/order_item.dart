@@ -170,10 +170,8 @@ class OrderItem extends ConsumerWidget {
               ],
             ),
           ),
-          if (order.systemStatus!.toOrderPartnerTypeEnum() ==
-                  OrderPartnerStatusType.preparing &&
-              order.partnerOrderStatus!.toOrderSystemTypeEnum() ==
-                  OrderSystemStatusType.instore) ...[
+          if (order.partnerOrderStatus!.toOrderPartnerTypeEnum() ==
+              OrderPartnerStatusType.preparing) ...[
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

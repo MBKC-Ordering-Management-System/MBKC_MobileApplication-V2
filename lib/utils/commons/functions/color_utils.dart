@@ -10,9 +10,9 @@ Color getColorOrderPartnerStatus(OrderPartnerStatusType orderType) {
     case OrderPartnerStatusType.ready:
       return AssetsConstants.mainColor;
     case OrderPartnerStatusType.upcoming:
-      return AssetsConstants.deliveringColor;
+      return AssetsConstants.upcomingColor;
     case OrderPartnerStatusType.completed:
-      return AssetsConstants.deliveredColor;
+      return AssetsConstants.completedColor;
     case OrderPartnerStatusType.cancelled:
       return AssetsConstants.subtitleColor;
     default:
@@ -27,9 +27,9 @@ Color getColorOrderSystemStatus(OrderSystemStatusType orderType) {
     case OrderSystemStatusType.readydelivery:
       return AssetsConstants.mainColor;
     case OrderSystemStatusType.completed:
-      return AssetsConstants.deliveringColor;
+      return AssetsConstants.completedColor;
     case OrderSystemStatusType.cancelled:
-      return AssetsConstants.deliveredColor;
+      return AssetsConstants.subtitleColor;
     default:
       return AssetsConstants.preparingColor;
   }
@@ -61,11 +61,29 @@ Color getColorTransaction(TransactionType type) {
 
 Color getColorByKey(String key) {
   switch (key) {
-    case 'IN_STORE':
-    case 'PREPARING':
+    case 'Trong bếp':
+    case 'Đang chuẩn bị':
+      return AssetsConstants.preparingColor;
+
+    case 'Sẵn sàng':
+    case 'Sẵn sàng giao':
+      return AssetsConstants.mainColor;
+
+    case 'Đặt trước':
+      return AssetsConstants.upcomingColor;
+
+    case 'Đã giao':
+      return AssetsConstants.completedColor;
+
+    case 'Đã hủy':
+      return AssetsConstants.subtitleColor;
+
+    case 'Thanh toán của giao hàng':
+      return AssetsConstants.mainColor;
+
+    case 'Giảm giá:':
       return AssetsConstants.discountColor;
-    case '':
-      return AssetsConstants.transactionOut;
+
     default:
       return AssetsConstants.blackColor;
   }

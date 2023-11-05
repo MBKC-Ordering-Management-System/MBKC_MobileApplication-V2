@@ -11,13 +11,13 @@ enum OrderSystemStatusType {
 extension ConvertOrderSystemStatus on String {
   OrderSystemStatusType toOrderSystemTypeEnum() {
     switch (this) {
-      case 'IN_STORE':
+      case 'In store':
         return OrderSystemStatusType.instore;
-      case 'READY_DELIVERY':
+      case 'Ready delivery':
         return OrderSystemStatusType.readydelivery;
-      case 'COMPLETED':
+      case 'Completed':
         return OrderSystemStatusType.completed;
-      case 'CANCELLED':
+      case 'Cancelled':
         return OrderSystemStatusType.cancelled;
       default:
         return OrderSystemStatusType.instore;

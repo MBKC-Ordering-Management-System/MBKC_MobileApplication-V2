@@ -97,8 +97,8 @@ class AssetsConstants {
   static const totalOrderContent = Color(0xff08660D);
   static const transparentColor = Colors.transparent;
   static const preparingColor = Color(0xffCE6147);
-  static const deliveringColor = Color(0xffD5770B);
-  static const deliveredColor = Color(0xff1AD285);
+  static const upcomingColor = Color(0xffD5770B);
+  static const completedColor = Color(0xff1AD285);
   static const discountColor = Color(0xffff8134);
   static const searchBoxColor = Color(0xffF6F7FB);
   static const descriptionColor = Color(0xff818A94);

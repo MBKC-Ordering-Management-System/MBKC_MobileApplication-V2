@@ -25,6 +25,7 @@ class _ProductSource implements ProductSource {
     String contentType,
     String accessToken,
     String? searchName,
+    String? sortBy,
     String? productType,
     int currentPage,
     int itemsPerPage,
@@ -33,6 +34,7 @@ class _ProductSource implements ProductSource {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'searchValue': searchName,
+      r'sortBy': sortBy,
       r'productType': productType,
       r'currentPage': currentPage,
       r'itemsPerPage': itemsPerPage,

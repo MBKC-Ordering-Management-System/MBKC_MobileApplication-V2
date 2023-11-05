@@ -53,7 +53,7 @@ class ProductDetailController extends _$ProductDetailController {
             return;
           }
 
-          product = await getProductDetail(context, productId);
+          getProductDetail(context, productId);
         },
       );
 

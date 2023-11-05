@@ -23,6 +23,7 @@ class ProductRepositoryImpl extends RemoteBaseRepository
         APIConstants.contentType,
         accessToken,
         request.searchContent,
+        request.sortContent,
         request.filterContent,
         request.pageNumber,
         request.pageSize,

@@ -34,7 +34,7 @@ class _OrderSource implements OrderSource {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'systemStatus': orderSystemStatus,
-      r'partnerStatus': orderPartnerStatus,
+      r'partnerOrderStatus': orderPartnerStatus,
       r'searchDateFrom': dateFrom,
       r'SearchDateTo': dateTo,
       r'currentPage': currentPage,
@@ -103,6 +103,80 @@ class _OrderSource implements OrderSource {
               baseUrl,
             ))));
     final value = OrderModel.fromMap(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<SuccessModel>> changeOrderToReady(
+    String contentType,
+    String accessToken,
+    int id,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Authorization': accessToken,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<SuccessModel>>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/orders/${id}/change-order-to-ready',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = SuccessModel.fromMap(_result.data!);
+    final httpResponse = HttpResponse(value, _result);
+    return httpResponse;
+  }
+
+  @override
+  Future<HttpResponse<SuccessModel>> cancelOrder(
+    String contentType,
+    String accessToken,
+    int id,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{
+      r'Content-Type': contentType,
+      r'Authorization': accessToken,
+    };
+    _headers.removeWhere((k, v) => v == null);
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<HttpResponse<SuccessModel>>(Options(
+      method: 'PUT',
+      headers: _headers,
+      extra: _extra,
+      contentType: contentType,
+    )
+            .compose(
+              _dio.options,
+              '/orders/${id}/cancel-order',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = SuccessModel.fromMap(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }

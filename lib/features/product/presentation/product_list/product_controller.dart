@@ -57,7 +57,7 @@ class ProductController extends _$ProductController {
             return;
           }
 
-          products = await getProducts(request, context);
+          getProducts(request, context);
         },
       );
 

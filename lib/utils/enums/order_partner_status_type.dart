@@ -12,15 +12,15 @@ enum OrderPartnerStatusType {
 extension ConvertOrderPartnerStatus on String {
   OrderPartnerStatusType toOrderPartnerTypeEnum() {
     switch (this) {
-      case 'PREPARING':
+      case 'Preparing':
         return OrderPartnerStatusType.preparing;
-      case 'READY':
+      case 'Ready':
         return OrderPartnerStatusType.ready;
-      case 'UPCOMING':
+      case 'Upcoming':
         return OrderPartnerStatusType.upcoming;
-      case 'COMPLETED':
+      case 'Completed':
         return OrderPartnerStatusType.completed;
-      case 'CANCELLED':
+      case 'Cancelled':
         return OrderPartnerStatusType.cancelled;
       default:
         return OrderPartnerStatusType.preparing;

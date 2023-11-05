@@ -25,6 +25,16 @@ DateTime stringToDateTime(String time) {
   }
 }
 
+String formatDateTime(String time) {
+  try {
+    DateTime dateTime = DateTime.parse(time);
+    String formattedDate = DateFormat("HH:mm:ss dd/MM/yyyy").format(dateTime);
+    return formattedDate;
+  } catch (ex) {
+    throw Exception('Exception when parsing from String to Datetime');
+  }
+}
+
 String getDateTimeNow() {
   DateTime now = DateTime.now();
   DateFormat formatter = DateFormat('dd/MM/yyyy');

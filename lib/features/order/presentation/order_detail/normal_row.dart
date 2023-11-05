@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/enums_export.dart';
 
 class NormalRow extends StatelessWidget {
   const NormalRow({super.key, required this.content});
@@ -34,55 +33,78 @@ class NormalRow extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  //*** LABEL ***
                   Expanded(
                     child: Align(
                       alignment: Alignment.topLeft,
                       child: LabelText(
                         content: e.entries.first.key,
                         size: AssetsConstants.defaultFontSize - 13.0,
-                        fontWeight: FontWeight.w600,
-                        color: e.entries.first.key == 'Giảm giá:'
-                            ? AssetsConstants.discountColor
-                            : AssetsConstants.blackColor,
+                        fontWeight: (e.entries.first.key == 'Tổng cộng:' ||
+                                e.entries.first.key == 'Trạng thái hệ thống:' ||
+                                e.entries.first.key == 'Trạng thái đối tác:' ||
+                                e.entries.first.key == 'Số tiền:' ||
+                                e.entries.first.key ==
+                                    'Thanh toán của giao hàng')
+                            ? FontWeight.bold
+                            : FontWeight.w600,
+                        color: getColorByKey(e.entries.first.key),
                       ),
                     ),
                   ),
-                  e.entries.first.key == 'Trạng thái:'
+
+                  //*** VALUE ***
+                  (e.entries.first.key == 'Trạng thái hệ thống:' ||
+                          e.entries.first.key == 'Trạng thái đối tác:')
                       ? Container(
                           height: size.height * 0.04,
                           width: size.width * 0.35,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: AssetsConstants.blackColor,
+                            color: getColorByKey(e.entries.first.value),
                           ),
                           child: Center(
                             child: LabelText(
-                              content: (e.entries.first.value
-                                      as OrderPartnerStatusType)
-                                  .type
-                                  .toUpperCase(),
+                              content: e.entries.first.value,
                               size: AssetsConstants.defaultFontSize - 14.0,
                               fontWeight: FontWeight.w600,
                               color: AssetsConstants.whiteColor,
                             ),
                           ),
                         )
-                      : Expanded(
-                          child: Align(
-                            alignment: Alignment.topRight,
-                            child: LabelText(
-                              content: getCustomContent(e),
-                              size: AssetsConstants.defaultFontSize - 13.0,
-                              fontWeight: e.entries.first.key == 'Tổng cộng:'
-                                  ? FontWeight.bold
-                                  : FontWeight.w600,
-                              maxLine: 10,
-                              color: e.entries.first.key == 'Giảm giá:'
-                                  ? AssetsConstants.discountColor
-                                  : AssetsConstants.blackColor,
-                            ),
-                          ),
-                        ),
+                      : e.entries.first.key == 'Thanh toán của giao hàng'
+                          ? Container()
+                          : e.entries.first.key == 'Hình ảnh:'
+                              ? Expanded(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(5),
+                                    child: FadeInImage(
+                                      placeholder: const AssetImage(
+                                          AssetsConstants.welcomeImage),
+                                      image:
+                                          NetworkImage(e.entries.first.value),
+                                    ),
+                                  ),
+                                )
+                              : Expanded(
+                                  child: Align(
+                                    alignment: Alignment.topRight,
+                                    child: LabelText(
+                                      content: getCustomContent(e),
+                                      size: AssetsConstants.defaultFontSize -
+                                          13.0,
+                                      fontWeight: (e.entries.first.key ==
+                                                  'Tổng cộng:' ||
+                                              e.entries.first.key == 'Số tiền:')
+                                          ? FontWeight.bold
+                                          : FontWeight.w600,
+                                      maxLine: 10,
+                                      color: e.entries.first.key == 'Giảm giá:'
+                                          ? AssetsConstants.discountColor
+                                          : AssetsConstants.blackColor,
+                                    ),
+                                  ),
+                                ),
                 ],
               ),
             ),

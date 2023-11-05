@@ -52,8 +52,13 @@ class OrderRepositoryImpl extends RemoteBaseRepository
     required int orderId,
     required String accessToken,
   }) async {
-    await delay(addDelay);
-    return SuccessModel(message: "Confirm order successfully.");
+    return getDataOf(
+      request: () => _orderSource.changeOrderToReady(
+        APIConstants.contentType,
+        accessToken,
+        orderId,
+      ),
+    );
   }
 
   @override
@@ -62,6 +67,12 @@ class OrderRepositoryImpl extends RemoteBaseRepository
     required String accessToken,
   }) async {
     await delay(addDelay);
-    return SuccessModel(message: "Cancel order successfully.");
+    return getDataOf(
+      request: () => _orderSource.cancelOrder(
+        APIConstants.contentType,
+        accessToken,
+        orderId,
+      ),
+    );
   }
 }
