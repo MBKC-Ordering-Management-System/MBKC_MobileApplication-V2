@@ -15,12 +15,6 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    BankingAccountScreenRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const BankingAccountScreen(),
-      );
-    },
     ChangePasswordScreenRoute.name: (routeData) {
       final args = routeData.argsAs<ChangePasswordScreenRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -81,33 +75,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const OrderScreen(),
       );
     },
-    PartnerDetailScreenRoute.name: (routeData) {
-      final args = routeData.argsAs<PartnerDetailScreenRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PartnerDetailScreen(
-          key: args.key,
-          partner: args.partner,
-        ),
-      );
-    },
-    PartnerModifyScreenRoute.name: (routeData) {
-      final args = routeData.argsAs<PartnerModifyScreenRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: PartnerModifyScreen(
-          key: args.key,
-          partner: args.partner,
-          type: args.type,
-        ),
-      );
-    },
-    PartnerScreenRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const PartnerScreen(),
-      );
-    },
     ProductDetailScreenRoute.name: (routeData) {
       final args = routeData.argsAs<ProductDetailScreenRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -164,12 +131,6 @@ abstract class _$AppRouter extends RootStackRouter {
         ),
       );
     },
-    TransactionScreenRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const TransactionScreen(),
-      );
-    },
     WalletScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -177,20 +138,6 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
-}
-
-/// generated route for
-/// [BankingAccountScreen]
-class BankingAccountScreenRoute extends PageRouteInfo<void> {
-  const BankingAccountScreenRoute({List<PageRouteInfo>? children})
-      : super(
-          BankingAccountScreenRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'BankingAccountScreenRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -401,103 +348,6 @@ class OrderScreenRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [PartnerDetailScreen]
-class PartnerDetailScreenRoute
-    extends PageRouteInfo<PartnerDetailScreenRouteArgs> {
-  PartnerDetailScreenRoute({
-    Key? key,
-    required PartnerModel partner,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PartnerDetailScreenRoute.name,
-          args: PartnerDetailScreenRouteArgs(
-            key: key,
-            partner: partner,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PartnerDetailScreenRoute';
-
-  static const PageInfo<PartnerDetailScreenRouteArgs> page =
-      PageInfo<PartnerDetailScreenRouteArgs>(name);
-}
-
-class PartnerDetailScreenRouteArgs {
-  const PartnerDetailScreenRouteArgs({
-    this.key,
-    required this.partner,
-  });
-
-  final Key? key;
-
-  final PartnerModel partner;
-
-  @override
-  String toString() {
-    return 'PartnerDetailScreenRouteArgs{key: $key, partner: $partner}';
-  }
-}
-
-/// generated route for
-/// [PartnerModifyScreen]
-class PartnerModifyScreenRoute
-    extends PageRouteInfo<PartnerModifyScreenRouteArgs> {
-  PartnerModifyScreenRoute({
-    Key? key,
-    PartnerModel? partner,
-    required ModifyType type,
-    List<PageRouteInfo>? children,
-  }) : super(
-          PartnerModifyScreenRoute.name,
-          args: PartnerModifyScreenRouteArgs(
-            key: key,
-            partner: partner,
-            type: type,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'PartnerModifyScreenRoute';
-
-  static const PageInfo<PartnerModifyScreenRouteArgs> page =
-      PageInfo<PartnerModifyScreenRouteArgs>(name);
-}
-
-class PartnerModifyScreenRouteArgs {
-  const PartnerModifyScreenRouteArgs({
-    this.key,
-    this.partner,
-    required this.type,
-  });
-
-  final Key? key;
-
-  final PartnerModel? partner;
-
-  final ModifyType type;
-
-  @override
-  String toString() {
-    return 'PartnerModifyScreenRouteArgs{key: $key, partner: $partner, type: $type}';
-  }
-}
-
-/// generated route for
-/// [PartnerScreen]
-class PartnerScreenRoute extends PageRouteInfo<void> {
-  const PartnerScreenRoute({List<PageRouteInfo>? children})
-      : super(
-          PartnerScreenRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'PartnerScreenRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
 /// [ProductDetailScreen]
 class ProductDetailScreenRoute
     extends PageRouteInfo<ProductDetailScreenRouteArgs> {
@@ -683,20 +533,6 @@ class TransactionDetailScreenRouteArgs {
   String toString() {
     return 'TransactionDetailScreenRouteArgs{key: $key, transaction: $transaction}';
   }
-}
-
-/// generated route for
-/// [TransactionScreen]
-class TransactionScreenRoute extends PageRouteInfo<void> {
-  const TransactionScreenRoute({List<PageRouteInfo>? children})
-      : super(
-          TransactionScreenRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'TransactionScreenRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

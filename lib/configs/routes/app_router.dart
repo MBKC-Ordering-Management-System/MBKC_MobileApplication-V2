@@ -9,24 +9,17 @@ import '../../features/auth/presentation/sign_in/sign_in_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/order/presentation/order_detail/order_detail_screen.dart';
 import '../../features/order/presentation/order_list/order_screen.dart';
-import '../../features/partner/domain/models/partner_model.dart';
-import '../../features/partner/presentation/partner_detail/partner_detail_screen.dart';
-import '../../features/partner/presentation/partner_list/partner_screen.dart';
-import '../../features/partner/presentation/partner_modify/partner_modify_screen.dart';
 import '../../features/product/presentation/product_detail/product_detail_screen.dart';
 import '../../features/product/presentation/product_list/product_screen.dart';
 import '../../features/profile/domain/models/profile_model.dart';
 import '../../features/profile/presentation/profile/profile_screen.dart';
 import '../../features/profile/presentation/profile_detail/profile_detail_screen.dart';
 import '../../features/wallet/domain/models/transaction_model.dart';
-import '../../features/wallet/presentation/banking_account_list/banking_account_screen.dart';
 import '../../features/wallet/presentation/transaction_detail.dart/transaction_detail_screen.dart';
-import '../../features/wallet/presentation/transaction_list/transaction_screen.dart';
 import '../../features/wallet/presentation/wallet_balance/wallet_screen.dart';
 import '../../models/token_model.dart';
 import '../../models/user_model.dart';
 import '../../tabview_screen.dart';
-import '../../utils/enums/modify_type.dart';
 import '../../utils/enums/verification_otp_type.dart';
 import 'guard/auth_guard.dart';
 
@@ -74,15 +67,8 @@ class AppRouter extends _$AppRouter {
         // order
         AutoRoute(page: OrderDetailScreenRoute.page),
 
-        // partner
-        AutoRoute(page: PartnerScreenRoute.page),
-        AutoRoute(page: PartnerDetailScreenRoute.page),
-        AutoRoute(page: PartnerModifyScreenRoute.page),
-
         // wallet
         AutoRoute(page: WalletScreenRoute.page),
-        AutoRoute(page: BankingAccountScreenRoute.page),
-        AutoRoute(page: TransactionScreenRoute.page),
         AutoRoute(page: TransactionDetailScreenRoute.page),
 
         // product

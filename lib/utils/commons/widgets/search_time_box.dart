@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../features/order/presentation/order_list/order_screen.dart';
-import '../../../features/wallet/presentation/transaction_list/transaction_screen.dart';
+import '../../../features/wallet/presentation/wallet_balance/wallet_screen.dart';
 import '../../enums/enums_export.dart';
 import '../functions/functions_common_export.dart';
 import 'widgets_common_export.dart';

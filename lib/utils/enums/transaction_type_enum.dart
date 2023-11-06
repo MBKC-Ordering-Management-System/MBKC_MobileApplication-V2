@@ -1,23 +1,21 @@
-enum TransactionType {
-  all(0),
-  moneyin(1),
-  moneyout(2);
+enum MoneyExchangeType {
+  all(''),
+  receive('RECEIVE'),
+  withdraw('WITHDRAW');
 
-  final int type;
-  const TransactionType(this.type);
+  final String type;
+  const MoneyExchangeType(this.type);
 }
 
-extension ConvertTransaction on int {
-  TransactionType toTransactionTypeEnum() {
+extension ConvertMoneyExchangeType on String {
+  MoneyExchangeType toMoneyExchangeTypeEnum() {
     switch (this) {
-      case 0:
-        return TransactionType.all;
-      case 1:
-        return TransactionType.moneyin;
-      case 2:
-        return TransactionType.moneyout;
+      case 'Receive':
+        return MoneyExchangeType.receive;
+      case 'Withdraw':
+        return MoneyExchangeType.withdraw;
       default:
-        return TransactionType.all;
+        return MoneyExchangeType.receive;
     }
   }
 }

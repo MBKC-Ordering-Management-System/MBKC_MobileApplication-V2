@@ -14,10 +14,6 @@ import '../../domain/models/order_model.dart';
 import 'order_controller.dart';
 import 'order_item.dart';
 
-final searchByDate = StateProvider.autoDispose<bool>(
-  (ref) => false,
-);
-
 final orderDateFrom = StateProvider.autoDispose<String>(
   (ref) => getDateTimeNow(),
 );

@@ -73,12 +73,12 @@ String getTitleStatus(String status) {
   }
 }
 
-String getTitleTypeTransaction(TransactionType type) {
+String getTitleTypeMoneyExchange(MoneyExchangeType type) {
   switch (type) {
-    case TransactionType.moneyin:
-      return 'Tiền vào';
-    case TransactionType.moneyout:
-      return 'Tiền ra';
+    case MoneyExchangeType.receive:
+      return 'Tiền nhận';
+    case MoneyExchangeType.withdraw:
+      return 'Tiền rút';
     default:
       return 'Unknow!';
   }
@@ -148,6 +148,20 @@ String getTitlePaymentMethod(String type) {
       return 'Tiền mặt';
     case 'Cashless':
       return 'Chuyển khoản';
+
+    default:
+      return 'Unknow!';
+  }
+}
+
+String getTitleMoneyExchangeType(MoneyExchangeType type) {
+  switch (type) {
+    case MoneyExchangeType.all:
+      return 'Tiền cả';
+    case MoneyExchangeType.receive:
+      return 'Tiền nhận';
+    case MoneyExchangeType.withdraw:
+      return 'Tiền rút';
 
     default:
       return 'Unknow!';

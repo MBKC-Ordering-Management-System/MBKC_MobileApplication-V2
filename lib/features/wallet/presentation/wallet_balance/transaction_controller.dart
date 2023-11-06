@@ -1,43 +1,43 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
-import '../../domain/models/order_model.dart';
-import '../../../../models/request/paging_model.dart';
-import '../../domain/repositories/order_repository.dart';
+import '../../domain/models/transaction_model.dart';
+import '../../domain/repositories/wallet_repository.dart';
 
-part 'order_controller.g.dart';
+part 'transaction_controller.g.dart';
 
 @riverpod
-class OrderController extends _$OrderController {
+class TransactionController extends _$TransactionController {
   @override
   FutureOr<void> build() {
     // nothing to do
   }
 
-  // get orders
-  Future<List<OrderModel>> getOrders(
+  // get transactions
+  Future<List<TransactionModel>> getMoneyExchanges(
     PagingModel request,
     BuildContext context,
   ) async {
-    List<OrderModel> orders = [];
+    List<TransactionModel> transactions = [];
     state = const AsyncLoading();
-    final orderRepository = ref.read(orderRepositoryProvider);
+    final walletRepository = ref.read(walletRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
-        final response = await orderRepository.getOrders(
-          request: request,
+        final response = await walletRepository.getMoneyExchanges(
           accessToken: APIConstants.prefixToken + user!.token.accessToken,
+          request: request,
         );
 
-        orders = response.orders;
+        transactions = response.transactions;
       },
     );
 
@@ -56,7 +56,7 @@ class OrderController extends _$OrderController {
             return;
           }
 
-          getOrders(request, context);
+          getMoneyExchanges(request, context);
         },
       );
 
@@ -66,6 +66,6 @@ class OrderController extends _$OrderController {
       }
     }
 
-    return orders;
+    return transactions;
   }
 }

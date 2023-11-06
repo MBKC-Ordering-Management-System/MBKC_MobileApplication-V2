@@ -29,7 +29,7 @@ class TransactionItem extends StatelessWidget {
         children: [
           LabelText(
             content:
-                '${transaction.date} - ${getTitleTypeTransaction(transaction.type)}',
+                '${transaction.date} - ${getTitleTypeMoneyExchange(transaction.type)}',
             size: AssetsConstants.defaultFontSize - 10.0,
           ),
           Row(
@@ -44,11 +44,11 @@ class TransactionItem extends StatelessWidget {
                 ),
               ),
               LabelText(
-                content: transaction.type == TransactionType.moneyin
-                    ? getCustomContent({'Tiền vào:': transaction.amout})
-                    : getCustomContent({'Tiền ra:': transaction.amout}),
+                content: transaction.type == MoneyExchangeType.receive
+                    ? getCustomContent({'Tiền nhận:': transaction.amout})
+                    : getCustomContent({'Tiền tiền:': transaction.amout}),
                 size: AssetsConstants.defaultFontSize - 10.0,
-                color: getColorTransaction(transaction.type),
+                color: getColorMoneyExchange(transaction.type),
                 fontWeight: FontWeight.w600,
               ),
             ],

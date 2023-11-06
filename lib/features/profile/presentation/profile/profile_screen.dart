@@ -100,15 +100,6 @@ class ProfileScreen extends HookConsumerWidget {
                       ),
                     ),
                     InkWell(
-                      onTap: () =>
-                          context.router.push(const PartnerScreenRoute()),
-                      child: const ActionBox(
-                        icon: FontAwesomeIcons.handshakeAngle,
-                        title: 'Đối tác',
-                        color: AssetsConstants.blackColor,
-                      ),
-                    ),
-                    InkWell(
                       onTap: () {
                         final user = ref.read(authProvider);
                         checkEmail(

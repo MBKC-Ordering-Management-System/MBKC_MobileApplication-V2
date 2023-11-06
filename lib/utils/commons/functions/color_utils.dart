@@ -48,11 +48,11 @@ Color getColorPartner(PartnerType type) {
   }
 }
 
-Color getColorTransaction(TransactionType type) {
+Color getColorMoneyExchange(MoneyExchangeType type) {
   switch (type) {
-    case TransactionType.moneyin:
+    case MoneyExchangeType.receive:
       return AssetsConstants.transactionIn;
-    case TransactionType.moneyout:
+    case MoneyExchangeType.withdraw:
       return AssetsConstants.transactionOut;
     default:
       return AssetsConstants.transactionIn;

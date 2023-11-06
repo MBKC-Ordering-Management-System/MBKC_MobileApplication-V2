@@ -1,11 +1,8 @@
 import '../../../../models/request/paging_model.dart';
-import '../../../../models/response/success_model.dart';
-import '../../../../utils/commons/functions/delay_util.dart';
-import '../../../../utils/dummy_data/wallet_dummy_data.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/resources/remote_base_repository.dart';
-import '../../domain/models/banking_account_model.dart';
-import '../../domain/models/request/account_banking_request.dart';
+import '../../domain/models/response/money_exchange_list_response.dart';
 import '../../domain/models/transaction_model.dart';
 import '../../domain/repositories/wallet_repository.dart';
 
@@ -15,65 +12,34 @@ class WalletRepositoryImpl extends RemoteBaseRepository
   WalletRepositoryImpl({this.addDelay = true});
 
   @override
-  Future<List<BankingAccountModel>> getBankingAccounts({
+  Future<MoneyExchangeListResponse> getMoneyExchanges({
+    required String accessToken,
     required PagingModel request,
   }) async {
     await delay(addDelay);
-    return WalletDummyData.bankingAccountsGenerate
-        .skip((request.pageNumber - 1) * request.pageSize)
-        .take(request.pageSize)
-        .toList();
+    return MoneyExchangeListResponse(
+      totalPages: 1,
+      numberItems: 2,
+      transactions: [],
+    );
   }
 
   @override
-  Future<List<TransactionModel>> getTransactions({
-    required PagingModel request,
-    required TransactionType type,
+  Future<TransactionModel> getDetailMoneyExchange({
+    required String accessToken,
+    required int moneyExchangeId,
   }) async {
     await delay(addDelay);
-    switch (type) {
-      case TransactionType.all:
-        return WalletDummyData.transactionsGenerate
-            .skip((request.pageNumber - 1) * request.pageSize)
-            .take(request.pageSize)
-            .toList();
-
-      case TransactionType.moneyin:
-      case TransactionType.moneyout:
-        return WalletDummyData.transactionsGenerate
-            .where((item) => item.type == type)
-            .skip((request.pageNumber - 1) * request.pageSize)
-            .take(request.pageSize)
-            .toList();
-
-      default:
-        return WalletDummyData.transactionsGenerate
-            .skip((request.pageNumber - 1) * request.pageSize)
-            .take(request.pageSize)
-            .toList();
-    }
-  }
-
-  @override
-  Future<SuccessModel> createBankingAccount({
-    required AccountBankingRequest request,
-  }) async {
-    await delay(addDelay);
-    return SuccessModel(message: 'Create successfully.');
-  }
-
-  @override
-  Future<SuccessModel> updateBankingAccount({
-    required int id,
-    required AccountBankingRequest request,
-  }) async {
-    await delay(addDelay);
-    return SuccessModel(message: 'Update successfully.');
-  }
-
-  @override
-  Future<SuccessModel> deleteBankingAccount({required int id}) async {
-    await delay(addDelay);
-    return SuccessModel(message: 'Delete successfully.');
+    return TransactionModel(
+      id: 1,
+      amout: 10000,
+      balance: 1000,
+      from: 'from',
+      to: 'to',
+      date: 'date',
+      type: MoneyExchangeType.receive,
+      status: 'Active',
+      content: 'HAHA',
+    );
   }
 }

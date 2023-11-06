@@ -97,9 +97,6 @@ showCustomBottomSheet({
                   contentColor: AssetsConstants.blackColor,
                   backGroundColor: AssetsConstants.whiteColor,
                   onCallBack: () {
-                    ref
-                        .read(searchByDate.notifier)
-                        .update((state) => !ref.read(searchByDate));
                     onCallback();
                     context.router.pop();
                   },

@@ -65,9 +65,9 @@ class TransactionDetailScreen extends StatelessWidget {
                 SizedBox(height: size.height * 0.01),
                 TransactionFieldItem(
                   title: 'Loại giao dịch',
-                  content: transaction.type == TransactionType.moneyin
-                      ? 'Tiền vào'
-                      : 'Tiền ra',
+                  content: transaction.type == MoneyExchangeType.receive
+                      ? 'Tiền nhận'
+                      : 'Tiền rút',
                 ),
                 SizedBox(height: size.height * 0.01),
                 TransactionFieldItem(
