@@ -9,6 +9,7 @@ class CustomButton extends StatelessWidget {
   final double width;
   final double height;
   final double size;
+  final Color backgroundColor;
   const CustomButton({
     super.key,
     required this.content,
@@ -17,6 +18,7 @@ class CustomButton extends StatelessWidget {
     required this.width,
     required this.height,
     this.size = AssetsConstants.defaultFontSize - 5.0,
+    this.backgroundColor = AssetsConstants.mainColor,
   });
 
   @override
@@ -27,9 +29,7 @@ class CustomButton extends StatelessWidget {
         width: width,
         height: height,
         decoration: BoxDecoration(
-          color: isActive == true
-              ? AssetsConstants.mainColor
-              : AssetsConstants.subtitleColor,
+          color: backgroundColor,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Center(

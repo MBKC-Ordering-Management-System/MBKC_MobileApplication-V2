@@ -117,7 +117,7 @@ String getTitleSystemStatus(OrderSystemStatusType type) {
     case OrderSystemStatusType.readydelivery:
       return 'Sẵn sàng giao';
     case OrderSystemStatusType.completed:
-      return 'Đã giao';
+      return 'Hoàn thành';
     case OrderSystemStatusType.cancelled:
       return 'Đã hủy';
     default:
@@ -134,7 +134,7 @@ String getTitlePartnerStatus(OrderPartnerStatusType type) {
     case OrderPartnerStatusType.ready:
       return 'Sẵn sàng';
     case OrderPartnerStatusType.completed:
-      return 'Đã giao';
+      return 'Hoàn thành';
     case OrderPartnerStatusType.cancelled:
       return 'Đã hủy';
     default:

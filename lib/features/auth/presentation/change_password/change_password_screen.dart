@@ -142,6 +142,9 @@ class ChangePasswordScreen extends HookConsumerWidget with Validations {
                 password: newPassword.text.trim(),
               ),
               isActive: a.text.isNotEmpty && b.text.isNotEmpty,
+              backgroundColor: (a.text.isNotEmpty && b.text.isNotEmpty)
+                  ? AssetsConstants.mainColor
+                  : AssetsConstants.subtitleColor,
               size: AssetsConstants.defaultFontSize - 10.0,
             ),
           ),

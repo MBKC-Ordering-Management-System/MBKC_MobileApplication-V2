@@ -99,9 +99,6 @@ class NormalRow extends StatelessWidget {
                                           ? FontWeight.bold
                                           : FontWeight.w600,
                                       maxLine: 10,
-                                      color: e.entries.first.key == 'Giảm giá:'
-                                          ? AssetsConstants.discountColor
-                                          : AssetsConstants.blackColor,
                                     ),
                                   ),
                                 ),

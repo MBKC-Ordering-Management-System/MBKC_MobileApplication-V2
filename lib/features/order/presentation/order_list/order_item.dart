@@ -184,19 +184,21 @@ class OrderItem extends ConsumerWidget {
                     ref: ref,
                   ),
                   isActive: true,
-                  width: size.width * 0.8,
+                  width: size.width * 0.6,
                   height: size.height * 0.035,
                 ),
-                InkWell(
-                  onTap: () => cancelOrder(
+                CustomButton(
+                  size: AssetsConstants.defaultFontSize - 14.0,
+                  content: 'Hủy đơn'.toUpperCase(),
+                  onCallback: () => cancelOrder(
                     id: order.id!,
                     context: context,
                     ref: ref,
                   ),
-                  child: const Icon(
-                    Icons.delete,
-                    color: AssetsConstants.warningColor,
-                  ),
+                  isActive: true,
+                  width: size.width * 0.3,
+                  height: size.height * 0.035,
+                  backgroundColor: AssetsConstants.warningColor,
                 ),
               ],
             ),

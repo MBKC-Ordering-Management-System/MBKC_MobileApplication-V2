@@ -164,6 +164,9 @@ class SignInScreen extends HookConsumerWidget with Validations {
               ),
               isActive: a.text.isNotEmpty && b.text.isNotEmpty,
               size: AssetsConstants.defaultFontSize - 10.0,
+              backgroundColor: (a.text.isNotEmpty && b.text.isNotEmpty)
+                  ? AssetsConstants.mainColor
+                  : AssetsConstants.subtitleColor,
             ),
           ),
         ),

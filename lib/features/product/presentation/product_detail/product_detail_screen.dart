@@ -10,6 +10,7 @@ import 'information_tab.dart';
 import 'product_child_tab.dart';
 import 'product_detail_controller.dart';
 import 'product_detail_shimmer.dart';
+import 'product_extra_tab.dart';
 
 @RoutePage()
 class ProductDetailScreen extends HookConsumerWidget {
@@ -35,7 +36,7 @@ class ProductDetailScreen extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final product = useState<ProductModel?>(null);
     final tabController = useTabController(
-      initialLength: 2,
+      initialLength: 3,
     );
     final state = ref.watch(productDetailControllerProvider);
 
@@ -64,7 +65,7 @@ class ProductDetailScreen extends HookConsumerWidget {
                 : Stack(
                     children: [
                       DefaultTabController(
-                        length: 2,
+                        length: 3,
                         child: NestedScrollView(
                           headerSliverBuilder: (context, value) {
                             return [
@@ -126,9 +127,9 @@ class ProductDetailScreen extends HookConsumerWidget {
                                             content: 'Thông tin',
                                             size: AssetsConstants
                                                     .defaultFontSize -
-                                                10.0,
+                                                14.0,
                                             color: AssetsConstants.mainColor,
-                                            fontWeight: FontWeight.w600,
+                                            fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                         Tab(
@@ -136,9 +137,19 @@ class ProductDetailScreen extends HookConsumerWidget {
                                             content: 'Sản phẩm con',
                                             size: AssetsConstants
                                                     .defaultFontSize -
-                                                10.0,
+                                                14.0,
                                             color: AssetsConstants.mainColor,
-                                            fontWeight: FontWeight.w600,
+                                            fontWeight: FontWeight.w700,
+                                          ),
+                                        ),
+                                        Tab(
+                                          child: LabelText(
+                                            content: 'Sản phẩm thêm',
+                                            size: AssetsConstants
+                                                    .defaultFontSize -
+                                                14.0,
+                                            color: AssetsConstants.mainColor,
+                                            fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                       ],
@@ -158,8 +169,11 @@ class ProductDetailScreen extends HookConsumerWidget {
                                 InformationTab(product: product.value!),
                                 ProductChildTab(
                                   productsChild:
-                                      product.value!.childrenProducts,
+                                      product.value!.childrenProducts!,
                                 ),
+                                ProductExtraTab(
+                                    productsExtra:
+                                        product.value!.extraProducts!),
                               ],
                             ),
                           ),

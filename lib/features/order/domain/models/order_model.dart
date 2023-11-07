@@ -17,8 +17,8 @@ class OrderModel {
   final int? subTotalPrice;
   final int? totalDiscount;
   final int? finalTotalPrice;
-  final int? commission;
-  final int? tax;
+  final double? commission;
+  final double? tax;
   final String? systemStatus;
   final String? displayId;
   final String? address;
@@ -151,8 +151,8 @@ class OrderModel {
       subTotalPrice: map['subTotalPrice']?.toInt(),
       totalDiscount: map['totalDiscount']?.toInt(),
       finalTotalPrice: map['finalTotalPrice']?.toInt(),
-      commission: map['commission']?.toInt(),
-      tax: map['tax']?.toInt(),
+      commission: map['commission']?.toDouble(),
+      tax: map['tax']?.toDouble(),
       systemStatus: map['systemStatus'],
       displayId: map['displayId'],
       address: map['address'],

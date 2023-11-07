@@ -60,8 +60,7 @@ class ProductDetail extends StatelessWidget {
                     content:
                         '${orderDetail.quantity}X  ${orderDetail.product!.name}',
                     size: AssetsConstants.defaultFontSize - 13.0,
-                    fontWeight: FontWeight.w600,
-                    color: AssetsConstants.mainColor,
+                    fontWeight: FontWeight.w700,
                   ),
                 ),
                 Expanded(

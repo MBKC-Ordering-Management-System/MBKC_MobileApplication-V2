@@ -17,7 +17,8 @@ class ProductModel {
   final String? size;
   final int displayOrder;
   final int? parentProductId;
-  final List<ProductModel> childrenProducts;
+  final List<ProductModel>? childrenProducts;
+  final List<ProductModel>? extraProducts;
   final int categoryId;
   final String categoryName;
   final BrandModel brand;
@@ -37,39 +38,11 @@ class ProductModel {
     required this.displayOrder,
     required this.parentProductId,
     required this.childrenProducts,
+    required this.extraProducts,
     required this.categoryId,
     required this.categoryName,
     required this.brand,
   });
-
-  Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    result.addAll({'productId': productId});
-    result.addAll({'code': code});
-    result.addAll({'name': name});
-    result.addAll({'description': description});
-    result.addAll({'sellingPrice': sellingPrice});
-    result.addAll({'discountPrice': discountPrice});
-    result.addAll({'historicalPrice': historicalPrice});
-    result.addAll({'type': type.type});
-    result.addAll({'image': image});
-    result.addAll({'status': status});
-    if (size != null) {
-      result.addAll({'size': size});
-    }
-    result.addAll({'displayOrder': displayOrder});
-    if (parentProductId != null) {
-      result.addAll({'parentProductId': parentProductId});
-    }
-    result.addAll(
-        {'childrenProducts': childrenProducts.map((x) => x.toMap()).toList()});
-    result.addAll({'categoryId': categoryId});
-    result.addAll({'categoryName': categoryName});
-    result.addAll({'brand': brand.toMap()});
-
-    return result;
-  }
 
   factory ProductModel.fromMap(Map<String, dynamic> map) {
     return ProductModel(
@@ -85,16 +58,20 @@ class ProductModel {
       status: map['status'] ?? '',
       size: map['size'],
       displayOrder: map['displayOrder']?.toInt() ?? 0,
-      parentProductId: map['parentProductId']?.toInt() ?? 0,
-      childrenProducts: List<ProductModel>.from(
-          map['childrenProducts']?.map((x) => ProductModel.fromMap(x))),
+      parentProductId: map['parentProductId']?.toInt(),
+      childrenProducts: map['childrenProducts'] != null
+          ? List<ProductModel>.from(
+              map['childrenProducts']?.map((x) => ProductModel.fromMap(x)))
+          : null,
+      extraProducts: map['extraProducts'] != null
+          ? List<ProductModel>.from(
+              map['extraProducts']?.map((x) => ProductModel.fromMap(x)))
+          : null,
       categoryId: map['categoryId']?.toInt() ?? 0,
       categoryName: map['categoryName'] ?? '',
       brand: BrandModel.fromMap(map['brand']),
     );
   }
-
-  String toJson() => json.encode(toMap());
 
   factory ProductModel.fromJson(String source) =>
       ProductModel.fromMap(json.decode(source));

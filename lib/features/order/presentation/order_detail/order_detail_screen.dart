@@ -169,8 +169,8 @@ class OrderDetailScreen extends HookConsumerWidget {
                         ),
                         NormalRow(
                           content: [
-                            {'Hoa hồng:': order.value!.commission},
-                            {'Thuế:': order.value!.tax},
+                            {'Hoa hồng (%):': order.value!.commission},
+                            {'Thuế (%):': order.value!.tax},
                             {'Tạm tính:': order.value!.subTotalPrice},
                             {'Phí giao hàng:': order.value!.deliveryFee},
                             {'Giảm giá:': order.value!.totalDiscount},
@@ -244,7 +244,7 @@ class OrderDetailScreen extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomButton(
-                              width: size.width * 0.75,
+                              width: size.width * 0.6,
                               height: size.height * 0.05,
                               content: 'Hoàn thành',
                               onCallback: () => changeStatus(
@@ -256,15 +256,19 @@ class OrderDetailScreen extends HookConsumerWidget {
                                   OrderPartnerStatusType.preparing),
                               size: AssetsConstants.defaultFontSize - 10.0,
                             ),
-                            InkWell(
-                              onTap: () => cancelOrder(
+                            CustomButton(
+                              width: size.width * 0.3,
+                              height: size.height * 0.05,
+                              content: 'Hủy đơn',
+                              onCallback: () => changeStatus(
                                   order: order.value!,
                                   context: context,
                                   ref: ref),
-                              child: const Icon(
-                                Icons.delete,
-                                color: AssetsConstants.warningColor,
-                              ),
+                              isActive: (order.value!.partnerOrderStatus!
+                                      .toOrderPartnerTypeEnum() ==
+                                  OrderPartnerStatusType.preparing),
+                              size: AssetsConstants.defaultFontSize - 10.0,
+                              backgroundColor: AssetsConstants.warningColor,
                             ),
                           ],
                         ),

@@ -98,6 +98,9 @@ class EnterEmailScreen extends HookConsumerWidget with Validations {
                 ref: ref,
                 email: email.text.trim(),
               ),
+              backgroundColor: a.text.isNotEmpty
+                  ? AssetsConstants.mainColor
+                  : AssetsConstants.subtitleColor,
               size: AssetsConstants.defaultFontSize - 10.0,
             ),
           ),

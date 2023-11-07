@@ -240,6 +240,15 @@ class OTPVerificationScreen extends HookConsumerWidget {
                     otp_5.text +
                     otp_6.text,
               ),
+              backgroundColor: (a.text.length +
+                          b.text.length +
+                          c.text.length +
+                          d.text.length +
+                          e.text.length +
+                          f.text.length ==
+                      6)
+                  ? AssetsConstants.mainColor
+                  : AssetsConstants.subtitleColor,
               size: AssetsConstants.defaultFontSize - 10.0,
             ),
           ),

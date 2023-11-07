@@ -72,7 +72,7 @@ Color getColorByKey(String key) {
     case 'Đặt trước':
       return AssetsConstants.upcomingColor;
 
-    case 'Đã giao':
+    case 'Hoàn thành':
       return AssetsConstants.completedColor;
 
     case 'Đã hủy':
@@ -80,9 +80,6 @@ Color getColorByKey(String key) {
 
     case 'Thanh toán của giao hàng':
       return AssetsConstants.mainColor;
-
-    case 'Giảm giá:':
-      return AssetsConstants.discountColor;
 
     default:
       return AssetsConstants.blackColor;
