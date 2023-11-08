@@ -9,9 +9,9 @@ enum CategoryType {
 extension ConvertCategoryType on String {
   CategoryType toCategoryTypeEnum() {
     switch (this) {
-      case 'Normal':
+      case 'NORMAL':
         return CategoryType.normal;
-      case 'Extra':
+      case 'EXTRA':
         return CategoryType.extra;
       default:
         return CategoryType.normal;

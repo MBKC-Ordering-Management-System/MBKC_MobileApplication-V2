@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import '../../../../utils/enums/product_type_enum.dart';
 import '../../../profile/domain/models/brand_model.dart';
 

@@ -1,23 +1,22 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../../../utils/commons/widgets/widgets_common_export.dart';
-import '../../../../utils/constants/asset_constant.dart';
-import '../../../../utils/enums/product_type_enum.dart';
+
+import '../../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../../utils/commons/widgets/widgets_common_export.dart';
+import '../../../../../utils/constants/asset_constant.dart';
+import '../../../../../utils/enums/enums_export.dart';
 
 final options = [
-  ProductType.single,
-  ProductType.parent,
-  ProductType.child,
-  ProductType.extra
+  SortType.asc,
+  SortType.desc,
 ];
 
-final optionFilterProvider = StateProvider.autoDispose<ProductType?>(
+final optionSortProvider = StateProvider.autoDispose<SortType?>(
   (ref) => null,
 );
 
-bottomSheetFilter({
+bottomSheetSort({
   required BuildContext context,
   required Size size,
   required VoidCallback onCallback,
@@ -47,14 +46,14 @@ bottomSheetFilter({
                   Row(
                     children: [
                       const Icon(
-                        Icons.filter_alt_rounded,
+                        Icons.sort,
                         color: AssetsConstants.blackColor,
                       ),
                       SizedBox(
                         width: size.width * 0.02,
                       ),
                       const LabelText(
-                        content: 'Lọc',
+                        content: 'Sắp xếp',
                         size: AssetsConstants.defaultFontSize - 10.0,
                         fontWeight: FontWeight.w600,
                       ),
@@ -83,14 +82,14 @@ bottomSheetFilter({
                   children: [
                     RadioListTile(
                       title: LabelText(
-                        content: getTitleProductType(ProductType.single),
+                        content: getTitleSortType(SortType.asc),
                         size: AssetsConstants.defaultFontSize - 10.0,
                       ),
                       value: options[0],
-                      groupValue: ref.watch(optionFilterProvider),
+                      groupValue: ref.watch(optionSortProvider),
                       onChanged: (val) {
                         ref
-                            .read(optionFilterProvider.notifier)
+                            .read(optionSortProvider.notifier)
                             .update((state) => options[0]);
                         onCallback();
                         context.router.pop();
@@ -99,47 +98,15 @@ bottomSheetFilter({
                     ),
                     RadioListTile(
                       title: LabelText(
-                        content: getTitleProductType(ProductType.parent),
+                        content: getTitleSortType(SortType.desc),
                         size: AssetsConstants.defaultFontSize - 10.0,
                       ),
                       value: options[1],
-                      groupValue: ref.watch(optionFilterProvider),
+                      groupValue: ref.watch(optionSortProvider),
                       onChanged: (val) {
                         ref
-                            .read(optionFilterProvider.notifier)
+                            .read(optionSortProvider.notifier)
                             .update((state) => options[1]);
-                        onCallback();
-                        context.router.pop();
-                      },
-                      activeColor: AssetsConstants.mainColor,
-                    ),
-                    RadioListTile(
-                      title: LabelText(
-                        content: getTitleProductType(ProductType.child),
-                        size: AssetsConstants.defaultFontSize - 10.0,
-                      ),
-                      value: options[2],
-                      groupValue: ref.watch(optionFilterProvider),
-                      onChanged: (val) {
-                        ref
-                            .read(optionFilterProvider.notifier)
-                            .update((state) => options[2]);
-                        onCallback();
-                        context.router.pop();
-                      },
-                      activeColor: AssetsConstants.mainColor,
-                    ),
-                    RadioListTile(
-                      title: LabelText(
-                        content: getTitleProductType(ProductType.extra),
-                        size: AssetsConstants.defaultFontSize - 10.0,
-                      ),
-                      value: options[3],
-                      groupValue: ref.watch(optionFilterProvider),
-                      onChanged: (val) {
-                        ref
-                            .read(optionFilterProvider.notifier)
-                            .update((state) => options[3]);
                         onCallback();
                         context.router.pop();
                       },
@@ -150,18 +117,18 @@ bottomSheetFilter({
               ),
               SizedBox(height: size.height * 0.02),
               CustomButton(
-                content: 'Xóa lọc',
+                content: 'Xóa sắp xếp',
                 size: AssetsConstants.defaultFontSize - 15.0,
                 onCallback: () {
-                  if (ref.read(optionFilterProvider) != null) {
+                  if (ref.read(optionSortProvider) != null) {
                     ref
-                        .read(optionFilterProvider.notifier)
+                        .read(optionSortProvider.notifier)
                         .update((state) => null);
                     onCallback();
                   }
                 },
                 isActive: true,
-                width: size.width * 0.2,
+                width: size.width * 0.25,
                 height: size.height * 0.04,
               ),
             ],

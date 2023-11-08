@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../domain/models/product_model.dart';
-import '../../../../utils/commons/widgets/label_text.dart';
-import '../../../../utils/constants/asset_constant.dart';
+import '../../../../../utils/commons/widgets/widgets_common_export.dart';
+import '../../../../../utils/constants/asset_constant.dart';
+import '../../../domain/models/product_model.dart';
 
 class ProductItem extends StatelessWidget {
   const ProductItem({super.key, required this.product});

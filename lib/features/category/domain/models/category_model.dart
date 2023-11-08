@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import '../../../../utils/enums/enums_export.dart';
+
 class CategoryModel {
   final int? categoryId;
   final String? code;
   final String? name;
-  final String? type;
+  final CategoryType? type;
   final int? displayOrder;
   final String? description;
   final String? imageUrl;
@@ -23,47 +25,14 @@ class CategoryModel {
     required this.extraCategories,
   });
 
-  Map<String, dynamic> toMap() {
-    final result = <String, dynamic>{};
-
-    if (categoryId != null) {
-      result.addAll({'categoryId': categoryId});
-    }
-    if (code != null) {
-      result.addAll({'code': code});
-    }
-    if (name != null) {
-      result.addAll({'name': name});
-    }
-    if (type != null) {
-      result.addAll({'type': type});
-    }
-    if (displayOrder != null) {
-      result.addAll({'displayOrder': displayOrder});
-    }
-    if (description != null) {
-      result.addAll({'description': description});
-    }
-    if (imageUrl != null) {
-      result.addAll({'imageUrl': imageUrl});
-    }
-    if (status != null) {
-      result.addAll({'status': status});
-    }
-    if (extraCategories != null) {
-      result.addAll(
-          {'extraCategories': extraCategories!.map((x) => x.toMap()).toList()});
-    }
-
-    return result;
-  }
-
   factory CategoryModel.fromMap(Map<String, dynamic> map) {
     return CategoryModel(
       categoryId: map['categoryId']?.toInt(),
       code: map['code'],
       name: map['name'],
-      type: map['type'],
+      type: map['type'] != null
+          ? (map['type'] as String).toCategoryTypeEnum()
+          : null,
       displayOrder: map['displayOrder']?.toInt(),
       description: map['description'],
       imageUrl: map['imageUrl'],
@@ -74,8 +43,6 @@ class CategoryModel {
           : null,
     );
   }
-
-  String toJson() => json.encode(toMap());
 
   factory CategoryModel.fromJson(String source) =>
       CategoryModel.fromMap(json.decode(source));

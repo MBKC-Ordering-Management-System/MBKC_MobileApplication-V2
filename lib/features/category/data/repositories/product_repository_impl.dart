@@ -16,6 +16,7 @@ class ProductRepositoryImpl extends RemoteBaseRepository
   Future<ProductListResponse> getProducts({
     required PagingModel request,
     required String accessToken,
+    required int categoryId,
     required int storeId,
   }) async {
     return getDataOf(
@@ -27,6 +28,7 @@ class ProductRepositoryImpl extends RemoteBaseRepository
         request.filterContent,
         request.pageNumber,
         request.pageSize,
+        categoryId,
         storeId,
       ),
     );

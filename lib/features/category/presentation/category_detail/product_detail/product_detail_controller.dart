@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../../../utils/constants/api_constant.dart';
-import '../../../../utils/enums/enums_export.dart';
-import '../../../../utils/extensions/extensions_export.dart';
-import '../../../auth/domain/repositories/auth_repository.dart';
-import '../../domain/models/product_model.dart';
-import '../../domain/repositories/product_repository.dart';
+
+import '../../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../../utils/constants/api_constant.dart';
+import '../../../../../utils/enums/enums_export.dart';
+import '../../../../../utils/extensions/extensions_export.dart';
+import '../../../../auth/domain/repositories/auth_repository.dart';
+import '../../../domain/models/product_model.dart';
+import '../../../domain/repositories/product_repository.dart';
 
 part 'product_detail_controller.g.dart';
 

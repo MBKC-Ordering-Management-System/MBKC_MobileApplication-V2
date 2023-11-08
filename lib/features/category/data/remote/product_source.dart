@@ -21,6 +21,7 @@ abstract class ProductSource {
     @Query('productType') String? productType,
     @Query('currentPage') int currentPage,
     @Query('itemsPerPage') int itemsPerPage,
+    @Query('idCategory') int categoryId,
     @Query('idStore') int storeId,
   );
 

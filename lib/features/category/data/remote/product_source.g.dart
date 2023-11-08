@@ -29,6 +29,7 @@ class _ProductSource implements ProductSource {
     String? productType,
     int currentPage,
     int itemsPerPage,
+    int categoryId,
     int storeId,
   ) async {
     const _extra = <String, dynamic>{};
@@ -38,6 +39,7 @@ class _ProductSource implements ProductSource {
       r'productType': productType,
       r'currentPage': currentPage,
       r'itemsPerPage': itemsPerPage,
+      r'idCategory': categoryId,
       r'idStore': storeId,
     };
     queryParameters.removeWhere((k, v) => v == null);

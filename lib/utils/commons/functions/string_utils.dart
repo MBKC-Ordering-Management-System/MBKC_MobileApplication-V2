@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'package:crypto/crypto.dart';
 import 'package:intl/intl.dart';
 import '../../enums/enums_export.dart';
-import '../../enums/order_system_status_type.dart';
-import '../../enums/product_type_enum.dart';
-import '../../enums/sort_type_enum.dart';
 
 String calculateMD5(String input) {
   var bytes = utf8.encode(input); // Encode the input string to bytes

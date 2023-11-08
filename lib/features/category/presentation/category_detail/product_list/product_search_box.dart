@@ -1,7 +1,8 @@
 // ignore_for_file: deprecated_member_use
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../../../utils/constants/asset_constant.dart';
+
+import '../../../../../utils/constants/asset_constant.dart';
 
 class ProductSearchBox extends StatelessWidget {
   const ProductSearchBox({

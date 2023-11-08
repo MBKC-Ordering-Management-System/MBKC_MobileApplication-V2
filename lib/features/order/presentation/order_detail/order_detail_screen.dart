@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../../../utils/enums/order_system_status_type.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
@@ -106,7 +105,7 @@ class OrderDetailScreen extends HookConsumerWidget {
           backgroundColor: AssetsConstants.mainColor,
           centerTitle: true,
           title: const LabelText(
-            content: 'Thông tin đơn hàng',
+            content: 'Thông Tin Đơn Hàng',
             size: AssetsConstants.defaultFontSize - 8.0,
             color: AssetsConstants.whiteColor,
             fontWeight: FontWeight.w600,

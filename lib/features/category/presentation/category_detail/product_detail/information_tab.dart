@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../../../utils/commons/widgets/field_box.dart';
-import '../../domain/models/product_model.dart';
+import '../../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../../utils/commons/widgets/widgets_common_export.dart';
+import '../../../domain/models/product_model.dart';
 
 class InformationTab extends StatelessWidget {
   const InformationTab({super.key, required this.product});

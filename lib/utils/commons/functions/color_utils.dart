@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../constants/asset_constant.dart';
 import '../../enums/enums_export.dart';
-import '../../enums/order_system_status_type.dart';
 
 Color getColorOrderPartnerStatus(OrderPartnerStatusType orderType) {
   switch (orderType) {

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-
-import '../../../../utils/constants/asset_constant.dart';
+import '../../../../../utils/constants/asset_constant.dart';
 
 List<Widget> _generateWidget(int amount, Size size) {
   // <<<<< Note this change for the return type
