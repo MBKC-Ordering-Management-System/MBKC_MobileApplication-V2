@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'banking_account.dart';
+
 class ShipperPayment {
   final int? paymentId;
   final int? status;
@@ -8,6 +10,7 @@ class ShipperPayment {
   final String? createDate;
   final int? createdBy;
   final String? cashierCreated;
+  final BankingAccount? bankingAccount;
 
   ShipperPayment({
     required this.paymentId,
@@ -17,6 +20,7 @@ class ShipperPayment {
     required this.createDate,
     required this.createdBy,
     required this.cashierCreated,
+    required this.bankingAccount,
   });
 
   Map<String, dynamic> toMap() {
@@ -43,6 +47,9 @@ class ShipperPayment {
     if (cashierCreated != null) {
       result.addAll({'cashierCreated': cashierCreated});
     }
+    if (bankingAccount != null) {
+      result.addAll({'bankingAccount': bankingAccount!.toMap()});
+    }
 
     return result;
   }
@@ -56,6 +63,9 @@ class ShipperPayment {
       createDate: map['createDate'],
       createdBy: map['createdBy']?.toInt(),
       cashierCreated: map['cashierCreated'],
+      bankingAccount: map['bankingAccount'] != null
+          ? BankingAccount.fromMap(map['bankingAccount'])
+          : null,
     );
   }
 

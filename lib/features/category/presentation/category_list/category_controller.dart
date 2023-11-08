@@ -1,40 +1,43 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
-import '../../domain/models/order_model.dart';
-import '../../domain/repositories/order_repository.dart';
+import '../../domain/models/category_model.dart';
+import '../../domain/repositories/category_repository.dart';
 
-part 'order_detail_controller.g.dart';
+part 'category_controller.g.dart';
 
 @riverpod
-class OrderDetailController extends _$OrderDetailController {
+class CategoryController extends _$CategoryController {
   @override
   FutureOr<void> build() {
     // nothing to do
   }
 
-  // get product detail
-  Future<OrderModel?> getOrderDetail(
+  // get categories
+  Future<List<CategoryModel>> getCategories(
+    PagingModel request,
     BuildContext context,
-    int orderId,
   ) async {
-    OrderModel? order;
+    List<CategoryModel> categories = [];
     state = const AsyncLoading();
-    final orderRepository = ref.read(orderRepositoryProvider);
+    final categoryRepository = ref.read(categoryRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
-        order = await orderRepository.getOrderDetail(
-          orderId: orderId,
+        final response = await categoryRepository.getCategories(
+          request: request,
           accessToken: APIConstants.prefixToken + user!.token.accessToken,
         );
+
+        categories = response.categories;
       },
     );
 
@@ -53,7 +56,7 @@ class OrderDetailController extends _$OrderDetailController {
             return;
           }
 
-          getOrderDetail(context, orderId);
+          getCategories(request, context);
         },
       );
 
@@ -63,6 +66,6 @@ class OrderDetailController extends _$OrderDetailController {
       }
     }
 
-    return order;
+    return categories;
   }
 }

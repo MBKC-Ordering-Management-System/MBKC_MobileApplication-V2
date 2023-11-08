@@ -6,6 +6,8 @@ import '../../features/auth/presentation/change_password/change_password_screen.
 import '../../features/auth/presentation/enter_email/enter_email_screen.dart';
 import '../../features/auth/presentation/otp_verification/otp_verification_screen.dart';
 import '../../features/auth/presentation/sign_in/sign_in_screen.dart';
+import '../../features/category/presentation/category_detail/category_detail_screen.dart';
+import '../../features/category/presentation/category_list/category_screen.dart';
 import '../../features/home/presentation/home_screen.dart';
 import '../../features/order/presentation/order_detail/order_detail_screen.dart';
 import '../../features/order/presentation/order_list/order_screen.dart';
@@ -56,7 +58,7 @@ class AppRouter extends _$AppRouter {
               page: HomeScreenRoute.page,
             ),
             AutoRoute(page: OrderScreenRoute.page),
-            AutoRoute(page: ProductScreenRoute.page),
+            AutoRoute(page: CategoryScreenRoute.page),
             AutoRoute(page: ProfileScreenRoute.page),
           ],
         ),
@@ -70,6 +72,9 @@ class AppRouter extends _$AppRouter {
         // wallet
         AutoRoute(page: WalletScreenRoute.page),
         AutoRoute(page: TransactionDetailScreenRoute.page),
+
+        // category
+        AutoRoute(page: CategoryDetailScreenRoute.page),
 
         // product
         AutoRoute(page: ProductDetailScreenRoute.page),

@@ -167,3 +167,14 @@ String getTitleMoneyExchangeType(MoneyExchangeType type) {
       return 'Unknow!';
   }
 }
+
+String getTitleCategoryType(CategoryType type) {
+  switch (type) {
+    case CategoryType.normal:
+      return 'Danh mục thường';
+    case CategoryType.extra:
+      return 'Danh mục thêm';
+    default:
+      return 'Unknow!';
+  }
+}

@@ -3,46 +3,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
-import '../../domain/models/product_model.dart';
 import '../../../../utils/constants/asset_constant.dart';
-import 'information_tab.dart';
-import 'product_child_tab.dart';
-import 'product_detail_controller.dart';
-import 'product_detail_shimmer.dart';
-import 'product_extra_tab.dart';
+import '../../../product/presentation/product_detail/product_detail_shimmer.dart';
+import '../../domain/models/category_model.dart';
+import 'category_detail_controller.dart';
+import 'category_detail_information_tab.dart';
 
 @RoutePage()
-class ProductDetailScreen extends HookConsumerWidget {
-  const ProductDetailScreen(this.productId, {super.key});
-  final int productId;
+class CategoryDetailScreen extends HookConsumerWidget {
+  const CategoryDetailScreen(this.categoryId, {super.key});
+  final int categoryId;
 
   // fetch data
   Future<void> fetchData({
     required WidgetRef ref,
     required BuildContext context,
-    required ValueNotifier<ProductModel?> product,
+    required ValueNotifier<CategoryModel?> category,
   }) async {
-    final productData = await ref
-        .read(productDetailControllerProvider.notifier)
-        .getProductDetail(context, productId);
+    final categoryData = await ref
+        .read(categoryDetailControllerProvider.notifier)
+        .getCategoryDetail(context, categoryId);
 
-    product.value = productData;
+    category.value = categoryData;
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // intit
     final size = MediaQuery.sizeOf(context);
-    final product = useState<ProductModel?>(null);
+    final category = useState<CategoryModel?>(null);
     final tabController = useTabController(
       initialLength: 3,
     );
-    final state = ref.watch(productDetailControllerProvider);
+    final state = ref.watch(categoryDetailControllerProvider);
 
     // fetch data
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await fetchData(ref: ref, context: context, product: product);
+        await fetchData(ref: ref, context: context, category: category);
       });
 
       return () {
@@ -56,7 +54,7 @@ class ProductDetailScreen extends HookConsumerWidget {
       body: SafeArea(
         child: state.isLoading
             ? const ProductDetailShimmer()
-            : product.value == null
+            : category.value == null
                 ? const Align(
                     alignment: Alignment.topCenter,
                     child: EmptyBox(title: 'Sai thông tin'),
@@ -95,7 +93,7 @@ class ProductDetailScreen extends HookConsumerWidget {
                                 ),
                                 expandedHeight: size.height * 0.36,
                                 flexibleSpace: FlexibleSpaceBar(
-                                  background: product.value!.image.isEmpty
+                                  background: category.value!.imageUrl == null
                                       ? Image.asset(
                                           AssetsConstants.defaultAvatar)
                                       : FadeInImage(
@@ -104,7 +102,7 @@ class ProductDetailScreen extends HookConsumerWidget {
                                             AssetsConstants.welcomeImage,
                                           ),
                                           image: NetworkImage(
-                                            product.value!.image,
+                                            category.value!.imageUrl!,
                                           ),
                                         ),
                                 ),
@@ -126,27 +124,27 @@ class ProductDetailScreen extends HookConsumerWidget {
                                             content: 'Thông tin',
                                             size: AssetsConstants
                                                     .defaultFontSize -
-                                                14.0,
+                                                15.0,
                                             color: AssetsConstants.mainColor,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                         Tab(
                                           child: LabelText(
-                                            content: 'Sản phẩm con',
+                                            content: 'Danh mục thêm',
                                             size: AssetsConstants
                                                     .defaultFontSize -
-                                                14.0,
+                                                15.0,
                                             color: AssetsConstants.mainColor,
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
                                         Tab(
                                           child: LabelText(
-                                            content: 'Sản phẩm thêm',
+                                            content: 'Sản phẩm',
                                             size: AssetsConstants
                                                     .defaultFontSize -
-                                                14.0,
+                                                15.0,
                                             color: AssetsConstants.mainColor,
                                             fontWeight: FontWeight.w700,
                                           ),
@@ -165,14 +163,11 @@ class ProductDetailScreen extends HookConsumerWidget {
                             child: TabBarView(
                               controller: tabController,
                               children: [
-                                InformationTab(product: product.value!),
-                                ProductChildTab(
-                                  productsChild:
-                                      product.value!.childrenProducts!,
+                                CategoryDetailInformationTab(
+                                  category: category.value!,
                                 ),
-                                ProductExtraTab(
-                                    productsExtra:
-                                        product.value!.extraProducts!),
+                                Container(),
+                                Container(),
                               ],
                             ),
                           ),

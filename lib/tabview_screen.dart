@@ -21,7 +21,7 @@ class TabViewScreen extends ConsumerWidget {
         routes: const [
           HomeScreenRoute(),
           OrderScreenRoute(),
-          ProductScreenRoute(),
+          CategoryScreenRoute(),
           ProfileScreenRoute(),
         ],
         bottomNavigationBuilder: (_, tabsRouter) =>

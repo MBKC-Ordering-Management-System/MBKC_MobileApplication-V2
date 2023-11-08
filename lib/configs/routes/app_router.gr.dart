@@ -15,6 +15,22 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    CategoryDetailScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<CategoryDetailScreenRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: CategoryDetailScreen(
+          args.categoryId,
+          key: args.key,
+        ),
+      );
+    },
+    CategoryScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const CategoryScreen(),
+      );
+    },
     ChangePasswordScreenRoute.name: (routeData) {
       final args = routeData.argsAs<ChangePasswordScreenRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -138,6 +154,59 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
   };
+}
+
+/// generated route for
+/// [CategoryDetailScreen]
+class CategoryDetailScreenRoute
+    extends PageRouteInfo<CategoryDetailScreenRouteArgs> {
+  CategoryDetailScreenRoute({
+    required int categoryId,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          CategoryDetailScreenRoute.name,
+          args: CategoryDetailScreenRouteArgs(
+            categoryId: categoryId,
+            key: key,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'CategoryDetailScreenRoute';
+
+  static const PageInfo<CategoryDetailScreenRouteArgs> page =
+      PageInfo<CategoryDetailScreenRouteArgs>(name);
+}
+
+class CategoryDetailScreenRouteArgs {
+  const CategoryDetailScreenRouteArgs({
+    required this.categoryId,
+    this.key,
+  });
+
+  final int categoryId;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CategoryDetailScreenRouteArgs{categoryId: $categoryId, key: $key}';
+  }
+}
+
+/// generated route for
+/// [CategoryScreen]
+class CategoryScreenRoute extends PageRouteInfo<void> {
+  const CategoryScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          CategoryScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'CategoryScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

@@ -6,33 +6,33 @@ import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
-import '../../domain/models/order_model.dart';
-import '../../domain/repositories/order_repository.dart';
+import '../../domain/models/category_model.dart';
+import '../../domain/repositories/category_repository.dart';
 
-part 'order_detail_controller.g.dart';
+part 'category_detail_controller.g.dart';
 
 @riverpod
-class OrderDetailController extends _$OrderDetailController {
+class CategoryDetailController extends _$CategoryDetailController {
   @override
   FutureOr<void> build() {
     // nothing to do
   }
 
-  // get product detail
-  Future<OrderModel?> getOrderDetail(
+  // get category detail
+  Future<CategoryModel?> getCategoryDetail(
     BuildContext context,
-    int orderId,
+    int categoryId,
   ) async {
-    OrderModel? order;
+    CategoryModel? category;
     state = const AsyncLoading();
-    final orderRepository = ref.read(orderRepositoryProvider);
+    final categoryRepository = ref.read(categoryRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
-        order = await orderRepository.getOrderDetail(
-          orderId: orderId,
+        category = await categoryRepository.getCategoryDetail(
+          categoryId: categoryId,
           accessToken: APIConstants.prefixToken + user!.token.accessToken,
         );
       },
@@ -53,7 +53,7 @@ class OrderDetailController extends _$OrderDetailController {
             return;
           }
 
-          getOrderDetail(context, orderId);
+          getCategoryDetail(context, categoryId);
         },
       );
 
@@ -63,6 +63,6 @@ class OrderDetailController extends _$OrderDetailController {
       }
     }
 
-    return order;
+    return category;
   }
 }

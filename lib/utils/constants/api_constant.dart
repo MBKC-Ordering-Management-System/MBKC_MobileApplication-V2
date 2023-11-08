@@ -18,8 +18,11 @@ class APIConstants {
   // order
   static const order = '/orders';
 
-  // product
+  // category
   static const product = '/products';
+
+  // product
+  static const category = '/categories';
 
   // profile
   static const getProfile = '/stores/profile';

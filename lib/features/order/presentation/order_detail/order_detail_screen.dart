@@ -195,10 +195,16 @@ class OrderDetailScreen extends HookConsumerWidget {
                                     .value!.shipperPayments!.last.createDate!)
                               },
                               {
-                                'Phương thức thanh toán:':
-                                    order.value!.subTotalPrice
+                                'Phương thức thanh toán:': order
+                                            .value!
+                                            .shipperPayments!
+                                            .last
+                                            .bankingAccount ==
+                                        null
+                                    ? 'Tiền mặt'
+                                    : 'Chuyển khoản'
                               },
-                              {'Thanh toán bởi:': order.value!.subTotalPrice},
+                              {'Thanh toán bởi:': order.value!.shipperName},
                               {
                                 'Hình ảnh:':
                                     order.value!.orderHistories.last.image

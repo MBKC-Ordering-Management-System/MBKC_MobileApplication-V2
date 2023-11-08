@@ -1,25 +1,24 @@
+// ignore_for_file: unused_local_variable
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../configs/routes/app_router.dart';
-import '../../../../utils/commons/functions/functions_common_export.dart';
-import '../../domain/models/product_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
-import 'bottom_sheet_filter.dart';
-import 'bottom_sheet_sort.dart';
-import 'product_controller.dart';
-import 'product_item.dart';
-import 'product_shimmer.dart';
-import 'product_search_box.dart';
+import '../../../product/presentation/product_list/product_shimmer.dart';
+import '../../domain/models/category_model.dart';
+import 'category_bottom_sheet_filter.dart';
+import 'category_controller.dart';
+import 'category_item.dart';
+import 'category_search_box.dart';
 
 @RoutePage()
-class ProductScreen extends HookConsumerWidget {
-  const ProductScreen({super.key});
+class CategoryScreen extends HookConsumerWidget {
+  const CategoryScreen({super.key});
 
   // fetch data
   Future<void> fetchData({
@@ -29,11 +28,10 @@ class ProductScreen extends HookConsumerWidget {
     required ValueNotifier<int> pageNumber,
     required ValueNotifier<bool> isLastPage,
     required ValueNotifier<bool> isLoadMoreLoading,
-    required ValueNotifier<List<ProductModel>> products,
+    required ValueNotifier<List<CategoryModel>> categories,
     required ValueNotifier<bool> isFetchingData,
     required String? searchContent,
     required String? filterContent,
-    required String? sortContent,
   }) async {
     if (getDatatype == GetDataType.loadmore && isFetchingData.value) {
       return;
@@ -51,36 +49,35 @@ class ProductScreen extends HookConsumerWidget {
 
     isFetchingData.value = true;
     pageNumber.value = pageNumber.value + 1;
-    final productsData =
-        await ref.read(productControllerProvider.notifier).getProducts(
+    final categoriesData =
+        await ref.read(categoryControllerProvider.notifier).getCategories(
               PagingModel(
                 pageNumber: pageNumber.value,
                 searchContent: searchContent,
                 filterContent: filterContent,
-                sortContent: sortContent,
               ),
               context,
             );
 
-    isLastPage.value = productsData.length < 10;
+    isLastPage.value = categoriesData.length < 10;
     if (getDatatype == GetDataType.fetchdata) {
       isLoadMoreLoading.value = true;
-      products.value = productsData;
+      categories.value = categoriesData;
       isFetchingData.value = false;
       return;
     }
 
     isFetchingData.value = false;
-    products.value = products.value + productsData;
+    categories.value = categories.value + categoriesData;
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final products = useState<List<ProductModel>>([]);
+    final categories = useState<List<CategoryModel>>([]);
     final scrollController = useScrollController();
-    final state = ref.watch(productControllerProvider);
+    final state = ref.watch(categoryControllerProvider);
     final isFetchingData = useState(true);
 
     // searching
@@ -93,8 +90,7 @@ class ProductScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         await fetchData(
-          filterContent: ref.read(optionFilterProvider)?.type,
-          sortContent: ref.read(optionSortProvider)?.type,
+          filterContent: ref.read(categoryFilterProvider).type,
           searchContent: searchContent.text.trim(),
           getDatatype: GetDataType.fetchdata,
           ref: ref,
@@ -102,7 +98,7 @@ class ProductScreen extends HookConsumerWidget {
           pageNumber: pageNumber,
           isLastPage: isLastPage,
           isLoadMoreLoading: isLoadMoreLoading,
-          products: products,
+          categories: categories,
           isFetchingData: isFetchingData,
         );
       });
@@ -110,8 +106,7 @@ class ProductScreen extends HookConsumerWidget {
       scrollController.onScrollEndsListener(
         () async {
           await fetchData(
-            filterContent: ref.read(optionFilterProvider)?.type,
-            sortContent: ref.read(optionSortProvider)?.type,
+            filterContent: ref.read(categoryFilterProvider).type,
             searchContent: searchContent.text.trim(),
             getDatatype: GetDataType.loadmore,
             ref: ref,
@@ -119,7 +114,7 @@ class ProductScreen extends HookConsumerWidget {
             pageNumber: pageNumber,
             isLastPage: isLastPage,
             isLoadMoreLoading: isLoadMoreLoading,
-            products: products,
+            categories: categories,
             isFetchingData: isFetchingData,
           );
         },
@@ -129,13 +124,11 @@ class ProductScreen extends HookConsumerWidget {
     }, const []);
 
     return Scaffold(
-      backgroundColor: AssetsConstants.whiteColor,
       appBar: CustomAppBar(
-        title: 'Sản Phẩm',
+        title: 'Danh Mục Sản Phẩm',
         iconFirst: Icons.refresh_rounded,
         onCallBackFirst: () => fetchData(
-          filterContent: ref.read(optionFilterProvider)?.type,
-          sortContent: ref.read(optionSortProvider)?.type,
+          filterContent: ref.read(categoryFilterProvider).type,
           searchContent: searchContent.text.trim(),
           getDatatype: GetDataType.fetchdata,
           ref: ref,
@@ -143,7 +136,7 @@ class ProductScreen extends HookConsumerWidget {
           pageNumber: pageNumber,
           isLastPage: isLastPage,
           isLoadMoreLoading: isLoadMoreLoading,
-          products: products,
+          categories: categories,
           isFetchingData: isFetchingData,
         ),
       ),
@@ -156,68 +149,37 @@ class ProductScreen extends HookConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                InkWell(
-                  onTap: () => bottomSheetFilter(
-                    context: context,
-                    size: size,
-                    onCallback: () => fetchData(
-                      filterContent: ref.read(optionFilterProvider)?.type,
-                      sortContent: ref.read(optionSortProvider)?.type,
-                      getDatatype: GetDataType.fetchdata,
-                      ref: ref,
-                      context: context,
-                      pageNumber: pageNumber,
-                      isLastPage: isLastPage,
-                      isLoadMoreLoading: isLoadMoreLoading,
-                      products: products,
-                      isFetchingData: isFetchingData,
-                      searchContent: searchContent.text.trim(),
-                    ),
-                  ),
-                  child: FilterSortBox(
-                    clickable: true,
-                    content: ref.watch(optionFilterProvider) != null
-                        ? getTitleProductType(ref.watch(optionFilterProvider)!)
-                        : 'Loại',
-                  ),
+            InkWell(
+              onTap: () => categoryBottomSheetFilter(
+                context: context,
+                size: size,
+                onCallback: () => fetchData(
+                  filterContent: ref.read(categoryFilterProvider).type,
+                  getDatatype: GetDataType.fetchdata,
+                  ref: ref,
+                  context: context,
+                  pageNumber: pageNumber,
+                  isLastPage: isLastPage,
+                  isLoadMoreLoading: isLoadMoreLoading,
+                  categories: categories,
+                  isFetchingData: isFetchingData,
+                  searchContent: searchContent.text.trim(),
                 ),
-                SizedBox(width: size.width * 0.03),
-                InkWell(
-                  onTap: () => bottomSheetSort(
-                    context: context,
-                    size: size,
-                    onCallback: () => fetchData(
-                      filterContent: ref.read(optionFilterProvider)?.type,
-                      sortContent: ref.read(optionSortProvider)?.type,
-                      getDatatype: GetDataType.fetchdata,
-                      ref: ref,
-                      context: context,
-                      pageNumber: pageNumber,
-                      isLastPage: isLastPage,
-                      isLoadMoreLoading: isLoadMoreLoading,
-                      products: products,
-                      isFetchingData: isFetchingData,
-                      searchContent: searchContent.text.trim(),
-                    ),
-                  ),
-                  child: FilterSortBox(
-                    clickable: true,
-                    content: ref.watch(optionSortProvider) != null
-                        ? getTitleSortType(ref.watch(optionSortProvider)!)
-                        : 'Giá',
-                  ),
-                ),
-              ],
+              ),
+              child: FilterSortBox(
+                clickable: true,
+                content:
+                    ref.watch(categoryFilterProvider) == CategoryType.normal
+                        ? 'Thường'
+                        : 'Thêm',
+              ),
             ),
             SizedBox(height: size.height * 0.015),
-            ProductSearchBox(
+            CategorySearchBox(
               controller: searchContent,
               onCallBack: (val) {
                 fetchData(
-                  filterContent: ref.read(optionFilterProvider)?.type,
-                  sortContent: ref.read(optionSortProvider)?.type,
+                  filterContent: ref.read(categoryFilterProvider).type,
                   searchContent: searchContent.text.trim(),
                   getDatatype: GetDataType.fetchdata,
                   ref: ref,
@@ -225,7 +187,7 @@ class ProductScreen extends HookConsumerWidget {
                   pageNumber: pageNumber,
                   isLastPage: isLastPage,
                   isLoadMoreLoading: isLoadMoreLoading,
-                  products: products,
+                  categories: categories,
                   isFetchingData: isFetchingData,
                 );
               },
@@ -238,17 +200,17 @@ class ProductScreen extends HookConsumerWidget {
             ),
             (state.isLoading && isLoadMoreLoading.value == false)
                 ? const ProductShimmer(amount: 4)
-                : products.value.isEmpty
+                : categories.value.isEmpty
                     ? const Align(
                         alignment: Alignment.topCenter,
-                        child: EmptyBox(title: 'không có sản phẩm'),
+                        child: EmptyBox(title: 'Không có danh mục'),
                       )
                     : Expanded(
                         child: ListView.builder(
                           controller: scrollController,
-                          itemCount: products.value.length + 1,
+                          itemCount: categories.value.length + 1,
                           itemBuilder: (_, index) {
-                            if (index == products.value.length) {
+                            if (index == categories.value.length) {
                               if (state.isLoading) {
                                 return Container(
                                   margin: const EdgeInsets.only(
@@ -269,12 +231,13 @@ class ProductScreen extends HookConsumerWidget {
 
                             return InkWell(
                               onTap: () => context.router.push(
-                                ProductDetailScreenRoute(
-                                  productId: products.value[index].productId,
+                                CategoryDetailScreenRoute(
+                                  categoryId:
+                                      categories.value[index].categoryId!,
                                 ),
                               ),
-                              child: ProductItem(
-                                product: products.value[index],
+                              child: CategoryItem(
+                                category: categories.value[index],
                               ),
                             );
                           },

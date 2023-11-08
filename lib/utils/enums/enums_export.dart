@@ -1,3 +1,4 @@
+export './category_type_enum.dart';
 export './get_data_type.dart';
 export './modify_type.dart';
 export 'order_partner_status_type.dart';

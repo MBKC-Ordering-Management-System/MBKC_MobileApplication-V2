@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../../../utils/constants/asset_constant.dart';
 
-class SearchBox extends StatelessWidget {
-  const SearchBox({
+class ProductSearchBox extends StatelessWidget {
+  const ProductSearchBox({
     super.key,
     required this.controller,
     required this.onCallBack,
