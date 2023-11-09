@@ -10,9 +10,9 @@ enum MoneyExchangeType {
 extension ConvertMoneyExchangeType on String {
   MoneyExchangeType toMoneyExchangeTypeEnum() {
     switch (this) {
-      case 'RECEIVE':
+      case 'Receive':
         return MoneyExchangeType.receive;
-      case 'WITHDRAW':
+      case 'Withdraw':
         return MoneyExchangeType.withdraw;
       default:
         return MoneyExchangeType.receive;
