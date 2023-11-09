@@ -29,7 +29,7 @@ class MoneyExchangeItem extends StatelessWidget {
         children: [
           LabelText(
             content:
-                '${moneyExchange.transactionTime} - ${getTitleTypeMoneyExchange(moneyExchange.exchangeType!)}',
+                '${formatDateTime(moneyExchange.transactionTime!)} - ${getTitleTypeMoneyExchange(moneyExchange.exchangeType!)}',
             size: AssetsConstants.defaultFontSize - 10.0,
           ),
           Row(
@@ -46,7 +46,7 @@ class MoneyExchangeItem extends StatelessWidget {
               LabelText(
                 content: moneyExchange.exchangeType == MoneyExchangeType.receive
                     ? getCustomContent({'Tiền nhận:': moneyExchange.amount})
-                    : getCustomContent({'Tiền tiền:': moneyExchange.amount}),
+                    : getCustomContent({'Tiền rút:': moneyExchange.amount}),
                 size: AssetsConstants.defaultFontSize - 10.0,
                 color: getColorMoneyExchange(moneyExchange.exchangeType!),
                 fontWeight: FontWeight.w600,

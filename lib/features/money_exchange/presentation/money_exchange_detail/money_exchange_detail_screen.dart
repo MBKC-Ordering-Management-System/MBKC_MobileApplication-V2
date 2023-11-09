@@ -66,12 +66,22 @@ class MoneyExchangeDetailScreen extends StatelessWidget {
                 SizedBox(height: size.height * 0.01),
                 MoneyExchangeFieldItem(
                   title: 'Trạng thái',
-                  content: moneyExchange.status!,
+                  content: getTitleStatusMoneyExchange(moneyExchange.status!),
                 ),
                 SizedBox(height: size.height * 0.01),
                 MoneyExchangeFieldItem(
                   title: 'Nội dung',
-                  content: moneyExchange.content!,
+                  content: getContentMoneyExchange(moneyExchange.exchangeType!),
+                ),
+                SizedBox(height: size.height * 0.01),
+                MoneyExchangeFieldItem(
+                  title: 'Người gửi',
+                  content: moneyExchange.senderName!,
+                ),
+                SizedBox(height: size.height * 0.01),
+                MoneyExchangeFieldItem(
+                  title: 'Người nhận',
+                  content: moneyExchange.receiveName!,
                 ),
                 SizedBox(height: size.height * 0.01),
               ],

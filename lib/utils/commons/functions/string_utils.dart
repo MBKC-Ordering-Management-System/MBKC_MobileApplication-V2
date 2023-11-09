@@ -14,12 +14,12 @@ String getCustomContent(Map<String, dynamic> content) {
     case 'Mã:':
       return '#${content.entries.first.value}';
 
-    case 'Tiền vào:':
+    case 'Tiền nhận:':
       final number =
           NumberFormat.decimalPattern().format(content.entries.first.value);
       return '+ $numberđ';
 
-    case 'Tiền ra:':
+    case 'Tiền rút:':
     case 'Giảm giá:':
       final number =
           NumberFormat.decimalPattern().format(content.entries.first.value);
@@ -171,6 +171,28 @@ String getTitleCategoryType(CategoryType type) {
       return 'Danh mục thường';
     case CategoryType.extra:
       return 'Danh mục thêm';
+    default:
+      return 'Unknow!';
+  }
+}
+
+String getTitleStatusMoneyExchange(String status) {
+  switch (status) {
+    case 'Success':
+      return 'Thành công';
+    case 'Fail':
+      return 'Thất bại';
+    default:
+      return 'Unknow!';
+  }
+}
+
+String getContentMoneyExchange(MoneyExchangeType type) {
+  switch (type) {
+    case MoneyExchangeType.receive:
+      return 'Nhận tiền đơn hàng trong ngày từ bếp trung tâm';
+    case MoneyExchangeType.withdraw:
+      return 'Rút tiền từ số dư của ví';
     default:
       return 'Unknow!';
   }
