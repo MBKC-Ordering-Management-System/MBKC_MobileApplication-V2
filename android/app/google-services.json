@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "213812436850",
+    "project_id": "mbkc-mobile-application",
+    "storage_bucket": "mbkc-mobile-application.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:213812436850:android:3c22384cef2f6f5d2847eb",
+        "android_client_info": {
+          "package_name": "com.example.haha"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7ocZfHP3o-mVlHaFCL6af4H4b7an0QX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

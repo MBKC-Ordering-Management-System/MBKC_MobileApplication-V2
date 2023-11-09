@@ -37,12 +37,13 @@ class MoneyExchangeItem extends StatelessWidget {
             children: [
               Expanded(
                 child: LabelText(
-                  content: moneyExchange.content!,
+                  content: getContentMoneyExchange(moneyExchange.exchangeType!),
                   size: AssetsConstants.defaultFontSize - 10.0,
                   fontWeight: FontWeight.w600,
                   maxLine: 1,
                 ),
               ),
+              SizedBox(width: size.width * 0.03),
               LabelText(
                 content: moneyExchange.exchangeType == MoneyExchangeType.receive
                     ? getCustomContent({'Tiền nhận:': moneyExchange.amount})

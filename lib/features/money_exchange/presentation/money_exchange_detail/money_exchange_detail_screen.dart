@@ -28,21 +28,21 @@ class MoneyExchangeDetailScreen extends StatelessWidget {
           horizontal: AssetsConstants.defaultPadding - 6.0,
           vertical: AssetsConstants.defaultPadding - 6.0,
         ),
-        child: FittedBox(
-          child: Container(
-            width: size.width * 1,
-            padding: const EdgeInsets.all(
-              AssetsConstants.defaultPadding - 10.0,
+        child: Container(
+          width: size.width * 1,
+          padding: const EdgeInsets.all(
+            AssetsConstants.defaultPadding - 10.0,
+          ),
+          decoration: BoxDecoration(
+            color: AssetsConstants.whiteColor,
+            border: Border.all(
+              color: AssetsConstants.borderColor,
             ),
-            decoration: BoxDecoration(
-              color: AssetsConstants.whiteColor,
-              border: Border.all(
-                color: AssetsConstants.borderColor,
-              ),
-              borderRadius:
-                  BorderRadius.circular(AssetsConstants.defaultBorder),
-            ),
+            borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
+          ),
+          child: SingleChildScrollView(
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 MoneyExchangeFieldItem(
                   title: 'Ngày giao dịch',
@@ -84,6 +84,27 @@ class MoneyExchangeDetailScreen extends StatelessWidget {
                   content: moneyExchange.receiveName!,
                 ),
                 SizedBox(height: size.height * 0.01),
+                const LabelText(
+                  content: 'Hình ảnh',
+                  size: AssetsConstants.defaultFontSize - 10.0,
+                  color: AssetsConstants.skipText,
+                ),
+                if (moneyExchange.exchangeType ==
+                    MoneyExchangeType.withdraw) ...[
+                  SizedBox(height: size.height * 0.01),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: FadeInImage(
+                      fit: BoxFit.cover,
+                      placeholder: const AssetImage(
+                        AssetsConstants.welcomeImage,
+                      ),
+                      image: NetworkImage(
+                        moneyExchange.exchangeImage!,
+                      ),
+                    ),
+                  ),
+                ]
               ],
             ),
           ),
