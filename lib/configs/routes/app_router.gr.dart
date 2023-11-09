@@ -64,6 +64,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeScreen(),
       );
     },
+    MoneyExchangeDetailScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<MoneyExchangeDetailScreenRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: MoneyExchangeDetailScreen(
+          key: args.key,
+          moneyExchange: args.moneyExchange,
+        ),
+      );
+    },
+    MoneyExchangeScreenRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MoneyExchangeScreen(),
+      );
+    },
     OTPVerificationScreenRoute.name: (routeData) {
       final args = routeData.argsAs<OTPVerificationScreenRouteArgs>();
       return AutoRoutePage<dynamic>(
@@ -129,22 +145,6 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const TabViewScreen(),
-      );
-    },
-    TransactionDetailScreenRoute.name: (routeData) {
-      final args = routeData.argsAs<TransactionDetailScreenRouteArgs>();
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: TransactionDetailScreen(
-          key: args.key,
-          transaction: args.transaction,
-        ),
-      );
-    },
-    WalletScreenRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const WalletScreen(),
       );
     },
   };
@@ -310,6 +310,59 @@ class HomeScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeScreenRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MoneyExchangeDetailScreen]
+class MoneyExchangeDetailScreenRoute
+    extends PageRouteInfo<MoneyExchangeDetailScreenRouteArgs> {
+  MoneyExchangeDetailScreenRoute({
+    Key? key,
+    required MoneyExchangeModel moneyExchange,
+    List<PageRouteInfo>? children,
+  }) : super(
+          MoneyExchangeDetailScreenRoute.name,
+          args: MoneyExchangeDetailScreenRouteArgs(
+            key: key,
+            moneyExchange: moneyExchange,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'MoneyExchangeDetailScreenRoute';
+
+  static const PageInfo<MoneyExchangeDetailScreenRouteArgs> page =
+      PageInfo<MoneyExchangeDetailScreenRouteArgs>(name);
+}
+
+class MoneyExchangeDetailScreenRouteArgs {
+  const MoneyExchangeDetailScreenRouteArgs({
+    this.key,
+    required this.moneyExchange,
+  });
+
+  final Key? key;
+
+  final MoneyExchangeModel moneyExchange;
+
+  @override
+  String toString() {
+    return 'MoneyExchangeDetailScreenRouteArgs{key: $key, moneyExchange: $moneyExchange}';
+  }
+}
+
+/// generated route for
+/// [MoneyExchangeScreen]
+class MoneyExchangeScreenRoute extends PageRouteInfo<void> {
+  const MoneyExchangeScreenRoute({List<PageRouteInfo>? children})
+      : super(
+          MoneyExchangeScreenRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MoneyExchangeScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -541,59 +594,6 @@ class TabViewScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'TabViewScreenRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [TransactionDetailScreen]
-class TransactionDetailScreenRoute
-    extends PageRouteInfo<TransactionDetailScreenRouteArgs> {
-  TransactionDetailScreenRoute({
-    Key? key,
-    required TransactionModel transaction,
-    List<PageRouteInfo>? children,
-  }) : super(
-          TransactionDetailScreenRoute.name,
-          args: TransactionDetailScreenRouteArgs(
-            key: key,
-            transaction: transaction,
-          ),
-          initialChildren: children,
-        );
-
-  static const String name = 'TransactionDetailScreenRoute';
-
-  static const PageInfo<TransactionDetailScreenRouteArgs> page =
-      PageInfo<TransactionDetailScreenRouteArgs>(name);
-}
-
-class TransactionDetailScreenRouteArgs {
-  const TransactionDetailScreenRouteArgs({
-    this.key,
-    required this.transaction,
-  });
-
-  final Key? key;
-
-  final TransactionModel transaction;
-
-  @override
-  String toString() {
-    return 'TransactionDetailScreenRouteArgs{key: $key, transaction: $transaction}';
-  }
-}
-
-/// generated route for
-/// [WalletScreen]
-class WalletScreenRoute extends PageRouteInfo<void> {
-  const WalletScreenRoute({List<PageRouteInfo>? children})
-      : super(
-          WalletScreenRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'WalletScreenRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

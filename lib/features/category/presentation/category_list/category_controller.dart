@@ -1,6 +1,8 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import '../../../../configs/routes/app_router.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
@@ -63,6 +65,7 @@ class CategoryController extends _$CategoryController {
       // if refresh token expired
       if (state.hasError) {
         await authRepository.signOut();
+        context.router.replaceAll([SignInScreenRoute()]);
       }
     }
 

@@ -1,5 +1,3 @@
-// ignore_for_file: unused_local_variable
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -34,7 +32,6 @@ class CategoryDetailScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // intit
-    final size = MediaQuery.sizeOf(context);
     final category = useState<CategoryModel?>(null);
     final tabController = useTabController(
       initialLength: 3,

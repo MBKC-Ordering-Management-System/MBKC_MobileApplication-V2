@@ -27,6 +27,13 @@ class APIConstants {
   // profile
   static const getProfile = '/stores/profile';
 
+  // money exchange
+  static const moneyExchange = '/money-exchanges';
+
+  // wallet
+  static const wallet =
+      '/wallets/transaction-money-exchange-shipper-payment-information';
+
   // error
   static const Map<String, String> errorTrans = {
     'Email does not exist in the system.':

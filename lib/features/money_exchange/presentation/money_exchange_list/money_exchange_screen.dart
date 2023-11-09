@@ -11,10 +11,11 @@ import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
-import '../../domain/models/transaction_model.dart';
+import '../../domain/models/money_exchange_model.dart';
 import 'bottom_sheet_searching.dart';
-import 'transaction_controller.dart';
-import 'transaction_item.dart';
+import 'money_exchange_controller.dart';
+import 'money_exchange_item.dart';
+import 'wallet_controller.dart';
 
 final transactionDateFrom = StateProvider.autoDispose<String>(
   (ref) => getDateTimeNow(),
@@ -25,8 +26,21 @@ final transactionDateTo = StateProvider.autoDispose<String>(
 );
 
 @RoutePage()
-class WalletScreen extends HookConsumerWidget {
-  const WalletScreen({super.key});
+class MoneyExchangeScreen extends HookConsumerWidget {
+  const MoneyExchangeScreen({super.key});
+
+  // fetch balance data
+  Future<void> fetchBalanceData({
+    required ValueNotifier<double> balance,
+    required WidgetRef ref,
+    required BuildContext context,
+  }) async {
+    final response =
+        await ref.read(walletControllerProvider.notifier).getBalance(context);
+    if (response != null) {
+      balance.value = response.balance;
+    }
+  }
 
   // fetch data
   Future<void> fetchData({
@@ -36,7 +50,7 @@ class WalletScreen extends HookConsumerWidget {
     required ValueNotifier<int> pageNumber,
     required ValueNotifier<bool> isLastPage,
     required ValueNotifier<bool> isLoadMoreLoading,
-    required ValueNotifier<List<TransactionModel>> transactions,
+    required ValueNotifier<List<MoneyExchangeModel>> moneyExchanges,
     required ValueNotifier<bool> isFetchingData,
     required ValueNotifier<bool> isFirstLoad,
     required String? filterType,
@@ -59,16 +73,17 @@ class WalletScreen extends HookConsumerWidget {
 
     isFetchingData.value = true;
     pageNumber.value = pageNumber.value + 1;
-    final transactionsData = await ref
-        .read(transactionControllerProvider.notifier)
+    final moneyExchangesData = await ref
+        .read(moneyExchangeControllerProvider.notifier)
         .getMoneyExchanges(
           PagingModel(
             pageNumber: pageNumber.value,
+            filterContent: filterType,
           ),
           context,
         );
 
-    isLastPage.value = transactionsData.length < 10;
+    isLastPage.value = moneyExchangesData.length < 10;
     if (getDatatype == GetDataType.fetchdata) {
       isLoadMoreLoading.value = true;
       // here
@@ -76,24 +91,26 @@ class WalletScreen extends HookConsumerWidget {
         isFirstLoad.value = !isFirstLoad.value;
       }
 
-      transactions.value = transactionsData;
+      moneyExchanges.value = moneyExchangesData;
       isFetchingData.value = false;
       return;
     }
 
     isFetchingData.value = false;
-    transactions.value = transactions.value + transactionsData;
+    moneyExchanges.value = moneyExchanges.value + moneyExchangesData;
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final transactions = useState<List<TransactionModel>>([]);
+    final balance = useState<double>(0);
+    final moneyExchanges = useState<List<MoneyExchangeModel>>([]);
     final isFirstLoad = useState(true);
     final scrollController = useScrollController();
     final isFetchingData = useState(true);
-    final state = ref.watch(transactionControllerProvider);
+    final stateMoneyExchange = ref.watch(moneyExchangeControllerProvider);
+    final stateBalance = ref.watch(walletControllerProvider);
     final moneyExchangeType = ref.watch(moneyExchangeTypeProvider);
     final dateFrom = ref.watch(transactionDateFrom);
     final dateTo = ref.watch(transactionDateTo);
@@ -106,6 +123,11 @@ class WalletScreen extends HookConsumerWidget {
     // first load
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        fetchBalanceData(
+          balance: balance,
+          ref: ref,
+          context: context,
+        );
         fetchData(
           filterType: ref.read(moneyExchangeTypeProvider).type,
           transactionDateFrom: ref.read(transactionDateFrom),
@@ -117,7 +139,7 @@ class WalletScreen extends HookConsumerWidget {
           pageNumber: pageNumber,
           isLastPage: isLastPage,
           isLoadMoreLoading: isLoadMoreLoading,
-          transactions: transactions,
+          moneyExchanges: moneyExchanges,
           isFetchingData: isFetchingData,
         );
       });
@@ -135,7 +157,7 @@ class WalletScreen extends HookConsumerWidget {
             pageNumber: pageNumber,
             isLastPage: isLastPage,
             isLoadMoreLoading: isLoadMoreLoading,
-            transactions: transactions,
+            moneyExchanges: moneyExchanges,
             isFetchingData: isFetchingData,
           );
         },
@@ -153,20 +175,27 @@ class WalletScreen extends HookConsumerWidget {
         iconFirst: Icons.refresh_rounded,
         iconSecond: Icons.filter_list_alt,
         backButtonColor: AssetsConstants.whiteColor,
-        onCallBackFirst: () => fetchData(
-          filterType: ref.read(moneyExchangeTypeProvider).type,
-          transactionDateFrom: ref.read(transactionDateFrom),
-          transactionDateTo: ref.read(transactionDateTo),
-          isFirstLoad: isFirstLoad,
-          getDatatype: GetDataType.fetchdata,
-          context: context,
-          ref: ref,
-          pageNumber: pageNumber,
-          isLastPage: isLastPage,
-          isLoadMoreLoading: isLoadMoreLoading,
-          transactions: transactions,
-          isFetchingData: isFetchingData,
-        ),
+        onCallBackFirst: () {
+          fetchBalanceData(
+            balance: balance,
+            ref: ref,
+            context: context,
+          );
+          fetchData(
+            filterType: ref.read(moneyExchangeTypeProvider).type,
+            transactionDateFrom: ref.read(transactionDateFrom),
+            transactionDateTo: ref.read(transactionDateTo),
+            isFirstLoad: isFirstLoad,
+            getDatatype: GetDataType.fetchdata,
+            context: context,
+            ref: ref,
+            pageNumber: pageNumber,
+            isLastPage: isLastPage,
+            isLoadMoreLoading: isLoadMoreLoading,
+            moneyExchanges: moneyExchanges,
+            isFetchingData: isFetchingData,
+          );
+        },
         onCallBackSecond: () => showBottomSheetSearching(
           context: context,
           size: size,
@@ -182,7 +211,7 @@ class WalletScreen extends HookConsumerWidget {
               pageNumber: pageNumber,
               isLastPage: isLastPage,
               isLoadMoreLoading: isLoadMoreLoading,
-              transactions: transactions,
+              moneyExchanges: moneyExchanges,
               isFetchingData: isFetchingData,
             );
           },
@@ -198,13 +227,15 @@ class WalletScreen extends HookConsumerWidget {
               children: [
                 SizedBox(height: size.height * 0.02),
                 StatisticalCard(
+                  loadingColor: AssetsConstants.mainColor,
+                  state: stateBalance,
                   backgroundColor: AssetsConstants.revenueBackground,
                   contentColor: AssetsConstants.mainColor,
                   icon: const Icon(
                     Icons.wallet,
                     color: AssetsConstants.mainColor,
                   ),
-                  title: getCustomContent({'Giá:': 5000000}),
+                  title: getCustomContent({'Giá:': balance.value}),
                   subtitle: 'Số dư tài khoản',
                 ),
                 SizedBox(height: size.height * 0.02),
@@ -225,7 +256,8 @@ class WalletScreen extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(height: size.height * 0.01),
-                      (state.isLoading && isLoadMoreLoading.value == false)
+                      (stateMoneyExchange.isLoading &&
+                              isLoadMoreLoading.value == false)
                           ? Center(
                               child: LottieBuilder.asset(
                                 AssetsConstants.lottieLoadingTrans,
@@ -233,15 +265,16 @@ class WalletScreen extends HookConsumerWidget {
                                 height: size.height * 0.5,
                               ),
                             )
-                          : transactions.value.isEmpty
+                          : moneyExchanges.value.isEmpty
                               ? const EmptyBox(title: 'Không có giao dịch')
                               : Expanded(
                                   child: ListView.builder(
                                     controller: scrollController,
-                                    itemCount: transactions.value.length + 1,
+                                    itemCount: moneyExchanges.value.length + 1,
                                     itemBuilder: (_, index) {
-                                      if (index == transactions.value.length) {
-                                        if (state.isLoading) {
+                                      if (index ==
+                                          moneyExchanges.value.length) {
+                                        if (stateMoneyExchange.isLoading) {
                                           return const CustomCircular();
                                         }
                                         return isLastPage.value
@@ -250,14 +283,14 @@ class WalletScreen extends HookConsumerWidget {
                                       }
                                       return InkWell(
                                         onTap: () => context.router.push(
-                                          TransactionDetailScreenRoute(
-                                            transaction:
-                                                transactions.value[index],
+                                          MoneyExchangeDetailScreenRoute(
+                                            moneyExchange:
+                                                moneyExchanges.value[index],
                                           ),
                                         ),
-                                        child: TransactionItem(
-                                          transaction:
-                                              transactions.value[index],
+                                        child: MoneyExchangeItem(
+                                          moneyExchange:
+                                              moneyExchanges.value[index],
                                         ),
                                       );
                                     },

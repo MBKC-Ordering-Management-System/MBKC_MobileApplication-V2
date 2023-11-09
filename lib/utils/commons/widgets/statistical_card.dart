@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'widgets_common_export.dart';
 import '../../constants/asset_constant.dart';
 
@@ -10,13 +11,17 @@ class StatisticalCard extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.subtitle,
+    required this.state,
+    required this.loadingColor,
   });
 
   final Color backgroundColor;
   final Color contentColor;
+  final Color loadingColor;
   final Icon icon;
   final String title;
   final String subtitle;
+  final AsyncValue<void> state;
 
   @override
   Widget build(BuildContext context) {
@@ -36,21 +41,30 @@ class StatisticalCard extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          icon,
-          SizedBox(height: size.height * 0.01),
-          LabelText(
-            content: title,
-            size: AssetsConstants.defaultFontSize - 8.0,
-            color: contentColor,
-            fontWeight: FontWeight.w700,
-          ),
-          SizedBox(height: size.height * 0.01),
-          LabelText(
-            content: subtitle,
-            size: AssetsConstants.defaultFontSize - 12.0,
-            color: contentColor,
-            fontWeight: FontWeight.w600,
-          ),
+          if (state.isLoading)
+            Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 3.5,
+                color: loadingColor,
+              ),
+            ),
+          if (state.isLoading == false) ...[
+            icon,
+            SizedBox(height: size.height * 0.01),
+            LabelText(
+              content: title,
+              size: AssetsConstants.defaultFontSize - 8.0,
+              color: contentColor,
+              fontWeight: FontWeight.w700,
+            ),
+            SizedBox(height: size.height * 0.01),
+            LabelText(
+              content: subtitle,
+              size: AssetsConstants.defaultFontSize - 12.0,
+              color: contentColor,
+              fontWeight: FontWeight.w600,
+            ),
+          ]
         ],
       ),
     );

@@ -3,11 +3,11 @@ import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
-import '../../domain/models/transaction_model.dart';
+import '../../domain/models/money_exchange_model.dart';
 
-class TransactionItem extends StatelessWidget {
-  const TransactionItem({super.key, required this.transaction});
-  final TransactionModel transaction;
+class MoneyExchangeItem extends StatelessWidget {
+  const MoneyExchangeItem({super.key, required this.moneyExchange});
+  final MoneyExchangeModel moneyExchange;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class TransactionItem extends StatelessWidget {
         children: [
           LabelText(
             content:
-                '${transaction.date} - ${getTitleTypeMoneyExchange(transaction.type)}',
+                '${moneyExchange.transactionTime} - ${getTitleTypeMoneyExchange(moneyExchange.exchangeType!)}',
             size: AssetsConstants.defaultFontSize - 10.0,
           ),
           Row(
@@ -37,18 +37,18 @@ class TransactionItem extends StatelessWidget {
             children: [
               Expanded(
                 child: LabelText(
-                  content: transaction.content,
+                  content: moneyExchange.content!,
                   size: AssetsConstants.defaultFontSize - 10.0,
                   fontWeight: FontWeight.w600,
                   maxLine: 1,
                 ),
               ),
               LabelText(
-                content: transaction.type == MoneyExchangeType.receive
-                    ? getCustomContent({'Tiền nhận:': transaction.amout})
-                    : getCustomContent({'Tiền tiền:': transaction.amout}),
+                content: moneyExchange.exchangeType == MoneyExchangeType.receive
+                    ? getCustomContent({'Tiền nhận:': moneyExchange.amount})
+                    : getCustomContent({'Tiền tiền:': moneyExchange.amount}),
                 size: AssetsConstants.defaultFontSize - 10.0,
-                color: getColorMoneyExchange(transaction.type),
+                color: getColorMoneyExchange(moneyExchange.exchangeType!),
                 fontWeight: FontWeight.w600,
               ),
             ],

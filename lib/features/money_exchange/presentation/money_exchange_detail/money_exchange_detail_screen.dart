@@ -4,13 +4,13 @@ import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
-import '../../domain/models/transaction_model.dart';
-import 'transaction_field_item.dart';
+import '../../domain/models/money_exchange_model.dart';
+import 'money_exchange_field_item.dart';
 
 @RoutePage()
-class TransactionDetailScreen extends StatelessWidget {
-  const TransactionDetailScreen({super.key, required this.transaction});
-  final TransactionModel transaction;
+class MoneyExchangeDetailScreen extends StatelessWidget {
+  const MoneyExchangeDetailScreen({super.key, required this.moneyExchange});
+  final MoneyExchangeModel moneyExchange;
 
   @override
   Widget build(BuildContext context) {
@@ -44,40 +44,34 @@ class TransactionDetailScreen extends StatelessWidget {
             ),
             child: Column(
               children: [
-                TransactionFieldItem(
+                MoneyExchangeFieldItem(
                   title: 'Ngày giao dịch',
-                  content: transaction.date,
+                  content: formatDateTime(moneyExchange.transactionTime!),
                 ),
                 SizedBox(height: size.height * 0.01),
-                TransactionFieldItem(
+                MoneyExchangeFieldItem(
                   title: 'Số tiền giao dịch',
                   content: getCustomContent({
-                    'Số tiền giao dịch': transaction.amout,
+                    'Số tiền giao dịch': moneyExchange.amount,
                   }),
                 ),
                 SizedBox(height: size.height * 0.01),
-                TransactionFieldItem(
-                  title: 'Số dư sau giao dịch',
-                  content: getCustomContent({
-                    'Số dư sau giao dịch': transaction.balance,
-                  }),
-                ),
-                SizedBox(height: size.height * 0.01),
-                TransactionFieldItem(
+                MoneyExchangeFieldItem(
                   title: 'Loại giao dịch',
-                  content: transaction.type == MoneyExchangeType.receive
-                      ? 'Tiền nhận'
-                      : 'Tiền rút',
+                  content:
+                      moneyExchange.exchangeType == MoneyExchangeType.receive
+                          ? 'Tiền nhận'
+                          : 'Tiền rút',
                 ),
                 SizedBox(height: size.height * 0.01),
-                TransactionFieldItem(
+                MoneyExchangeFieldItem(
                   title: 'Trạng thái',
-                  content: transaction.status,
+                  content: moneyExchange.status!,
                 ),
                 SizedBox(height: size.height * 0.01),
-                TransactionFieldItem(
+                MoneyExchangeFieldItem(
                   title: 'Nội dung',
-                  content: transaction.content,
+                  content: moneyExchange.content!,
                 ),
                 SizedBox(height: size.height * 0.01),
               ],

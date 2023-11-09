@@ -181,10 +181,7 @@ class OrderDetailScreen extends HookConsumerWidget {
                             OrderPartnerStatusType.completed)
                           NormalRow(
                             content: [
-                              {
-                                'Thanh toán của giao hàng':
-                                    order.value!.commission
-                              },
+                              const {'Thanh toán của giao hàng': ''},
                               {
                                 'Số tiền:':
                                     order.value!.shipperPayments!.last.amount

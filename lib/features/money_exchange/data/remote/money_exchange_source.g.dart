@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'order_source.dart';
+part of 'money_exchange_source.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'order_source.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _OrderSource implements OrderSource {
-  _OrderSource(
+class _MoneyExchangeSource implements MoneyExchangeSource {
+  _MoneyExchangeSource(
     this._dio, {
     this.baseUrl,
   }) {
@@ -21,22 +21,20 @@ class _OrderSource implements OrderSource {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<OrderListResponse>> getOrders(
+  Future<HttpResponse<MoneyExchangeListResponse>> getMoneyExchanges(
     String contentType,
     String accessToken,
-    String? orderSystemStatus,
-    String? orderPartnerStatus,
     String? dateFrom,
     String? dateTo,
+    String? type,
     int currentPage,
     int itemsPerPage,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
-      r'systemStatus': orderSystemStatus,
-      r'partnerOrderStatus': orderPartnerStatus,
       r'searchDateFrom': dateFrom,
       r'searchDateTo': dateTo,
+      r'exchangeType': type,
       r'currentPage': currentPage,
       r'itemsPerPage': itemsPerPage,
     };
@@ -48,7 +46,7 @@ class _OrderSource implements OrderSource {
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<OrderListResponse>>(Options(
+        _setStreamType<HttpResponse<MoneyExchangeListResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -56,7 +54,7 @@ class _OrderSource implements OrderSource {
     )
             .compose(
               _dio.options,
-              '/orders',
+              '/money-exchanges',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -65,16 +63,15 @@ class _OrderSource implements OrderSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = OrderListResponse.fromMap(_result.data!);
+    final value = MoneyExchangeListResponse.fromMap(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<OrderModel>> getProductDetail(
+  Future<HttpResponse<WalletModel>> getBalanceWallet(
     String contentType,
     String accessToken,
-    int id,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -85,7 +82,7 @@ class _OrderSource implements OrderSource {
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<OrderModel>>(Options(
+        _setStreamType<HttpResponse<WalletModel>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -93,7 +90,7 @@ class _OrderSource implements OrderSource {
     )
             .compose(
               _dio.options,
-              '/orders/${id}',
+              '/wallets/transaction-money-exchange-shipper-payment-information',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -102,13 +99,13 @@ class _OrderSource implements OrderSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = OrderModel.fromMap(_result.data!);
+    final value = WalletModel.fromMap(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
 
   @override
-  Future<HttpResponse<SuccessModel>> changeOrderToReady(
+  Future<HttpResponse<MoneyExchangeModel>> getMoneyExchangeDetail(
     String contentType,
     String accessToken,
     int id,
@@ -122,15 +119,15 @@ class _OrderSource implements OrderSource {
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<SuccessModel>>(Options(
-      method: 'PUT',
+        _setStreamType<HttpResponse<MoneyExchangeModel>>(Options(
+      method: 'GET',
       headers: _headers,
       extra: _extra,
       contentType: contentType,
     )
             .compose(
               _dio.options,
-              '/orders/${id}/change-order-to-ready',
+              '/money-exchanges/${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -139,44 +136,7 @@ class _OrderSource implements OrderSource {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = SuccessModel.fromMap(_result.data!);
-    final httpResponse = HttpResponse(value, _result);
-    return httpResponse;
-  }
-
-  @override
-  Future<HttpResponse<SuccessModel>> cancelOrder(
-    String contentType,
-    String accessToken,
-    int id,
-  ) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'Content-Type': contentType,
-      r'Authorization': accessToken,
-    };
-    _headers.removeWhere((k, v) => v == null);
-    final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<SuccessModel>>(Options(
-      method: 'PUT',
-      headers: _headers,
-      extra: _extra,
-      contentType: contentType,
-    )
-            .compose(
-              _dio.options,
-              '/orders/${id}/cancel-order',
-              queryParameters: queryParameters,
-              data: _data,
-            )
-            .copyWith(
-                baseUrl: _combineBaseUrls(
-              _dio.options.baseUrl,
-              baseUrl,
-            ))));
-    final value = SuccessModel.fromMap(_result.data!);
+    final value = MoneyExchangeModel.fromMap(_result.data!);
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
@@ -216,19 +176,22 @@ class _OrderSource implements OrderSource {
 // RiverpodGenerator
 // **************************************************************************
 
-String _$orderSourceHash() => r'05e6c1ae3c655f97edcb8a0bb736c2f208ab0180';
+String _$moneyExchangeSourceHash() =>
+    r'35247eeabd67c0065c6d7d15612c17c325e1e51c';
 
-/// See also [orderSource].
-@ProviderFor(orderSource)
-final orderSourceProvider = AutoDisposeProvider<OrderSource>.internal(
-  orderSource,
-  name: r'orderSourceProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$orderSourceHash,
+/// See also [moneyExchangeSource].
+@ProviderFor(moneyExchangeSource)
+final moneyExchangeSourceProvider =
+    AutoDisposeProvider<MoneyExchangeSource>.internal(
+  moneyExchangeSource,
+  name: r'moneyExchangeSourceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$moneyExchangeSourceHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef OrderSourceRef = AutoDisposeProviderRef<OrderSource>;
+typedef MoneyExchangeSourceRef = AutoDisposeProviderRef<MoneyExchangeSource>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

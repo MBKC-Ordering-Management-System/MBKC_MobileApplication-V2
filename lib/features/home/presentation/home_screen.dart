@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../utils/commons/functions/functions_common_export.dart';
 import '../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../utils/constants/asset_constant.dart';
+import '../../profile/presentation/profile/profile_controller.dart';
 import '../domain/models/statistical_model.dart';
 import '../domain/repositories/home_repository.dart';
 
@@ -34,6 +35,8 @@ class HomeScreen extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final isLoading = useState(false);
     final statistical = useState<StatisticalModel?>(null);
+    final state1 = ref.watch(profileControllerProvider);
+    final state2 = ref.watch(profileControllerProvider);
 
     // first load
     useEffect(() {
@@ -72,6 +75,8 @@ class HomeScreen extends HookConsumerWidget {
                 children: [
                   SizedBox(height: size.height * 0.02),
                   StatisticalCard(
+                    loadingColor: AssetsConstants.mainColor,
+                    state: state1,
                     backgroundColor: AssetsConstants.revenueBackground,
                     contentColor: AssetsConstants.mainColor,
                     icon: const Icon(
@@ -84,6 +89,8 @@ class HomeScreen extends HookConsumerWidget {
                   ),
                   SizedBox(height: size.height * 0.02),
                   StatisticalCard(
+                    loadingColor: AssetsConstants.totalOrderContent,
+                    state: state2,
                     backgroundColor: AssetsConstants.totalOrderBackground,
                     contentColor: AssetsConstants.totalOrderContent,
                     icon: const Icon(

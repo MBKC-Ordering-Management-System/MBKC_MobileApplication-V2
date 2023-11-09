@@ -20,7 +20,7 @@ abstract class OrderSource {
     @Query('systemStatus') String? orderSystemStatus,
     @Query('partnerOrderStatus') String? orderPartnerStatus,
     @Query('searchDateFrom') String? dateFrom,
-    @Query('SearchDateTo') String? dateTo,
+    @Query('searchDateTo') String? dateTo,
     @Query('currentPage') int currentPage,
     @Query('itemsPerPage') int itemsPerPage,
   );

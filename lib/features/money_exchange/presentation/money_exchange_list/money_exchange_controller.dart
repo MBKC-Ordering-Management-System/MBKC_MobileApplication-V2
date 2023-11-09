@@ -3,40 +3,43 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../../configs/routes/app_router.dart';
+import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
-import '../../domain/models/order_model.dart';
-import '../../domain/repositories/order_repository.dart';
+import '../../domain/models/money_exchange_model.dart';
+import '../../domain/repositories/money_exchange_repository.dart';
 
-part 'order_detail_controller.g.dart';
+part 'money_exchange_controller.g.dart';
 
 @riverpod
-class OrderDetailController extends _$OrderDetailController {
+class MoneyExchangeController extends _$MoneyExchangeController {
   @override
   FutureOr<void> build() {
     // nothing to do
   }
 
-  // get product detail
-  Future<OrderModel?> getOrderDetail(
+  // get money exchanges
+  Future<List<MoneyExchangeModel>> getMoneyExchanges(
+    PagingModel request,
     BuildContext context,
-    int orderId,
   ) async {
-    OrderModel? order;
+    List<MoneyExchangeModel> moneyExchanges = [];
     state = const AsyncLoading();
-    final orderRepository = ref.read(orderRepositoryProvider);
+    final moneyExchangeRepository = ref.read(moneyExchangeRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
-        order = await orderRepository.getOrderDetail(
-          orderId: orderId,
+        final response = await moneyExchangeRepository.getMoneyExchanges(
           accessToken: APIConstants.prefixToken + user!.token.accessToken,
+          request: request,
         );
+
+        moneyExchanges = response.moneyExchanges;
       },
     );
 
@@ -55,17 +58,16 @@ class OrderDetailController extends _$OrderDetailController {
             return;
           }
 
-          getOrderDetail(context, orderId);
+          getMoneyExchanges(request, context);
         },
       );
-
       // if refresh token expired
       if (state.hasError) {
-        await authRepository.signOut();
         context.router.replaceAll([SignInScreenRoute()]);
+        await authRepository.signOut();
       }
     }
 
-    return order;
+    return moneyExchanges;
   }
 }

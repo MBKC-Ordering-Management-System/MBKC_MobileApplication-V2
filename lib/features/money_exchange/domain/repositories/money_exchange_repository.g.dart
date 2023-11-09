@@ -1,27 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'transaction_controller.dart';
+part of 'money_exchange_repository.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$transactionControllerHash() =>
-    r'80a5f29374563f58b5d3faa6372419f72e891ca7';
+String _$moneyExchangeRepositoryHash() =>
+    r'205a6bba6cc97570f39784cf7847d0784e265f4f';
 
-/// See also [TransactionController].
-@ProviderFor(TransactionController)
-final transactionControllerProvider =
-    AutoDisposeAsyncNotifierProvider<TransactionController, void>.internal(
-  TransactionController.new,
-  name: r'transactionControllerProvider',
+/// See also [moneyExchangeRepository].
+@ProviderFor(moneyExchangeRepository)
+final moneyExchangeRepositoryProvider =
+    Provider<MoneyExchangeRepository>.internal(
+  moneyExchangeRepository,
+  name: r'moneyExchangeRepositoryProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$transactionControllerHash,
+      : _$moneyExchangeRepositoryHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$TransactionController = AutoDisposeAsyncNotifier<void>;
+typedef MoneyExchangeRepositoryRef = ProviderRef<MoneyExchangeRepository>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

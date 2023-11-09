@@ -92,7 +92,7 @@ class ProfileScreen extends HookConsumerWidget {
                     ProfileBox(profile: profile.value!),
                     InkWell(
                       onTap: () =>
-                          context.router.push(const WalletScreenRoute()),
+                          context.router.push(const MoneyExchangeScreenRoute()),
                       child: const ActionBox(
                         icon: FontAwesomeIcons.wallet,
                         title: 'Ví',

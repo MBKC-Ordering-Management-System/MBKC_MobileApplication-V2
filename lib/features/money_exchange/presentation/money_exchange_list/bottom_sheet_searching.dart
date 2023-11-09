@@ -5,7 +5,7 @@ import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
-import 'wallet_screen.dart';
+import 'money_exchange_screen.dart';
 
 final optionsMoneyExchangeType = [
   MoneyExchangeType.all,

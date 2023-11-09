@@ -1,7 +1,9 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../../../configs/routes/app_router.dart';
 import '../../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../../utils/constants/api_constant.dart';
 import '../../../../../utils/enums/enums_export.dart';
@@ -61,6 +63,7 @@ class ProductDetailController extends _$ProductDetailController {
       // if refresh token expired
       if (state.hasError) {
         await authRepository.signOut();
+        context.router.replaceAll([SignInScreenRoute()]);
       }
     }
 

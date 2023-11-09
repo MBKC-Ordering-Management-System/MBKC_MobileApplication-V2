@@ -16,6 +16,14 @@ Future<void> handleAPIError({
   Future<void>? onCallBackGenerateToken,
 }) async {
   final error = (stateError as DioException).response!.data;
+  if (error == null) {
+    showExceptionAlertDialog(
+      context: context,
+      title: 'Thông báo',
+      exception: 'Có lỗi rồi.',
+    );
+    return;
+  }
   final errorModel = ErrorModel.fromMap(error);
   switch (statusCode.toStatusCodeTypeEnum()) {
     case StatusCodeType.conflict:

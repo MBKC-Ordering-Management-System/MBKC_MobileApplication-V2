@@ -154,7 +154,7 @@ String getTitlePaymentMethod(String type) {
 String getTitleMoneyExchangeType(MoneyExchangeType type) {
   switch (type) {
     case MoneyExchangeType.all:
-      return 'Tiền cả';
+      return 'Tất cả';
     case MoneyExchangeType.receive:
       return 'Tiền nhận';
     case MoneyExchangeType.withdraw:

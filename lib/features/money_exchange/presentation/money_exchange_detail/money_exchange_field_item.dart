@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../../../utils/commons/widgets/label_text.dart';
 import '../../../../utils/constants/asset_constant.dart';
 
-class TransactionFieldItem extends StatelessWidget {
-  const TransactionFieldItem({
+class MoneyExchangeFieldItem extends StatelessWidget {
+  const MoneyExchangeFieldItem({
     super.key,
     required this.title,
     required this.content,
