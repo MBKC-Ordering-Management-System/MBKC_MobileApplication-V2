@@ -2,35 +2,69 @@ import 'package:flutter/material.dart';
 import '../../constants/asset_constant.dart';
 import '../../enums/enums_export.dart';
 
-Color getColorOrderPartnerStatus(OrderPartnerStatusType orderType) {
+Color getBackgroundColorPartnerStatus(OrderPartnerStatusType orderType) {
   switch (orderType) {
     case OrderPartnerStatusType.preparing:
-      return AssetsConstants.preparingColor;
+      return AssetsConstants.secondaryLighter;
     case OrderPartnerStatusType.ready:
-      return AssetsConstants.mainColor;
+      return AssetsConstants.secondaryLighter;
     case OrderPartnerStatusType.upcoming:
-      return AssetsConstants.upcomingColor;
+      return AssetsConstants.secondaryLighter;
     case OrderPartnerStatusType.completed:
-      return AssetsConstants.completedColor;
+      return AssetsConstants.successLighter;
     case OrderPartnerStatusType.cancelled:
-      return AssetsConstants.subtitleColor;
+      return AssetsConstants.errorLighter;
     default:
-      return AssetsConstants.preparingColor;
+      return AssetsConstants.secondaryLighter;
   }
 }
 
-Color getColorOrderSystemStatus(OrderSystemStatusType orderType) {
+Color getContentColorPartnerStatus(OrderPartnerStatusType orderType) {
+  switch (orderType) {
+    case OrderPartnerStatusType.preparing:
+      return AssetsConstants.secondaryDark;
+    case OrderPartnerStatusType.ready:
+      return AssetsConstants.secondaryDark;
+    case OrderPartnerStatusType.upcoming:
+      return AssetsConstants.secondaryDark;
+    case OrderPartnerStatusType.completed:
+      return AssetsConstants.successDarker;
+    case OrderPartnerStatusType.cancelled:
+      return AssetsConstants.errorDark;
+    default:
+      return AssetsConstants.secondaryDark;
+  }
+}
+
+// system ---
+
+Color getBackgroundColorSystemStatus(OrderSystemStatusType orderType) {
   switch (orderType) {
     case OrderSystemStatusType.instore:
-      return AssetsConstants.preparingColor;
+      return AssetsConstants.primaryLighter;
     case OrderSystemStatusType.readydelivery:
-      return AssetsConstants.mainColor;
+      return AssetsConstants.primaryLighter;
     case OrderSystemStatusType.completed:
-      return AssetsConstants.completedColor;
+      return AssetsConstants.successLighter;
     case OrderSystemStatusType.cancelled:
-      return AssetsConstants.subtitleColor;
+      return AssetsConstants.errorLighter;
     default:
-      return AssetsConstants.preparingColor;
+      return AssetsConstants.primaryLighter;
+  }
+}
+
+Color getContentColorSystemStatus(OrderSystemStatusType orderType) {
+  switch (orderType) {
+    case OrderSystemStatusType.instore:
+      return AssetsConstants.primaryDark;
+    case OrderSystemStatusType.readydelivery:
+      return AssetsConstants.primaryDark;
+    case OrderSystemStatusType.completed:
+      return AssetsConstants.successDarker;
+    case OrderSystemStatusType.cancelled:
+      return AssetsConstants.errorDark;
+    default:
+      return AssetsConstants.primaryDark;
   }
 }
 

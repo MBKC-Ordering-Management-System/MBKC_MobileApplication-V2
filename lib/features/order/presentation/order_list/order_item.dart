@@ -77,7 +77,7 @@ class OrderItem extends ConsumerWidget {
     final state = ref.watch(modifyOrderControllerProvider);
 
     return Container(
-      padding: const EdgeInsets.all(AssetsConstants.defaultPadding - 15.0),
+      padding: const EdgeInsets.all(AssetsConstants.defaultPadding - 12.0),
       margin: const EdgeInsets.only(bottom: AssetsConstants.defaultMargin),
       decoration: BoxDecoration(
         color: AssetsConstants.whiteColor,
@@ -134,9 +134,10 @@ class OrderItem extends ConsumerWidget {
                           order.systemStatus!.toOrderSystemTypeEnum()),
                       size: AssetsConstants.defaultFontSize - 18.0,
                       onCallBack: () {},
-                      backgroundColor: getColorOrderSystemStatus(
+                      backgroundColor: getBackgroundColorSystemStatus(
                           order.systemStatus!.toOrderSystemTypeEnum()),
-                      contentColor: AssetsConstants.whiteColor,
+                      contentColor: getContentColorSystemStatus(
+                          order.systemStatus!.toOrderSystemTypeEnum()),
                     ),
                     SizedBox(width: size.width * 0.02),
                     customButtonOrder(
@@ -146,9 +147,10 @@ class OrderItem extends ConsumerWidget {
                           order.partnerOrderStatus!.toOrderPartnerTypeEnum()),
                       size: AssetsConstants.defaultFontSize - 18.0,
                       onCallBack: () {},
-                      backgroundColor: getColorOrderPartnerStatus(
+                      backgroundColor: getBackgroundColorPartnerStatus(
                           order.partnerOrderStatus!.toOrderPartnerTypeEnum()),
-                      contentColor: AssetsConstants.whiteColor,
+                      contentColor: getContentColorPartnerStatus(
+                          order.partnerOrderStatus!.toOrderPartnerTypeEnum()),
                     ),
                     SizedBox(width: size.width * 0.01),
                   ],
@@ -176,6 +178,7 @@ class OrderItem extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CustomButton(
+                  isOutline: true,
                   size: AssetsConstants.defaultFontSize - 14.0,
                   content: 'Hoàn thành'.toUpperCase(),
                   onCallback: () => changeStatus(
@@ -184,10 +187,13 @@ class OrderItem extends ConsumerWidget {
                     ref: ref,
                   ),
                   isActive: true,
-                  width: size.width * 0.6,
+                  width: size.width * 0.55,
                   height: size.height * 0.035,
+                  backgroundColor: AssetsConstants.whiteColor,
+                  contentColor: AssetsConstants.mainColor,
                 ),
                 CustomButton(
+                  isOutline: true,
                   size: AssetsConstants.defaultFontSize - 14.0,
                   content: 'Hủy đơn'.toUpperCase(),
                   onCallback: () => cancelOrder(
@@ -198,7 +204,8 @@ class OrderItem extends ConsumerWidget {
                   isActive: true,
                   width: size.width * 0.3,
                   height: size.height * 0.035,
-                  backgroundColor: AssetsConstants.warningColor,
+                  backgroundColor: AssetsConstants.whiteColor,
+                  contentColor: AssetsConstants.warningColor,
                 ),
               ],
             ),

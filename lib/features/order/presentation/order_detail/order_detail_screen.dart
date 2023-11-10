@@ -210,14 +210,11 @@ class OrderDetailScreen extends HookConsumerWidget {
                         NormalRow(
                           content: [
                             {
-                              'Trạng thái hệ thống:': getTitleSystemStatus(order
-                                  .value!.systemStatus!
-                                  .toOrderSystemTypeEnum())
+                              'Trạng thái hệ thống:': order.value!.systemStatus!
                             },
                             {
-                              'Trạng thái đối tác:': getTitlePartnerStatus(order
-                                  .value!.partnerOrderStatus!
-                                  .toOrderPartnerTypeEnum())
+                              'Trạng thái đối tác:':
+                                  order.value!.partnerOrderStatus!
                             },
                           ],
                         ),
@@ -246,6 +243,7 @@ class OrderDetailScreen extends HookConsumerWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             CustomButton(
+                              isOutline: true,
                               width: size.width * 0.6,
                               height: size.height * 0.05,
                               content: 'Hoàn thành',
@@ -257,8 +255,11 @@ class OrderDetailScreen extends HookConsumerWidget {
                                       .toOrderPartnerTypeEnum() ==
                                   OrderPartnerStatusType.preparing),
                               size: AssetsConstants.defaultFontSize - 10.0,
+                              backgroundColor: AssetsConstants.whiteColor,
+                              contentColor: AssetsConstants.mainColor,
                             ),
                             CustomButton(
+                              isOutline: true,
                               width: size.width * 0.3,
                               height: size.height * 0.05,
                               content: 'Hủy đơn',
@@ -270,7 +271,8 @@ class OrderDetailScreen extends HookConsumerWidget {
                                       .toOrderPartnerTypeEnum() ==
                                   OrderPartnerStatusType.preparing),
                               size: AssetsConstants.defaultFontSize - 10.0,
-                              backgroundColor: AssetsConstants.warningColor,
+                              backgroundColor: AssetsConstants.whiteColor,
+                              contentColor: AssetsConstants.warningColor,
                             ),
                           ],
                         ),

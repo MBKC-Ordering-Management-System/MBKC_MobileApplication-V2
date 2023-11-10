@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
+import '../../../../utils/enums/enums_export.dart';
 
 class NormalRow extends StatelessWidget {
   const NormalRow({super.key, required this.content});
@@ -61,14 +62,40 @@ class NormalRow extends StatelessWidget {
                           width: size.width * 0.35,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: getColorByKey(e.entries.first.value),
+                            color: e.entries.first.key == 'Trạng thái hệ thống:'
+                                ? getBackgroundColorSystemStatus(
+                                    (e.entries.first.value as String)
+                                        .toOrderSystemTypeEnum(),
+                                  )
+                                : getBackgroundColorPartnerStatus(
+                                    (e.entries.first.value as String)
+                                        .toOrderPartnerTypeEnum(),
+                                  ),
                           ),
                           child: Center(
                             child: LabelText(
-                              content: e.entries.first.value,
+                              content:
+                                  e.entries.first.key == 'Trạng thái hệ thống:'
+                                      ? getTitleSystemStatus(
+                                          (e.entries.first.value as String)
+                                              .toOrderSystemTypeEnum(),
+                                        )
+                                      : getTitlePartnerStatus(
+                                          (e.entries.first.value as String)
+                                              .toOrderPartnerTypeEnum(),
+                                        ),
                               size: AssetsConstants.defaultFontSize - 14.0,
                               fontWeight: FontWeight.w600,
-                              color: AssetsConstants.whiteColor,
+                              color:
+                                  e.entries.first.key == 'Trạng thái hệ thống:'
+                                      ? getContentColorSystemStatus(
+                                          (e.entries.first.value as String)
+                                              .toOrderSystemTypeEnum(),
+                                        )
+                                      : getContentColorPartnerStatus(
+                                          (e.entries.first.value as String)
+                                              .toOrderPartnerTypeEnum(),
+                                        ),
                             ),
                           ),
                         )
