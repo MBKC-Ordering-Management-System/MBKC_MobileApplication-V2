@@ -31,7 +31,7 @@ class MoneyExchangeScreen extends HookConsumerWidget {
 
   // fetch balance data
   Future<void> fetchBalanceData({
-    required ValueNotifier<double> balance,
+    required ValueNotifier<int> balance,
     required WidgetRef ref,
     required BuildContext context,
   }) async {
@@ -79,6 +79,8 @@ class MoneyExchangeScreen extends HookConsumerWidget {
           PagingModel(
             pageNumber: pageNumber.value,
             filterContent: filterType,
+            searchDateFrom: transactionDateFrom,
+            searchDateTo: transactionDateTo,
           ),
           context,
         );
@@ -104,7 +106,7 @@ class MoneyExchangeScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final balance = useState<double>(0);
+    final balance = useState<int>(0);
     final moneyExchanges = useState<List<MoneyExchangeModel>>([]);
     final isFirstLoad = useState(true);
     final scrollController = useScrollController();

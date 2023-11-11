@@ -5,7 +5,7 @@ import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../domain/models/money_exchange_model.dart';
 import '../../domain/models/response/money_exchange_list_response.dart';
-import '../../domain/models/wallet_model.dart';
+import '../../../../models/wallet_model.dart';
 
 part 'money_exchange_source.g.dart';
 

@@ -127,26 +127,24 @@ class OrderItem extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    customButtonOrder(
+                    CustomLabelStatus(
                       width: size.width * 0.22,
                       height: size.height * 0.035,
                       content: getTitleSystemStatus(
                           order.systemStatus!.toOrderSystemTypeEnum()),
                       size: AssetsConstants.defaultFontSize - 18.0,
-                      onCallBack: () {},
                       backgroundColor: getBackgroundColorSystemStatus(
                           order.systemStatus!.toOrderSystemTypeEnum()),
                       contentColor: getContentColorSystemStatus(
                           order.systemStatus!.toOrderSystemTypeEnum()),
                     ),
                     SizedBox(width: size.width * 0.02),
-                    customButtonOrder(
+                    CustomLabelStatus(
                       width: size.width * 0.22,
                       height: size.height * 0.035,
                       content: getTitlePartnerStatus(
                           order.partnerOrderStatus!.toOrderPartnerTypeEnum()),
                       size: AssetsConstants.defaultFontSize - 18.0,
-                      onCallBack: () {},
                       backgroundColor: getBackgroundColorPartnerStatus(
                           order.partnerOrderStatus!.toOrderPartnerTypeEnum()),
                       contentColor: getContentColorPartnerStatus(
@@ -215,34 +213,4 @@ class OrderItem extends ConsumerWidget {
       ),
     );
   }
-}
-
-Widget customButtonOrder({
-  required double width,
-  required double height,
-  required String content,
-  required double size,
-  required VoidCallback onCallBack,
-  required Color backgroundColor,
-  required Color contentColor,
-}) {
-  return InkWell(
-    onTap: onCallBack,
-    child: Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Align(
-        child: LabelText(
-          content: content.toUpperCase(),
-          size: size,
-          color: contentColor,
-          fontWeight: FontWeight.w700,
-        ),
-      ),
-    ),
-  );
 }

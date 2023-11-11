@@ -23,8 +23,8 @@ class ProfileShimmer extends StatelessWidget {
                 baseColor: Colors.grey[300]!,
                 highlightColor: Colors.grey[100]!,
                 child: Container(
-                  height: size.height * 0.1,
-                  width: size.width * 0.18,
+                  height: size.height * 0.095,
+                  width: size.width * 0.2,
                   decoration: BoxDecoration(
                     color: AssetsConstants.whiteColor,
                     borderRadius: BorderRadius.circular(

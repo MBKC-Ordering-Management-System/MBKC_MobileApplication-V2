@@ -118,3 +118,29 @@ Color getColorByKey(String key) {
       return AssetsConstants.blackColor;
   }
 }
+
+Color getBackgrounStatusColor(StatusTypeEnum type) {
+  switch (type) {
+    case StatusTypeEnum.active:
+      return AssetsConstants.successLighter;
+    case StatusTypeEnum.inactive:
+      return AssetsConstants.warningLighter;
+    case StatusTypeEnum.deactive:
+      return AssetsConstants.warningLighter;
+    default:
+      return AssetsConstants.successLighter;
+  }
+}
+
+Color getContentStatusColor(StatusTypeEnum type) {
+  switch (type) {
+    case StatusTypeEnum.active:
+      return AssetsConstants.successDark;
+    case StatusTypeEnum.inactive:
+      return AssetsConstants.warningDark;
+    case StatusTypeEnum.deactive:
+      return AssetsConstants.warningDark;
+    default:
+      return AssetsConstants.successDark;
+  }
+}

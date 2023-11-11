@@ -3,7 +3,7 @@ import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/resources/remote_base_repository.dart';
 import '../../domain/models/money_exchange_model.dart';
 import '../../domain/models/response/money_exchange_list_response.dart';
-import '../../domain/models/wallet_model.dart';
+import '../../../../models/wallet_model.dart';
 import '../../domain/repositories/money_exchange_repository.dart';
 import '../remote/money_exchange_source.dart';
 

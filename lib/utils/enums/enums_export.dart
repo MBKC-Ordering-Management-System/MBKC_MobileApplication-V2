@@ -9,4 +9,5 @@ export './product_type_enum.dart';
 export './search_date_type_enum.dart';
 export './sort_type_enum.dart';
 export './status_code_type.dart';
+export './status_type_enum.dart';
 export './verification_otp_type.dart';

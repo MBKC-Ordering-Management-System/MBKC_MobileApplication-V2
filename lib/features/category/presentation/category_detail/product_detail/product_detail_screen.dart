@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../../utils/constants/asset_constant.dart';
+import '../../../../../utils/enums/enums_export.dart';
 import '../../../domain/models/product_model.dart';
 import 'information_tab.dart';
 import 'product_child_tab.dart';
@@ -13,8 +14,9 @@ import 'product_extra_tab.dart';
 
 @RoutePage()
 class ProductDetailScreen extends HookConsumerWidget {
-  const ProductDetailScreen(this.productId, {super.key});
+  const ProductDetailScreen(this.productId, this.productType, {super.key});
   final int productId;
+  final ProductType productType;
 
   // fetch data
   Future<void> fetchData({
@@ -51,7 +53,7 @@ class ProductDetailScreen extends HookConsumerWidget {
     }, const []);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AssetsConstants.whiteColor,
       extendBodyBehindAppBar: true,
       body: SafeArea(
         child: state.isLoading
@@ -74,8 +76,8 @@ class ProductDetailScreen extends HookConsumerWidget {
                                   icon: Stack(
                                     children: [
                                       Container(
-                                        height: size.height * 0.1,
-                                        width: size.width * 0.2,
+                                        height: size.height * 0.045,
+                                        width: size.width * 0.1,
                                         decoration: BoxDecoration(
                                           color: AssetsConstants.black_20
                                               .withOpacity(0.4),
@@ -83,11 +85,14 @@ class ProductDetailScreen extends HookConsumerWidget {
                                             AssetsConstants.defaultBorder + 20,
                                           ),
                                         ),
-                                      ),
-                                      const Center(
-                                        child: Icon(
-                                          Icons.arrow_back,
-                                          color: AssetsConstants.whiteColor,
+                                        child: const Center(
+                                          child: Icon(
+                                            Icons.arrow_back,
+                                            color: AssetsConstants.whiteColor,
+                                            size: AssetsConstants
+                                                    .defaultFontSize -
+                                                5.0,
+                                          ),
                                         ),
                                       ),
                                     ],

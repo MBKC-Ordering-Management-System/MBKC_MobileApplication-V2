@@ -21,6 +21,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: CategoryDetailScreen(
           args.categoryId,
+          args.categoryType,
           key: args.key,
         ),
       );
@@ -113,6 +114,7 @@ abstract class _$AppRouter extends RootStackRouter {
         routeData: routeData,
         child: ProductDetailScreen(
           args.productId,
+          args.productType,
           key: args.key,
         ),
       );
@@ -156,12 +158,14 @@ class CategoryDetailScreenRoute
     extends PageRouteInfo<CategoryDetailScreenRouteArgs> {
   CategoryDetailScreenRoute({
     required int categoryId,
+    required CategoryType categoryType,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           CategoryDetailScreenRoute.name,
           args: CategoryDetailScreenRouteArgs(
             categoryId: categoryId,
+            categoryType: categoryType,
             key: key,
           ),
           initialChildren: children,
@@ -176,16 +180,19 @@ class CategoryDetailScreenRoute
 class CategoryDetailScreenRouteArgs {
   const CategoryDetailScreenRouteArgs({
     required this.categoryId,
+    required this.categoryType,
     this.key,
   });
 
   final int categoryId;
 
+  final CategoryType categoryType;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'CategoryDetailScreenRouteArgs{categoryId: $categoryId, key: $key}';
+    return 'CategoryDetailScreenRouteArgs{categoryId: $categoryId, categoryType: $categoryType, key: $key}';
   }
 }
 
@@ -469,12 +476,14 @@ class ProductDetailScreenRoute
     extends PageRouteInfo<ProductDetailScreenRouteArgs> {
   ProductDetailScreenRoute({
     required int productId,
+    required ProductType productType,
     Key? key,
     List<PageRouteInfo>? children,
   }) : super(
           ProductDetailScreenRoute.name,
           args: ProductDetailScreenRouteArgs(
             productId: productId,
+            productType: productType,
             key: key,
           ),
           initialChildren: children,
@@ -489,16 +498,19 @@ class ProductDetailScreenRoute
 class ProductDetailScreenRouteArgs {
   const ProductDetailScreenRouteArgs({
     required this.productId,
+    required this.productType,
     this.key,
   });
 
   final int productId;
 
+  final ProductType productType;
+
   final Key? key;
 
   @override
   String toString() {
-    return 'ProductDetailScreenRouteArgs{productId: $productId, key: $key}';
+    return 'ProductDetailScreenRouteArgs{productId: $productId, productType: $productType, key: $key}';
   }
 }
 

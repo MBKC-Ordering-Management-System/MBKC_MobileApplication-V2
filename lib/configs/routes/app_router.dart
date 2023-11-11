@@ -21,7 +21,7 @@ import '../../features/profile/presentation/profile_detail/profile_detail_screen
 import '../../models/token_model.dart';
 import '../../models/user_model.dart';
 import '../../tabview_screen.dart';
-import '../../utils/enums/verification_otp_type.dart';
+import '../../utils/enums/enums_export.dart';
 import 'guard/auth_guard.dart';
 
 part 'app_router.gr.dart';

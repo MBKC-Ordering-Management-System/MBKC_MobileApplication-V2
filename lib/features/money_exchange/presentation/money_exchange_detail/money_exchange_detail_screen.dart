@@ -84,11 +84,12 @@ class MoneyExchangeDetailScreen extends StatelessWidget {
                   content: moneyExchange.receiveName!,
                 ),
                 SizedBox(height: size.height * 0.01),
-                const LabelText(
-                  content: 'Hình ảnh',
-                  size: AssetsConstants.defaultFontSize - 10.0,
-                  color: AssetsConstants.skipText,
-                ),
+                if (moneyExchange.exchangeType == MoneyExchangeType.withdraw)
+                  const LabelText(
+                    content: 'Hình ảnh',
+                    size: AssetsConstants.defaultFontSize - 10.0,
+                    color: AssetsConstants.skipText,
+                  ),
                 if (moneyExchange.exchangeType ==
                     MoneyExchangeType.withdraw) ...[
                   SizedBox(height: size.height * 0.01),

@@ -120,7 +120,9 @@ class CategoryScreen extends HookConsumerWidget {
         },
       );
 
-      return scrollController.dispose;
+      return () {
+        scrollController.dispose;
+      };
     }, const []);
 
     return Scaffold(
@@ -232,6 +234,7 @@ class CategoryScreen extends HookConsumerWidget {
                             return InkWell(
                               onTap: () => context.router.push(
                                 CategoryDetailScreenRoute(
+                                  categoryType: categories.value[index].type!,
                                   categoryId:
                                       categories.value[index].categoryId!,
                                 ),

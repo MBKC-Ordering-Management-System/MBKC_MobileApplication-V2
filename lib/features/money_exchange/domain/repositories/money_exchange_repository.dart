@@ -4,7 +4,7 @@ import '../../data/remote/money_exchange_source.dart';
 import '../../data/repositories/money_exchange_repository.dart';
 import '../models/money_exchange_model.dart';
 import '../models/response/money_exchange_list_response.dart';
-import '../models/wallet_model.dart';
+import '../../../../models/wallet_model.dart';
 
 part 'money_exchange_repository.g.dart';
 

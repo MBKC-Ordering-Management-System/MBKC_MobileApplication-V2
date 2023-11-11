@@ -271,6 +271,7 @@ class CategoryDetailProductTab extends HookConsumerWidget {
                           return InkWell(
                             onTap: () => context.router.push(
                               ProductDetailScreenRoute(
+                                productType: products.value[index].type,
                                 productId: products.value[index].productId,
                               ),
                             ),

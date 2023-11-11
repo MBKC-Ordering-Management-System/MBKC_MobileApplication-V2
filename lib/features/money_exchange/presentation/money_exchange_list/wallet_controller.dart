@@ -9,7 +9,7 @@ import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
-import '../../domain/models/wallet_model.dart';
+import '../../../../models/wallet_model.dart';
 import '../../domain/repositories/money_exchange_repository.dart';
 
 part 'wallet_controller.g.dart';

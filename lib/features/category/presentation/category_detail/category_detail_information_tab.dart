@@ -35,17 +35,23 @@ class CategoryDetailInformationTab extends StatelessWidget {
             color: AssetsConstants.skipText,
           ),
           SizedBox(height: size.height * 0.01),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(10),
-            child: FadeInImage(
-              fit: BoxFit.cover,
-              placeholder: const AssetImage(
-                AssetsConstants.welcomeImage,
+          Row(
+            children: [
+              Expanded(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: FadeInImage(
+                    fit: BoxFit.cover,
+                    placeholder: const AssetImage(
+                      AssetsConstants.welcomeImage,
+                    ),
+                    image: NetworkImage(
+                      category.imageUrl!,
+                    ),
+                  ),
+                ),
               ),
-              image: NetworkImage(
-                category.imageUrl!,
-              ),
-            ),
+            ],
           ),
           SizedBox(height: size.height * 0.01),
         ],

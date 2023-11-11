@@ -137,7 +137,9 @@ class OrderScreen extends HookConsumerWidget {
         },
       );
 
-      return scrollController.dispose;
+      return () {
+        scrollController.dispose;
+      };
     }, const []);
 
     // UI

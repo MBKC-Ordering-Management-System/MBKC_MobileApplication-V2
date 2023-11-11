@@ -132,6 +132,17 @@ class OrderDetailScreen extends HookConsumerWidget {
                         ),
                         NormalRow(
                           content: [
+                            {
+                              'Trạng thái hệ thống:': order.value!.systemStatus!
+                            },
+                            {
+                              'Trạng thái đối tác:':
+                                  order.value!.partnerOrderStatus!
+                            },
+                          ],
+                        ),
+                        NormalRow(
+                          content: [
                             {'Đối tác:': order.value!.partner!.name.toString()},
                           ],
                         ),
@@ -207,17 +218,6 @@ class OrderDetailScreen extends HookConsumerWidget {
                               },
                             ],
                           ),
-                        NormalRow(
-                          content: [
-                            {
-                              'Trạng thái hệ thống:': order.value!.systemStatus!
-                            },
-                            {
-                              'Trạng thái đối tác:':
-                                  order.value!.partnerOrderStatus!
-                            },
-                          ],
-                        ),
                       ],
                     ),
                   ),
