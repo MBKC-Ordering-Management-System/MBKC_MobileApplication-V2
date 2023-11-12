@@ -45,14 +45,11 @@ dependencies:
 
 
   # Other
-  flutter_svg: ^2.0.9
   image_picker: ^1.0.4
-  carousel_slider: ^4.2.1
-  timeago: ^3.6.0
   intl: ^0.18.1
   shared_preferences: ^2.2.2
-  faker: ^2.1.0
   crypto: ^3.0.3
+
 
 # config native splash
 flutter_native_splash:

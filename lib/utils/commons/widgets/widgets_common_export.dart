@@ -2,6 +2,7 @@ export './alert_dialogs.dart';
 export './app_bar.dart';
 export './async_value_widget.dart';
 export './colored_tab_bar.dart';
+export './content_box.dart';
 export './custom_button.dart';
 export './custom_circular.dart';
 export './custom_label_status.dart';

@@ -19,7 +19,7 @@ class CustomBottomBar extends StatelessWidget {
       currentIndex: tabsRouter.activeIndex,
       onTap: tabsRouter.setActiveIndex,
       height: size.height * 0.06,
-      backgroundColor: AssetsConstants.mainColor,
+      backgroundColor: AssetsConstants.whiteColor,
       items: [
         BottomNavigationBarItem(
           icon: Container(
@@ -33,14 +33,12 @@ class CustomBottomBar extends StatelessWidget {
                 AssetsConstants.defaultBorder,
               ),
               color: tabsRouter.activeIndex == 0
-                  ? AssetsConstants.whiteColor
-                  : AssetsConstants.mainColor,
-            ),
-            child: Icon(
-              Icons.home,
-              color: tabsRouter.activeIndex == 0
-                  ? AssetsConstants.mainColor
+                  ? AssetsConstants.primaryLight
                   : AssetsConstants.whiteColor,
+            ),
+            child: const Icon(
+              Icons.home,
+              color: AssetsConstants.primaryDark,
               size: AssetsConstants.defaultFontSize - 6.0,
             ),
           ),
@@ -57,14 +55,12 @@ class CustomBottomBar extends StatelessWidget {
                 AssetsConstants.defaultBorder,
               ),
               color: tabsRouter.activeIndex == 1
-                  ? AssetsConstants.whiteColor
-                  : AssetsConstants.mainColor,
-            ),
-            child: Icon(
-              Icons.shopping_bag,
-              color: tabsRouter.activeIndex == 1
-                  ? AssetsConstants.mainColor
+                  ? AssetsConstants.primaryLight
                   : AssetsConstants.whiteColor,
+            ),
+            child: const Icon(
+              Icons.shopping_bag,
+              color: AssetsConstants.primaryDark,
               size: AssetsConstants.defaultFontSize - 6.0,
             ),
           ),
@@ -81,15 +77,13 @@ class CustomBottomBar extends StatelessWidget {
                 AssetsConstants.defaultBorder,
               ),
               color: tabsRouter.activeIndex == 2
-                  ? AssetsConstants.whiteColor
-                  : AssetsConstants.mainColor,
+                  ? AssetsConstants.primaryLight
+                  : AssetsConstants.whiteColor,
             ),
-            child: Center(
+            child: const Center(
               child: FaIcon(
                 FontAwesomeIcons.bowlFood,
-                color: tabsRouter.activeIndex == 2
-                    ? AssetsConstants.mainColor
-                    : AssetsConstants.whiteColor,
+                color: AssetsConstants.primaryDark,
                 size: AssetsConstants.defaultFontSize - 6.0,
               ),
             ),
@@ -107,14 +101,12 @@ class CustomBottomBar extends StatelessWidget {
                 AssetsConstants.defaultBorder,
               ),
               color: tabsRouter.activeIndex == 3
-                  ? AssetsConstants.whiteColor
-                  : AssetsConstants.mainColor,
-            ),
-            child: Icon(
-              Icons.account_box,
-              color: tabsRouter.activeIndex == 3
-                  ? AssetsConstants.mainColor
+                  ? AssetsConstants.primaryLight
                   : AssetsConstants.whiteColor,
+            ),
+            child: const Icon(
+              Icons.account_box,
+              color: AssetsConstants.primaryDark,
               size: AssetsConstants.defaultFontSize - 6.0,
             ),
           ),

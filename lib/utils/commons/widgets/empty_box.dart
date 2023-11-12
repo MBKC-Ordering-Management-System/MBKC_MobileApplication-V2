@@ -18,13 +18,15 @@ class EmptyBox extends StatelessWidget {
       width: size.width * 0.9,
       height: size.height * 0.2,
       decoration: BoxDecoration(
-        color: AssetsConstants.mainColor,
+        color: AssetsConstants.borderColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const FaIcon(FontAwesomeIcons.boxArchive),
+          const FaIcon(
+            FontAwesomeIcons.boxArchive,
+          ),
           SizedBox(
             height: size.height * 0.02,
           ),

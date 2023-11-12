@@ -18,28 +18,33 @@ Future<bool?> showAlertDialog({
     // * Only make the dialog dismissible if there is a cancel button
     barrierDismissible: cancelActionText != null,
     builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius:
+            BorderRadius.circular(AssetsConstants.defaultBorder - 5.0),
+      ),
       title: Row(
         children: [
           LabelText(
             content: title,
             size: AssetsConstants.defaultFontSize - 10.0,
-            color: AssetsConstants.whiteColor,
             fontWeight: FontWeight.bold,
           ),
           SizedBox(width: size.width * 0.02),
           const Icon(
             Icons.error_outline,
             size: AssetsConstants.defaultFontSize - 10.0,
+            color: AssetsConstants.blackColor,
           )
         ],
       ),
-      backgroundColor: AssetsConstants.mainColor,
+      backgroundColor: AssetsConstants.whiteColor,
+      shadowColor: AssetsConstants.primaryLight,
+      surfaceTintColor: AssetsConstants.whiteColor,
       content: content != null
           ? LabelText(
               content: content,
               maxLine: 3,
               size: AssetsConstants.defaultFontSize - 12.0,
-              color: AssetsConstants.whiteColor,
             )
           : null,
       actions: <Widget>[
@@ -50,25 +55,35 @@ Future<bool?> showAlertDialog({
           children: [
             if (cancelActionText != null)
               OutlinedButton(
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(
-                    width: 2,
-                    color: AssetsConstants.whiteColor,
+                style: ButtonStyle(
+                  side: MaterialStateProperty.all(
+                    const BorderSide(),
+                  ),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        AssetsConstants.defaultBorder - 5.0,
+                      ),
+                    ),
                   ),
                 ),
                 child: LabelText(
                   content: cancelActionText,
                   size: AssetsConstants.defaultFontSize - 15.0,
-                  color: AssetsConstants.whiteColor,
                   fontWeight: FontWeight.bold,
                 ),
                 onPressed: () => Navigator.of(context).pop(false),
               ),
             OutlinedButton(
-              style: OutlinedButton.styleFrom(
-                side: const BorderSide(
-                  width: 2,
-                  color: AssetsConstants.whiteColor,
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(AssetsConstants.primaryDark),
+                shape: MaterialStateProperty.all(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(
+                      AssetsConstants.defaultBorder - 5.0,
+                    ),
+                  ),
                 ),
               ),
               key: kDialogDefaultKey,

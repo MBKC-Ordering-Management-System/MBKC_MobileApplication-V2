@@ -37,7 +37,11 @@ class ProductDetailScreen extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final product = useState<ProductModel?>(null);
     final tabController = useTabController(
-      initialLength: 3,
+      initialLength: productType == ProductType.parent
+          ? 3
+          : productType != ProductType.extra
+              ? 2
+              : 1,
     );
     final state = ref.watch(productDetailControllerProvider);
 
@@ -66,7 +70,11 @@ class ProductDetailScreen extends HookConsumerWidget {
                 : Stack(
                     children: [
                       DefaultTabController(
-                        length: 3,
+                        length: productType == ProductType.parent
+                            ? 3
+                            : productType != ProductType.extra
+                                ? 2
+                                : 1,
                         child: NestedScrollView(
                           headerSliverBuilder: (context, value) {
                             return [
@@ -125,8 +133,8 @@ class ProductDetailScreen extends HookConsumerWidget {
                                       indicatorColor: AssetsConstants.mainColor,
                                       dividerColor: AssetsConstants.borderColor,
                                       controller: tabController,
-                                      tabs: const [
-                                        Tab(
+                                      tabs: [
+                                        const Tab(
                                           child: LabelText(
                                             content: 'Thông tin',
                                             size: AssetsConstants
@@ -136,26 +144,28 @@ class ProductDetailScreen extends HookConsumerWidget {
                                             fontWeight: FontWeight.w700,
                                           ),
                                         ),
-                                        Tab(
-                                          child: LabelText(
-                                            content: 'Sản phẩm con',
-                                            size: AssetsConstants
-                                                    .defaultFontSize -
-                                                14.0,
-                                            color: AssetsConstants.mainColor,
-                                            fontWeight: FontWeight.w700,
+                                        if (productType == ProductType.parent)
+                                          const Tab(
+                                            child: LabelText(
+                                              content: 'Sản phẩm con',
+                                              size: AssetsConstants
+                                                      .defaultFontSize -
+                                                  14.0,
+                                              color: AssetsConstants.mainColor,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
-                                        ),
-                                        Tab(
-                                          child: LabelText(
-                                            content: 'Sản phẩm thêm',
-                                            size: AssetsConstants
-                                                    .defaultFontSize -
-                                                14.0,
-                                            color: AssetsConstants.mainColor,
-                                            fontWeight: FontWeight.w700,
+                                        if (productType != ProductType.extra)
+                                          const Tab(
+                                            child: LabelText(
+                                              content: 'Sản phẩm thêm',
+                                              size: AssetsConstants
+                                                      .defaultFontSize -
+                                                  14.0,
+                                              color: AssetsConstants.mainColor,
+                                              fontWeight: FontWeight.w700,
+                                            ),
                                           ),
-                                        ),
                                       ],
                                     ),
                                   ),
@@ -171,13 +181,16 @@ class ProductDetailScreen extends HookConsumerWidget {
                               controller: tabController,
                               children: [
                                 InformationTab(product: product.value!),
-                                ProductChildTab(
-                                  productsChild:
-                                      product.value!.childrenProducts!,
-                                ),
-                                ProductExtraTab(
+                                if (productType == ProductType.parent)
+                                  ProductChildTab(
+                                    productsChild:
+                                        product.value!.childrenProducts!,
+                                  ),
+                                if (productType != ProductType.extra)
+                                  ProductExtraTab(
                                     productsExtra:
-                                        product.value!.extraProducts!),
+                                        product.value!.extraProducts!,
+                                  ),
                               ],
                             ),
                           ),

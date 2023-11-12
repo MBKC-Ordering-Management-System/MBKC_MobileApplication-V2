@@ -25,9 +25,9 @@ String getCustomContent(Map<String, dynamic> content) {
           NumberFormat.decimalPattern().format(content.entries.first.value);
       return '- $numberđ';
 
-    case 'Giá cũ':
-    case 'Giá giảm giá':
-    case 'Giá bán':
+    case 'Giá cũ:':
+    case 'Giá giảm giá:':
+    case 'Giá bán:':
     case 'Số tiền giao dịch':
     case 'Số dư sau giao dịch':
     case 'Giá:':

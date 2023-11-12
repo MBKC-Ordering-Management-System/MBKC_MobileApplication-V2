@@ -5,7 +5,6 @@ import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../domain/models/profile_model.dart';
-import 'content_box.dart';
 
 @RoutePage()
 class ProfileDetailScreen extends StatelessWidget {
@@ -110,12 +109,12 @@ class ProfileDetailScreen extends StatelessWidget {
                           ),
                           SizedBox(height: size.height * 0.01),
                           ContentBox(
-                            label: 'Địa chỉ :',
+                            label: 'Địa chỉ:',
                             content: profile.kitchenCenter!.address,
                           ),
                           SizedBox(height: size.height * 0.01),
                           ContentBox(
-                            label: 'Email :',
+                            label: 'Email:',
                             content: profile.storeManagerEmail,
                           ),
                           SizedBox(height: size.height * 0.01),
@@ -136,7 +135,7 @@ class ProfileDetailScreen extends StatelessWidget {
                           ),
                           SizedBox(height: size.height * 0.01),
                           ContentBox(
-                            label: 'Email :',
+                            label: 'Email:',
                             content: profile.brand.brandManagerEmail,
                           ),
                           SizedBox(height: size.height * 0.01),
@@ -157,7 +156,7 @@ class ProfileDetailScreen extends StatelessWidget {
                           ),
                           SizedBox(height: size.height * 0.01),
                           ContentBox(
-                            label: 'Email :',
+                            label: 'Email:',
                             content: profile
                                 .kitchenCenter!.kitchenCenterManagerEmail,
                           ),

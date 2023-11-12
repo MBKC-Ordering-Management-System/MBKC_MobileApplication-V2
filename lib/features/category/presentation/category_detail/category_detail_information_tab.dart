@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../../../utils/commons/widgets/field_box.dart';
-import '../../../../utils/commons/widgets/label_text.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
+import '../../../../utils/enums/enums_export.dart';
 import '../../domain/models/category_model.dart';
 
 class CategoryDetailInformationTab extends StatelessWidget {
@@ -17,22 +18,63 @@ class CategoryDetailInformationTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: size.height * 0.02),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: LabelText(
+                  content: category.name!,
+                  size: AssetsConstants.defaultFontSize - 12.0,
+                  fontWeight: FontWeight.bold,
+                  maxLine: 3,
+                ),
+              ),
+              SizedBox(width: size.width * 0.01),
+              CustomLabelStatus(
+                width: size.width * 0.3,
+                height: size.height * 0.04,
+                content: category.status!.toStatusTypeEnum().type,
+                size: AssetsConstants.defaultFontSize - 18.0,
+                backgroundColor: getBackgrounStatusColor(
+                    category.status!.toStatusTypeEnum()),
+                contentColor:
+                    getContentStatusColor(category.status!.toStatusTypeEnum()),
+              )
+            ],
+          ),
           SizedBox(height: size.height * 0.01),
-          FieldBox(title: 'Mã danh mục', content: category.code!),
+          ContentBox(label: 'Mã:', content: category.code!),
           SizedBox(height: size.height * 0.01),
-          FieldBox(title: 'Tên danh mục', content: category.name!),
+          ContentBox(
+            label: 'Loại:',
+            content: getTitleCategoryType(category.type!),
+          ),
           SizedBox(height: size.height * 0.01),
-          FieldBox(
-            title: 'Thứ tự hiển thị',
+          ContentBox(
+            label: 'Thứ tự hiển thị:',
             content: category.displayOrder!.toString(),
           ),
           SizedBox(height: size.height * 0.01),
-          FieldBox(title: 'Mô tả', content: category.description!),
+          const LabelText(
+            content: 'Mô tả:',
+            size: AssetsConstants.defaultFontSize - 12.0,
+            color: AssetsConstants.skipText,
+            fontWeight: FontWeight.w600,
+          ),
+          SizedBox(height: size.height * 0.01),
+          LabelText(
+            content: category.description!,
+            size: AssetsConstants.defaultFontSize - 12.0,
+            fontWeight: FontWeight.w600,
+          ),
+          const LinearHorizontal(),
           SizedBox(height: size.height * 0.01),
           const LabelText(
             content: 'Hình ảnh',
             size: AssetsConstants.defaultFontSize - 12.0,
             color: AssetsConstants.skipText,
+            fontWeight: FontWeight.w600,
           ),
           SizedBox(height: size.height * 0.01),
           Row(

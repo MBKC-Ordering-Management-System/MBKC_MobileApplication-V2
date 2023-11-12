@@ -263,7 +263,7 @@ class OrderDetailScreen extends HookConsumerWidget {
                               width: size.width * 0.3,
                               height: size.height * 0.05,
                               content: 'Hủy đơn',
-                              onCallback: () => changeStatus(
+                              onCallback: () => cancelOrder(
                                   order: order.value!,
                                   context: context,
                                   ref: ref),
