@@ -13,6 +13,10 @@ import 'normal_row.dart';
 import 'order_detail_controller.dart';
 import 'product_row.dart';
 
+final refreshOrderList = StateProvider.autoDispose<bool>(
+  (ref) => true,
+);
+
 @RoutePage()
 class OrderDetailScreen extends HookConsumerWidget {
   const OrderDetailScreen({
@@ -53,6 +57,9 @@ class OrderDetailScreen extends HookConsumerWidget {
 
       if (result) {
         context.router.pop(true);
+        ref
+            .read(refreshOrderList.notifier)
+            .update((state) => !ref.read(refreshOrderList));
       }
     }
   }
@@ -77,6 +84,9 @@ class OrderDetailScreen extends HookConsumerWidget {
 
       if (result) {
         context.router.pop(true);
+        ref
+            .read(refreshOrderList.notifier)
+            .update((state) => !ref.read(refreshOrderList));
       }
     }
   }
@@ -120,16 +130,8 @@ class OrderDetailScreen extends HookConsumerWidget {
                   )
                 : SingleChildScrollView(
                     child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        NormalRow(
-                          content: [
-                            {'Mã hệ thống:': order.value!.id.toString()},
-                            {
-                              'Mã đối tác:':
-                                  order.value!.orderPartnerId.toString()
-                            }
-                          ],
-                        ),
                         NormalRow(
                           content: [
                             {
@@ -143,22 +145,12 @@ class OrderDetailScreen extends HookConsumerWidget {
                         ),
                         NormalRow(
                           content: [
+                            {'Mã hệ thống:': order.value!.id.toString()},
+                            {
+                              'Mã đối tác:':
+                                  order.value!.orderPartnerId.toString()
+                            },
                             {'Đối tác:': order.value!.partner!.name.toString()},
-                          ],
-                        ),
-                        ProductRow(orderDetails: order.value!.orderDetails!),
-                        NormalRow(
-                          content: [
-                            {
-                              'Phương thức thanh toán:': getTitlePaymentMethod(
-                                  order.value!.paymentMethod!)
-                            },
-                            {
-                              'Dụng cụ ăn uống:':
-                                  order.value!.cutlery == 1 ? 'Có' : 'Không'
-                            },
-                            if (order.value!.note != null)
-                              {'Ghi chú:': order.value!.note},
                           ],
                         ),
                         NormalRow(
@@ -177,19 +169,53 @@ class OrderDetailScreen extends HookConsumerWidget {
                             {'Địa chỉ:': order.value!.address},
                           ],
                         ),
+                        SizedBox(height: size.height * 0.01),
+                        const Padding(
+                          padding: EdgeInsets.only(
+                            left: AssetsConstants.defaultPadding - 10.0,
+                          ),
+                          child: LabelText(
+                            content: 'Chi tiết đơn hàng',
+                            size: AssetsConstants.defaultFontSize - 13.0,
+                            fontWeight: FontWeight.bold,
+                            color: AssetsConstants.primaryDark,
+                          ),
+                        ),
+                        ProductRow(orderDetails: order.value!.orderDetails!),
                         NormalRow(
                           content: [
-                            {'Hoa hồng (%):': order.value!.commission},
-                            {'Thuế (%):': order.value!.tax},
-                            {'Tạm tính:': order.value!.subTotalPrice},
-                            {'Phí giao hàng:': order.value!.deliveryFee},
-                            {'Giảm giá:': order.value!.totalDiscount},
-                            {'Tổng cộng:': order.value!.finalTotalPrice},
+                            {
+                              'Dụng cụ ăn uống:':
+                                  order.value!.cutlery == 1 ? 'Có' : 'Không'
+                            },
+                            {'Ghi chú:': order.value!.note},
                           ],
                         ),
-                        if (order.value!.partnerOrderStatus!
-                                .toOrderPartnerTypeEnum() ==
-                            OrderPartnerStatusType.completed)
+                        NormalRow(
+                          content: [
+                            {
+                              'Phương thức thanh toán:': getTitlePaymentMethod(
+                                  order.value!.paymentMethod!)
+                            },
+                            {
+                              'Trạng thái thanh toán:':
+                                  getStatusPaymentMethod(order.value!.isPaid!)
+                            },
+                          ],
+                        ),
+                        NormalRow(
+                          content: [
+                            {'Tạm tính:': order.value!.subTotalPrice},
+                            {'Thuế (%):': order.value!.tax},
+                            {'Giảm giá:': order.value!.totalDiscount},
+                            {'Phí giao hàng:': order.value!.deliveryFee},
+                            {'Phí đơn hàng:': order.value!.commission},
+                            {'Tổng cộng:': order.value!.finalTotalPrice},
+                            {'Tiền thu hộ:': order.value!.collectedPrice},
+                          ],
+                        ),
+                        if (order.value!.shipperPayments != null &&
+                            order.value!.shipperPayments!.isNotEmpty)
                           NormalRow(
                             content: [
                               const {'Thanh toán của giao hàng': ''},

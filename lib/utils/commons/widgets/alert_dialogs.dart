@@ -54,11 +54,35 @@ Future<bool?> showAlertDialog({
               : MainAxisAlignment.spaceBetween,
           children: [
             if (cancelActionText != null)
-              OutlinedButton(
-                style: ButtonStyle(
-                  side: MaterialStateProperty.all(
-                    const BorderSide(),
+              SizedBox(
+                width: size.width * 0.3,
+                child: OutlinedButton(
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(
+                      const BorderSide(),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          AssetsConstants.defaultBorder - 5.0,
+                        ),
+                      ),
+                    ),
                   ),
+                  child: LabelText(
+                    content: cancelActionText,
+                    size: AssetsConstants.defaultFontSize - 15.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+              ),
+            SizedBox(
+              width: size.width * 0.3,
+              child: OutlinedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(AssetsConstants.primaryDark),
                   shape: MaterialStateProperty.all(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(
@@ -67,33 +91,15 @@ Future<bool?> showAlertDialog({
                     ),
                   ),
                 ),
+                key: kDialogDefaultKey,
                 child: LabelText(
-                  content: cancelActionText,
+                  content: defaultActionText,
                   size: AssetsConstants.defaultFontSize - 15.0,
+                  color: AssetsConstants.whiteColor,
                   fontWeight: FontWeight.bold,
                 ),
-                onPressed: () => Navigator.of(context).pop(false),
+                onPressed: () => Navigator.of(context).pop(true),
               ),
-            OutlinedButton(
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all(AssetsConstants.primaryDark),
-                shape: MaterialStateProperty.all(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(
-                      AssetsConstants.defaultBorder - 5.0,
-                    ),
-                  ),
-                ),
-              ),
-              key: kDialogDefaultKey,
-              child: LabelText(
-                content: defaultActionText,
-                size: AssetsConstants.defaultFontSize - 15.0,
-                color: AssetsConstants.whiteColor,
-                fontWeight: FontWeight.bold,
-              ),
-              onPressed: () => Navigator.of(context).pop(true),
             ),
           ],
         ),

@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../configs/routes/app_router.dart';
-import '../../../../utils/enums/order_system_status_type.dart';
 import '../../domain/models/order_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
@@ -113,7 +112,7 @@ class OrderItem extends ConsumerWidget {
                             fontWeight: FontWeight.w600,
                           ),
                           LabelText(
-                            content: '${order.orderDetails!.length} món',
+                            content: '${order.totalQuantity} món',
                             size: AssetsConstants.defaultFontSize - 14.0,
                             fontWeight: FontWeight.w600,
                           ),
@@ -127,18 +126,6 @@ class OrderItem extends ConsumerWidget {
                         ],
                       ),
                     ),
-                    CustomLabelStatus(
-                      width: size.width * 0.22,
-                      height: size.height * 0.035,
-                      content: getTitleSystemStatus(
-                          order.systemStatus!.toOrderSystemTypeEnum()),
-                      size: AssetsConstants.defaultFontSize - 18.0,
-                      backgroundColor: getBackgroundColorSystemStatus(
-                          order.systemStatus!.toOrderSystemTypeEnum()),
-                      contentColor: getContentColorSystemStatus(
-                          order.systemStatus!.toOrderSystemTypeEnum()),
-                    ),
-                    SizedBox(width: size.width * 0.02),
                     CustomLabelStatus(
                       width: size.width * 0.22,
                       height: size.height * 0.035,
@@ -186,7 +173,7 @@ class OrderItem extends ConsumerWidget {
                   ),
                   isActive: true,
                   width: size.width * 0.55,
-                  height: size.height * 0.035,
+                  height: size.height * 0.04,
                   backgroundColor: AssetsConstants.whiteColor,
                   contentColor: AssetsConstants.mainColor,
                 ),
@@ -201,7 +188,7 @@ class OrderItem extends ConsumerWidget {
                   ),
                   isActive: true,
                   width: size.width * 0.3,
-                  height: size.height * 0.035,
+                  height: size.height * 0.04,
                   backgroundColor: AssetsConstants.whiteColor,
                   contentColor: AssetsConstants.warningColor,
                 ),

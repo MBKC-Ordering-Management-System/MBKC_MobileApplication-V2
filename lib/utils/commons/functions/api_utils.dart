@@ -75,7 +75,8 @@ Future<void> reGenerateToken(
     );
 
     final userNew = UserModel(
-      id: user.id,
+      accountId: user.accountId,
+      storeId: user.storeId,
       email: user.email,
       token: TokenModel(
         accessToken: tokenResponse.accessToken,

@@ -3,7 +3,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lottie/lottie.dart';
 import '../../../../configs/routes/app_router.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
@@ -260,11 +259,10 @@ class MoneyExchangeScreen extends HookConsumerWidget {
                       SizedBox(height: size.height * 0.01),
                       (stateMoneyExchange.isLoading &&
                               isLoadMoreLoading.value == false)
-                          ? Center(
-                              child: LottieBuilder.asset(
-                                AssetsConstants.lottieLoadingTrans,
-                                width: size.width * 0.5,
-                                height: size.height * 0.5,
+                          ? const Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 3.5,
+                                color: AssetsConstants.primaryDark,
                               ),
                             )
                           : moneyExchanges.value.isEmpty

@@ -42,8 +42,7 @@ class SignInScreen extends HookConsumerWidget with Validations {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final username =
-        useTextEditingController(text: 'thanhlhse150023@fpt.edu.vn');
+    final username = useTextEditingController(text: 'quoctoan190401@gmail.com');
     final password = useTextEditingController(text: '12345678');
     final state = ref.watch(signInControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);

@@ -123,11 +123,6 @@ class AssetsConstants {
   static const String shopeeLogo = 'assets/images/shopee_avt.jpg';
   static const String beaminLogo = 'assets/images/beamin_avt.jpg';
 
-  // lottie
-  static const String lottieLoading = 'assets/lotties/animation_lncnticn.json';
-  static const String lottieLoadingTrans =
-      'assets/lotties/animation_lncxa19j.json';
-
   // Sizes
   static const double defaultPadding = 20.0;
   static const double defaultFontSize = 25.0;

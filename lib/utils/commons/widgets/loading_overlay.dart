@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:lottie/lottie.dart';
 import '../../constants/asset_constant.dart';
+import './custom_rotation.dart';
 
 class LoadingOverlay extends HookWidget {
   final Widget child;
@@ -14,9 +14,6 @@ class LoadingOverlay extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // init
-    final size = MediaQuery.sizeOf(context);
-
     return Stack(
       children: [
         child,
@@ -29,12 +26,8 @@ class LoadingOverlay extends HookWidget {
             ),
           ),
         if (isLoading)
-          Center(
-            child: Lottie.asset(
-              AssetsConstants.lottieLoading,
-              width: size.width * 0.5,
-              height: size.height * 0.5,
-            ),
+          const Center(
+            child: CustomRotation(),
           ),
       ],
     );

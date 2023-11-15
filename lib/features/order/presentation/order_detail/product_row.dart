@@ -42,6 +42,8 @@ class ProductDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // init
+
     return Container(
       margin: const EdgeInsets.symmetric(
         vertical: AssetsConstants.defaultMargin - 8.0,

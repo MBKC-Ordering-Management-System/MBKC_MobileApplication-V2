@@ -45,6 +45,7 @@ class NormalRow extends StatelessWidget {
                                 e.entries.first.key == 'Trạng thái hệ thống:' ||
                                 e.entries.first.key == 'Trạng thái đối tác:' ||
                                 e.entries.first.key == 'Số tiền:' ||
+                                e.entries.first.key == 'Tiền thu hộ:' ||
                                 e.entries.first.key ==
                                     'Thanh toán của giao hàng')
                             ? FontWeight.bold

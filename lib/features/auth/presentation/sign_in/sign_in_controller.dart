@@ -72,7 +72,8 @@ class SignInController extends _$SignInController {
         );
 
         final userModel = UserModel(
-          id: profile.storeId,
+          accountId: user.accountId,
+          storeId: profile.storeId,
           email: user.email,
           token: user.tokens,
         );

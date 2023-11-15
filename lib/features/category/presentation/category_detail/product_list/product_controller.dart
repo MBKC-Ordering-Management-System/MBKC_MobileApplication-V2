@@ -39,7 +39,7 @@ class ProductController extends _$ProductController {
           request: request,
           accessToken: APIConstants.prefixToken + user!.token.accessToken,
           categoryId: categoryId,
-          storeId: user.id,
+          storeId: user.storeId!,
         );
 
         products = response.products;

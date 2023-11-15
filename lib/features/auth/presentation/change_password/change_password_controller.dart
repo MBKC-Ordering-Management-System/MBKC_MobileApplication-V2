@@ -48,7 +48,7 @@ class ChangePasswordController extends _$ChangePasswordController {
             request: ChangeFirstTimeRequest(
               newPassword: calculateMD5(password),
             ),
-            id: user!.id,
+            id: user!.accountId!,
             accessToken: APIConstants.prefixToken + token!.accessToken,
           );
 

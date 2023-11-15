@@ -53,9 +53,7 @@ class AppRouter extends _$AppRouter {
           initial: true,
           guards: [AuthGuard(ref: _ref)],
           children: [
-            AutoRoute(
-              page: HomeScreenRoute.page,
-            ),
+            AutoRoute(page: HomeScreenRoute.page),
             AutoRoute(page: OrderScreenRoute.page),
             AutoRoute(page: CategoryScreenRoute.page),
             AutoRoute(page: ProfileScreenRoute.page),

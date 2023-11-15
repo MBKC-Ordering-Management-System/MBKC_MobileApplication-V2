@@ -1,12 +1,16 @@
 import 'dart:convert';
+
 import 'token_model.dart';
 
 class UserModel {
-  final int id;
+  final int? accountId;
+  final int? storeId;
   final String email;
   final TokenModel token;
+
   UserModel({
-    required this.id,
+    required this.accountId,
+    required this.storeId,
     required this.email,
     required this.token,
   });
@@ -14,7 +18,12 @@ class UserModel {
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    result.addAll({'id': id});
+    if (accountId != null) {
+      result.addAll({'accountId': accountId});
+    }
+    if (storeId != null) {
+      result.addAll({'storeId': storeId});
+    }
     result.addAll({'email': email});
     result.addAll({'token': token.toMap()});
 
@@ -23,7 +32,8 @@ class UserModel {
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      id: map['id']?.toInt() ?? 0,
+      accountId: map['accountId']?.toInt(),
+      storeId: map['storeId']?.toInt(),
       email: map['email'] ?? '',
       token: TokenModel.fromMap(map['token']),
     );

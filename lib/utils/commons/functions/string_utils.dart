@@ -21,6 +21,11 @@ String getCustomContent(Map<String, dynamic> content) {
 
     case 'Tiền rút:':
     case 'Giảm giá:':
+      if ((content.entries.first.value as int) == 0) {
+        final number =
+            NumberFormat.decimalPattern().format(content.entries.first.value);
+        return '$numberđ';
+      }
       final number =
           NumberFormat.decimalPattern().format(content.entries.first.value);
       return '- $numberđ';
@@ -35,6 +40,8 @@ String getCustomContent(Map<String, dynamic> content) {
     case 'Tạm tính:':
     case 'Phí giao hàng:':
     case 'Tổng cộng:':
+    case 'Phí đơn hàng:':
+    case 'Tiền thu hộ:':
       final number =
           NumberFormat.decimalPattern().format(content.entries.first.value);
       return '$numberđ';
@@ -145,6 +152,18 @@ String getTitlePaymentMethod(String type) {
       return 'Tiền mặt';
     case 'Cashless':
       return 'Chuyển khoản';
+
+    default:
+      return 'Unknow!';
+  }
+}
+
+String getStatusPaymentMethod(bool isPaid) {
+  switch (isPaid) {
+    case true:
+      return 'Đã thanh toán';
+    case false:
+      return 'Chưa thanh toán';
 
     default:
       return 'Unknow!';

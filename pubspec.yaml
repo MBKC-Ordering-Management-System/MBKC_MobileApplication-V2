@@ -1,4 +1,4 @@
-name: mbkc_app
+name: MBKC
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
@@ -49,6 +49,7 @@ dependencies:
   intl: ^0.18.1
   shared_preferences: ^2.2.2
   crypto: ^3.0.3
+  flutter_local_notifications: ^16.1.0
 
 
 # config native splash
@@ -78,6 +79,8 @@ dev_dependencies:
   auto_route_generator: ^7.3.2
   build_runner: ^2.4.6
   flutter_launcher_icons: ^0.13.1
+  # Override for `flutter_local_notifications`:
+  plugin_platform_interface: ^2.1.3
 
   
 
@@ -86,8 +89,6 @@ flutter:
   assets:
     - assets/fonts/
     - assets/images/
-    - assets/icons/
-    - assets/lotties/
 
   fonts:
     - family: Open Sans

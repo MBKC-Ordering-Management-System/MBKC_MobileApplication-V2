@@ -16,9 +16,9 @@ class EmptyBox extends StatelessWidget {
         top: AssetsConstants.defaultMargin,
       ),
       width: size.width * 0.9,
-      height: size.height * 0.2,
+      height: size.height * 0.15,
       decoration: BoxDecoration(
-        color: AssetsConstants.borderColor,
+        color: AssetsConstants.primaryLighter,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(
@@ -26,14 +26,17 @@ class EmptyBox extends StatelessWidget {
         children: [
           const FaIcon(
             FontAwesomeIcons.boxArchive,
+            size: AssetsConstants.defaultFontSize - 6.0,
+            color: AssetsConstants.primaryDarker,
           ),
           SizedBox(
             height: size.height * 0.02,
           ),
           LabelText(
             content: title,
-            size: AssetsConstants.defaultFontSize,
-            color: AssetsConstants.whiteColor,
+            size: AssetsConstants.defaultFontSize - 6.0,
+            color: AssetsConstants.primaryDark,
+            fontWeight: FontWeight.w600,
           ),
         ],
       ),

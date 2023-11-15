@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'order_detail.dart';
 import 'order_history.dart';
 import 'partner.dart';
@@ -17,6 +18,8 @@ class OrderModel {
   final int? subTotalPrice;
   final int? totalDiscount;
   final int? finalTotalPrice;
+  final double? collectedPrice;
+  final bool? isPaid;
   final double? commission;
   final double? tax;
   final String? systemStatus;
@@ -43,6 +46,8 @@ class OrderModel {
     required this.subTotalPrice,
     required this.totalDiscount,
     required this.finalTotalPrice,
+    required this.collectedPrice,
+    required this.isPaid,
     required this.commission,
     required this.tax,
     required this.systemStatus,
@@ -95,6 +100,12 @@ class OrderModel {
     }
     if (finalTotalPrice != null) {
       result.addAll({'finalTotalPrice': finalTotalPrice});
+    }
+    if (collectedPrice != null) {
+      result.addAll({'collectedPrice': collectedPrice});
+    }
+    if (isPaid != null) {
+      result.addAll({'isPaid': isPaid});
     }
     if (commission != null) {
       result.addAll({'commission': commission});
@@ -151,6 +162,8 @@ class OrderModel {
       subTotalPrice: map['subTotalPrice']?.toInt(),
       totalDiscount: map['totalDiscount']?.toInt(),
       finalTotalPrice: map['finalTotalPrice']?.toInt(),
+      collectedPrice: map['collectedPrice']?.toDouble(),
+      isPaid: map['isPaid'],
       commission: map['commission']?.toDouble(),
       tax: map['tax']?.toDouble(),
       systemStatus: map['systemStatus'],

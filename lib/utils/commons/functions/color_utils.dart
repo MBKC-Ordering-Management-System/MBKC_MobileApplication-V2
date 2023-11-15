@@ -7,7 +7,7 @@ Color getBackgroundColorPartnerStatus(OrderPartnerStatusType orderType) {
     case OrderPartnerStatusType.preparing:
       return AssetsConstants.secondaryLighter;
     case OrderPartnerStatusType.ready:
-      return AssetsConstants.secondaryLighter;
+      return AssetsConstants.warningLighter;
     case OrderPartnerStatusType.upcoming:
       return AssetsConstants.secondaryLighter;
     case OrderPartnerStatusType.completed:
@@ -24,7 +24,7 @@ Color getContentColorPartnerStatus(OrderPartnerStatusType orderType) {
     case OrderPartnerStatusType.preparing:
       return AssetsConstants.secondaryDark;
     case OrderPartnerStatusType.ready:
-      return AssetsConstants.secondaryDark;
+      return AssetsConstants.warningDarker;
     case OrderPartnerStatusType.upcoming:
       return AssetsConstants.secondaryDark;
     case OrderPartnerStatusType.completed:
@@ -43,7 +43,7 @@ Color getBackgroundColorSystemStatus(OrderSystemStatusType orderType) {
     case OrderSystemStatusType.instore:
       return AssetsConstants.primaryLighter;
     case OrderSystemStatusType.readydelivery:
-      return AssetsConstants.primaryLighter;
+      return AssetsConstants.warningLighter;
     case OrderSystemStatusType.completed:
       return AssetsConstants.successLighter;
     case OrderSystemStatusType.cancelled:
@@ -58,7 +58,7 @@ Color getContentColorSystemStatus(OrderSystemStatusType orderType) {
     case OrderSystemStatusType.instore:
       return AssetsConstants.primaryDark;
     case OrderSystemStatusType.readydelivery:
-      return AssetsConstants.primaryDark;
+      return AssetsConstants.warningDarker;
     case OrderSystemStatusType.completed:
       return AssetsConstants.successDarker;
     case OrderSystemStatusType.cancelled:

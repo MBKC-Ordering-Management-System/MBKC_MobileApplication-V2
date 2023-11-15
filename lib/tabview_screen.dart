@@ -6,6 +6,8 @@ import 'features/home/presentation/custom_bottom_bar.dart';
 import 'utils/commons/widgets/loading_overlay.dart';
 import 'utils/providers/common_provider.dart';
 
+final GlobalKey<ScaffoldState> autoTabsScaffoldKey = GlobalKey<ScaffoldState>();
+
 @RoutePage()
 class TabViewScreen extends ConsumerWidget {
   const TabViewScreen({super.key});
@@ -18,6 +20,7 @@ class TabViewScreen extends ConsumerWidget {
     return LoadingOverlay(
       isLoading: state,
       child: AutoTabsScaffold(
+        scaffoldKey: autoTabsScaffoldKey,
         routes: const [
           HomeScreenRoute(),
           OrderScreenRoute(),

@@ -7,6 +7,7 @@ export './custom_button.dart';
 export './custom_circular.dart';
 export './custom_label_status.dart';
 export './custom_outline_button.dart';
+export './custom_rotation.dart';
 export './empty_box.dart';
 export './field_box.dart';
 export './error_message_widget.dart';
