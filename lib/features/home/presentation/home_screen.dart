@@ -3,11 +3,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import '../../../models/wallet_model.dart';
 import '../../../utils/commons/functions/functions_common_export.dart';
 import '../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../utils/constants/asset_constant.dart';
-import '../../money_exchange/presentation/money_exchange_list/wallet_controller.dart';
+import '../domain/models/dashboard_model.dart';
+import 'dashboard_controller.dart';
 
 @RoutePage()
 class HomeScreen extends HookConsumerWidget {
@@ -15,26 +15,27 @@ class HomeScreen extends HookConsumerWidget {
 
   // fetch data
   Future<void> fetchData({
-    required ValueNotifier<WalletModel?> wallet,
+    required ValueNotifier<DashBoardModel?> dashboard,
     required WidgetRef ref,
     required BuildContext context,
   }) async {
-    final response =
-        await ref.read(walletControllerProvider.notifier).getBalance(context);
+    final response = await ref
+        .read(dashboardControllerProvider.notifier)
+        .getStoreDashboard(context);
 
-    wallet.value = response;
+    dashboard.value = response;
   }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final size = MediaQuery.sizeOf(context);
-    final wallet = useState<WalletModel?>(null);
-    final state = ref.watch(walletControllerProvider);
+    final dashboard = useState<DashBoardModel?>(null);
+    final state = ref.watch(dashboardControllerProvider);
 
     // first load
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        fetchData(wallet: wallet, ref: ref, context: context);
+        fetchData(dashboard: dashboard, ref: ref, context: context);
       });
 
       () async {
@@ -51,16 +52,80 @@ class HomeScreen extends HookConsumerWidget {
         title: 'Trang Chủ',
         iconFirst: Icons.refresh_rounded,
         onCallBackFirst: () =>
-            fetchData(wallet: wallet, ref: ref, context: context),
+            fetchData(dashboard: dashboard, ref: ref, context: context),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(
           horizontal: AssetsConstants.defaultPadding - 6.0,
         ),
-        child: wallet.value == null && state.isLoading == false
+        child: dashboard.value == null && state.isLoading == false
             ? const HomeShimmer(amount: 2)
             : Column(
                 children: [
+                  SizedBox(height: size.height * 0.02),
+                  StatisticalCard(
+                    loadingColor: AssetsConstants.secondaryDark,
+                    state: state,
+                    backgroundColor: AssetsConstants.secondaryLighter,
+                    contentColor: AssetsConstants.secondaryDark,
+                    icon: const Icon(
+                      Icons.shopping_bag,
+                      color: AssetsConstants.secondaryDark,
+                      size: AssetsConstants.defaultFontSize - 6.0,
+                    ),
+                    title: dashboard.value == null
+                        ? ''
+                        : dashboard.value!.totalUpcomingOrder.toString(),
+                    subtitle: 'Tổng số đơn hàng sắp tới',
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  StatisticalCard(
+                    loadingColor: AssetsConstants.secondaryDark,
+                    state: state,
+                    backgroundColor: AssetsConstants.secondaryLighter,
+                    contentColor: AssetsConstants.secondaryDark,
+                    icon: const Icon(
+                      Icons.shopping_bag,
+                      color: AssetsConstants.secondaryDark,
+                      size: AssetsConstants.defaultFontSize - 6.0,
+                    ),
+                    title: dashboard.value == null
+                        ? ''
+                        : dashboard.value!.totalPreparingOrder.toString(),
+                    subtitle: 'Tổng số đơn hàng đang chuẩn bị',
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  StatisticalCard(
+                    loadingColor: AssetsConstants.warningDarker,
+                    state: state,
+                    backgroundColor: AssetsConstants.warningLighter,
+                    contentColor: AssetsConstants.warningDarker,
+                    icon: const Icon(
+                      Icons.shopping_bag,
+                      color: AssetsConstants.warningDarker,
+                      size: AssetsConstants.defaultFontSize - 6.0,
+                    ),
+                    title: dashboard.value == null
+                        ? ''
+                        : dashboard.value!.totalReadyOrder.toString(),
+                    subtitle: 'Tổng số đơn hàng sẵn sàng',
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  StatisticalCard(
+                    loadingColor: AssetsConstants.successDarker,
+                    state: state,
+                    backgroundColor: AssetsConstants.successLighter,
+                    contentColor: AssetsConstants.successDarker,
+                    icon: const Icon(
+                      Icons.shopping_bag,
+                      color: AssetsConstants.successDarker,
+                      size: AssetsConstants.defaultFontSize - 6.0,
+                    ),
+                    title: dashboard.value == null
+                        ? ''
+                        : dashboard.value!.totalCompletedOrder.toString(),
+                    subtitle: 'Tổng số đơn hàng hoàn thành',
+                  ),
                   SizedBox(height: size.height * 0.02),
                   StatisticalCard(
                     loadingColor: AssetsConstants.mainColor,
@@ -72,28 +137,13 @@ class HomeScreen extends HookConsumerWidget {
                       color: AssetsConstants.mainColor,
                       size: AssetsConstants.defaultFontSize - 6.0,
                     ),
-                    title: wallet.value == null
+                    title: dashboard.value == null
                         ? ''
                         : getCustomContent(
-                            {'Giá:': wallet.value!.totalRevenueDaily}),
+                            {'doanh thu:': dashboard.value!.totalRevenueDaily}),
                     subtitle: 'Doanh thu trong ngày',
                   ),
                   SizedBox(height: size.height * 0.02),
-                  StatisticalCard(
-                    loadingColor: AssetsConstants.totalOrderContent,
-                    state: state,
-                    backgroundColor: AssetsConstants.totalOrderBackground,
-                    contentColor: AssetsConstants.totalOrderContent,
-                    icon: const Icon(
-                      Icons.shopping_bag,
-                      color: AssetsConstants.totalOrderContent,
-                      size: AssetsConstants.defaultFontSize - 6.0,
-                    ),
-                    title: wallet.value == null
-                        ? ''
-                        : '${wallet.value!.toTalOrderDaily}',
-                    subtitle: 'Tổng số đơn hàng trong ngày',
-                  ),
                 ],
               ),
       ),

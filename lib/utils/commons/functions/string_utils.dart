@@ -42,6 +42,7 @@ String getCustomContent(Map<String, dynamic> content) {
     case 'Tổng cộng:':
     case 'Phí đơn hàng:':
     case 'Tiền thu hộ:':
+    case 'doanh thu:':
       final number =
           NumberFormat.decimalPattern().format(content.entries.first.value);
       return '$numberđ';

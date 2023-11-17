@@ -5,6 +5,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../configs/routes/app_router.dart';
 import '../../../../models/request/paging_model.dart';
+import '../../../../utils/commons/functions/delay_util.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
@@ -201,7 +202,13 @@ class CategoryScreen extends HookConsumerWidget {
               decoration: const BoxDecoration(),
             ),
             (state.isLoading && isLoadMoreLoading.value == false)
-                ? const ProductShimmer(amount: 4)
+                ? Expanded(
+                    child: ListView.builder(
+                      itemCount: 2,
+                      itemBuilder: (_, index) =>
+                          const ProductShimmer(amount: 2),
+                    ),
+                  )
                 : categories.value.isEmpty
                     ? const Align(
                         alignment: Alignment.topCenter,
@@ -232,13 +239,16 @@ class CategoryScreen extends HookConsumerWidget {
                             }
 
                             return InkWell(
-                              onTap: () => context.router.push(
-                                CategoryDetailScreenRoute(
-                                  categoryType: categories.value[index].type!,
-                                  categoryId:
-                                      categories.value[index].categoryId!,
-                                ),
-                              ),
+                              onTap: () {
+                                unfocus(context);
+                                context.router.push(
+                                  CategoryDetailScreenRoute(
+                                    categoryType: categories.value[index].type!,
+                                    categoryId:
+                                        categories.value[index].categoryId!,
+                                  ),
+                                );
+                              },
                               child: CategoryItem(
                                 category: categories.value[index],
                               ),

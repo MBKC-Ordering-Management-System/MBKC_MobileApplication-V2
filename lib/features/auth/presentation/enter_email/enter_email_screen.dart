@@ -34,7 +34,7 @@ class EnterEmailScreen extends HookConsumerWidget with Validations {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final email = useTextEditingController(text: 'thanhlhse150023@fpt.edu.vn');
+    final email = useTextEditingController();
     final state = ref.watch(enterEmailControllerProvider);
     final formKey = useMemoized(GlobalKey<FormState>.new, const []);
 

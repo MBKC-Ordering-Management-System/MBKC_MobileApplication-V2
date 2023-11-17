@@ -13,7 +13,8 @@ class APIConstants {
   static const otpVerification = '/verifications/otp-verification';
   static const changeFirstTime = '/accounts';
 
-  // statistical
+  // dashboard
+  static const dashboard = '/dashboards/store';
 
   // order
   static const order = '/orders';

@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../configs/routes/app_router.dart';
 import '../../../../models/request/paging_model.dart';
+import '../../../../utils/commons/functions/delay_util.dart';
 import '../../../../utils/commons/functions/string_utils.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
@@ -238,7 +239,12 @@ class CategoryDetailProductTab extends HookConsumerWidget {
             decoration: const BoxDecoration(),
           ),
           (state.isLoading && isLoadMoreLoading.value == false)
-              ? const ProductShimmer(amount: 4)
+              ? Expanded(
+                  child: ListView.builder(
+                    itemCount: 2,
+                    itemBuilder: (_, index) => const ProductShimmer(amount: 2),
+                  ),
+                )
               : products.value.isEmpty
                   ? const Align(
                       alignment: Alignment.topCenter,
@@ -269,12 +275,15 @@ class CategoryDetailProductTab extends HookConsumerWidget {
                           }
 
                           return InkWell(
-                            onTap: () => context.router.push(
-                              ProductDetailScreenRoute(
-                                productType: products.value[index].type,
-                                productId: products.value[index].productId,
-                              ),
-                            ),
+                            onTap: () {
+                              unfocus(context);
+                              context.router.push(
+                                ProductDetailScreenRoute(
+                                  productType: products.value[index].type,
+                                  productId: products.value[index].productId,
+                                ),
+                              );
+                            },
                             child: ProductItem(
                               product: products.value[index],
                             ),

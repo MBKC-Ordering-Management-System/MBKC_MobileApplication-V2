@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import '../../../../configs/routes/app_router.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
@@ -105,20 +107,28 @@ class OrderDetailScreen extends HookConsumerWidget {
         await fetchData(ref: ref, context: context, order: order);
       });
 
+      FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+        if (message.data['screen'] == OrderDetailScreenRoute.name) {
+          if (int.parse(message.data['orderid']) == orderId) {
+            fetchData(ref: ref, context: context, order: order);
+          }
+        }
+      });
+
       return;
     }, const []);
 
     return LoadingOverlay(
       isLoading: confirmOrderState,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AssetsConstants.mainColor,
-          centerTitle: true,
-          title: const LabelText(
-            content: 'Thông Tin Đơn Hàng',
-            size: AssetsConstants.defaultFontSize - 8.0,
-            color: AssetsConstants.whiteColor,
-            fontWeight: FontWeight.w600,
+        appBar: CustomAppBar(
+          backButtonColor: AssetsConstants.whiteColor,
+          title: 'Thông Tin Đơn Hàng',
+          iconFirst: Icons.refresh_rounded,
+          onCallBackFirst: () => fetchData(
+            ref: ref,
+            context: context,
+            order: order,
           ),
         ),
         body: getOrderDetail.isLoading
@@ -238,6 +248,16 @@ class OrderDetailScreen extends HookConsumerWidget {
                                     : 'Chuyển khoản'
                               },
                               {'Thanh toán bởi:': order.value!.shipperName},
+                              {
+                                'Hình ảnh:':
+                                    order.value!.orderHistories.last.image
+                              },
+                            ],
+                          ),
+                        if (order.value!.shipperPayments != null &&
+                            order.value!.shipperPayments!.isEmpty)
+                          NormalRow(
+                            content: [
                               {
                                 'Hình ảnh:':
                                     order.value!.orderHistories.last.image
