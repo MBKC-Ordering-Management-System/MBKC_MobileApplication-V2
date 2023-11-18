@@ -68,19 +68,6 @@ Color getContentColorSystemStatus(OrderSystemStatusType orderType) {
   }
 }
 
-Color getColorPartner(PartnerType type) {
-  switch (type) {
-    case PartnerType.beamin:
-      return AssetsConstants.beaminColor;
-    case PartnerType.grabfood:
-      return AssetsConstants.grabColor;
-    case PartnerType.shopeefood:
-      return AssetsConstants.shopeeColor;
-    default:
-      return AssetsConstants.beaminColor;
-  }
-}
-
 Color getColorMoneyExchange(MoneyExchangeType type) {
   switch (type) {
     case MoneyExchangeType.receive:

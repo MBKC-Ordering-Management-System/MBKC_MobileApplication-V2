@@ -1,43 +1,37 @@
 import 'package:flutter/material.dart';
 import '../../constants/asset_constant.dart';
 
-class CustomRotation extends StatefulWidget {
+class CustomRotation extends StatelessWidget {
   const CustomRotation({super.key});
 
   @override
-  _MyRotatingImageState createState() => _MyRotatingImageState();
-}
-
-class _MyRotatingImageState extends State<CustomRotation>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
-      duration: const Duration(seconds: 1), // Adjust the duration as needed
-    )..repeat(); // This makes the rotation continuous
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    // init
-    final size = MediaQuery.sizeOf(context);
+    // final size = MediaQuery.sizeOf(context);
 
-    return RotationTransition(
-      turns: _controller,
-      child: Image.asset(
-        AssetsConstants.appLogo,
-        width: size.width * 0.2,
-        height: size.height * 0.2,
+    return SizedBox(
+      width: 80,
+      height: 80,
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          Image.asset(
+            // you can replace this with Image.asset
+            AssetsConstants.appLogo,
+            fit: BoxFit.cover,
+            height: 50,
+            width: 50,
+          ),
+          // you can replace
+          const SizedBox(
+            height: 80,
+            width: 80,
+            child: CircularProgressIndicator(
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(AssetsConstants.primaryDark),
+              strokeWidth: 2,
+            ),
+          ),
+        ],
       ),
     );
   }

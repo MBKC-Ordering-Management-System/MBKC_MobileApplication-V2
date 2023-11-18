@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../../models/token_model.dart';
 import '../../../models/user_model.dart';
@@ -66,8 +67,10 @@ Future<void> reGenerateToken(
   AuthRepository authRepository,
   BuildContext context,
 ) async {
-  // ignore: avoid_print
-  print('re-authen');
+  if (kDebugMode) {
+    print('re-authen');
+  }
+
   final user = await SharedPreferencesUtils.getInstance('user_token');
   if (user != null) {
     final tokenResponse = await authRepository.generateToken(

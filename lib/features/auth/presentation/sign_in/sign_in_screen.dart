@@ -4,14 +4,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../configs/routes/app_router.dart';
-import '../../../../utils/commons/functions/delay_util.dart';
-import '../../../../utils/commons/widgets/app_bar.dart';
-import '../../../../utils/commons/widgets/custom_button.dart';
-import '../../../../utils/commons/widgets/label_text.dart';
-import '../../../../utils/commons/widgets/loading_overlay.dart';
-import '../../../../utils/commons/widgets/password_input.dart';
-import '../../../../utils/commons/widgets/text_input.dart';
-import '../../../../utils/commons/widgets/value_listenable_builder.dart';
+import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/asset_constant.dart';
 import 'sign_in_controller.dart';
 import '../../../../utils/resources/validations.dart';
@@ -55,6 +49,10 @@ class SignInScreen extends HookConsumerWidget with Validations {
       };
 
       FlutterNativeSplash.remove();
+
+      // check permission
+      WidgetsBinding.instance.addPostFrameCallback((_) async {});
+
       return null;
     }, const []);
 

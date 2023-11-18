@@ -24,4 +24,18 @@ class SharedPreferencesUtils {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.remove(key);
   }
+
+  // get user permission
+  static Future<bool?> getUserPermission(String key) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final permission = prefs.getBool(key);
+    return permission;
+  }
+
+  // set user permission
+  static Future<void> setUserPermission(bool value, String key) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+    await prefs.setBool(key, value);
+  }
 }
