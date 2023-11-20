@@ -21,7 +21,7 @@ String getCustomContent(Map<String, dynamic> content) {
 
     case 'Tiền rút:':
     case 'Giảm giá:':
-      if ((content.entries.first.value as int) == 0) {
+      if (content.entries.first.value == 0) {
         final number =
             NumberFormat.decimalPattern().format(content.entries.first.value);
         return '$numberđ';

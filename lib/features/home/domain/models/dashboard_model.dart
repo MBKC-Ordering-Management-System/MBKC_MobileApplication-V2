@@ -1,37 +1,37 @@
 import 'dart:convert';
 
 class DashBoardModel {
-  final int? totalUpcomingOrder;
-  final int? totalPreparingOrder;
-  final int? totalReadyOrder;
-  final int? totalCompletedOrder;
-  final double? totalRevenueDaily;
+  final int? totalUpcomingOrders;
+  final int? totalPreparingOrders;
+  final int? totalReadyOrders;
+  final int? totalCompletedOrders;
+  final double? totalRevenuesDaily;
 
   DashBoardModel({
-    required this.totalUpcomingOrder,
-    required this.totalPreparingOrder,
-    required this.totalReadyOrder,
-    required this.totalCompletedOrder,
-    required this.totalRevenueDaily,
+    required this.totalUpcomingOrders,
+    required this.totalPreparingOrders,
+    required this.totalReadyOrders,
+    required this.totalCompletedOrders,
+    required this.totalRevenuesDaily,
   });
 
   Map<String, dynamic> toMap() {
     final result = <String, dynamic>{};
 
-    if (totalUpcomingOrder != null) {
-      result.addAll({'totalUpcomingOrder': totalUpcomingOrder});
+    if (totalUpcomingOrders != null) {
+      result.addAll({'totalUpcomingOrders': totalUpcomingOrders});
     }
-    if (totalPreparingOrder != null) {
-      result.addAll({'totalPreparingOrder': totalPreparingOrder});
+    if (totalPreparingOrders != null) {
+      result.addAll({'totalPreparingOrders': totalPreparingOrders});
     }
-    if (totalReadyOrder != null) {
-      result.addAll({'totalReadyOrder': totalReadyOrder});
+    if (totalReadyOrders != null) {
+      result.addAll({'totalReadyOrders': totalReadyOrders});
     }
-    if (totalCompletedOrder != null) {
-      result.addAll({'totalCompletedOrder': totalCompletedOrder});
+    if (totalCompletedOrders != null) {
+      result.addAll({'totalCompletedOrders': totalCompletedOrders});
     }
-    if (totalRevenueDaily != null) {
-      result.addAll({'totalRevenueDaily': totalRevenueDaily});
+    if (totalRevenuesDaily != null) {
+      result.addAll({'totalRevenuesDaily': totalRevenuesDaily});
     }
 
     return result;
@@ -39,11 +39,11 @@ class DashBoardModel {
 
   factory DashBoardModel.fromMap(Map<String, dynamic> map) {
     return DashBoardModel(
-      totalUpcomingOrder: map['totalUpcomingOrder']?.toInt(),
-      totalPreparingOrder: map['totalPreparingOrder']?.toInt(),
-      totalReadyOrder: map['totalReadyOrder']?.toInt(),
-      totalCompletedOrder: map['totalCompletedOrder']?.toInt(),
-      totalRevenueDaily: map['totalRevenueDaily']?.toDouble(),
+      totalUpcomingOrders: map['totalUpcomingOrders']?.toInt(),
+      totalPreparingOrders: map['totalPreparingOrders']?.toInt(),
+      totalReadyOrders: map['totalReadyOrders']?.toInt(),
+      totalCompletedOrders: map['totalCompletedOrders']?.toInt(),
+      totalRevenuesDaily: map['totalRevenuesDaily']?.toDouble(),
     );
   }
 

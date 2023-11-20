@@ -7,7 +7,7 @@ part of 'money_exchange_controller.dart';
 // **************************************************************************
 
 String _$moneyExchangeControllerHash() =>
-    r'36c6496780763aaf4a18b2dfc209f0ce5488bdc2';
+    r'5e19f2a04b85d29262dff77a834ad547cfee1f12';
 
 /// See also [MoneyExchangeController].
 @ProviderFor(MoneyExchangeController)

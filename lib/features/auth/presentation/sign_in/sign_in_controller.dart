@@ -14,6 +14,7 @@ import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../../profile/domain/repositories/profile_repository.dart';
+import '../../domain/models/request/register_token_request.dart';
 import '../../domain/models/request/sign_in_request.dart';
 import '../../domain/repositories/auth_repository.dart';
 
@@ -71,11 +72,14 @@ class SignInController extends _$SignInController {
           APIConstants.prefixToken + user.tokens.accessToken,
         );
 
+        // get FCM token
+        final deviceToken = await getDeviceToken();
         final userModel = UserModel(
           accountId: user.accountId,
           storeId: profile.storeId,
           email: user.email,
           token: user.tokens,
+          fcmToken: deviceToken,
         );
 
         // check first time log
@@ -94,8 +98,27 @@ class SignInController extends _$SignInController {
           return;
         }
 
-        ref.read(authProvider.notifier).update((state) => userModel);
-        await SharedPreferencesUtils.setInstance(userModel, 'user_token');
+        // register FCM token
+        await authRepository.registerToken(
+          request: RegisterTokenRequest(fcmToken: deviceToken),
+          accessToken: APIConstants.prefixToken + userModel.token.accessToken,
+        );
+
+        final profileWithUserDevice = await profileRepository.getProfile(
+          APIConstants.prefixToken + user.tokens.accessToken,
+        );
+
+        final userModelWithUserDevice = userModel.copyWith(
+          userTokens: profileWithUserDevice.userDevices,
+        );
+
+        ref.read(authProvider.notifier).update(
+              (state) => userModelWithUserDevice,
+            );
+        await SharedPreferencesUtils.setInstance(
+          userModelWithUserDevice,
+          'user_token',
+        );
         context.router.replaceAll([const HomeScreenRoute()]);
       },
     );
@@ -113,17 +136,53 @@ class SignInController extends _$SignInController {
     }
   }
 
-  void signOut(
+  Future<void> signOut(
     BuildContext context,
   ) async {
     final authRepository = ref.read(authRepositoryProvider);
+    final user = await SharedPreferencesUtils.getInstance('user_token');
 
     state = await AsyncValue.guard(
       () async {
+        final userDevice = user!.userTokens!.firstWhere(
+          (element) => element.fcmToken == user.fcmToken,
+        );
+
         ref.read(authProvider.notifier).update((state) => null);
         await authRepository.signOut();
+        await authRepository.deleteToken(
+          id: userDevice.userDeviceId!,
+          accessToken: APIConstants.prefixToken + user.token.accessToken,
+        );
         context.router.replaceAll([SignInScreenRoute()]);
       },
     );
+
+    // access expired || other error
+    if (state.hasError) {
+      state = await AsyncValue.guard(
+        () async {
+          final statusCode = (state.error as DioException).onStatusDio();
+          await handleAPIError(
+            statusCode: statusCode,
+            stateError: state.error!,
+            context: context,
+            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+          );
+
+          if (statusCode != StatusCodeType.unauthentication.type) {
+            return;
+          }
+
+          await signOut(context);
+        },
+      );
+
+      // if refresh token expired
+      if (state.hasError) {
+        await authRepository.signOut();
+        context.router.replaceAll([SignInScreenRoute()]);
+      }
+    }
   }
 }

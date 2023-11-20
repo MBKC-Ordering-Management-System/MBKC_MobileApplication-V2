@@ -1,13 +1,12 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import '../../../../configs/routes/app_router.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
+import '../../../auth/presentation/sign_in/sign_in_controller.dart';
 import '../../domain/models/order_model.dart';
 import '../../../../models/request/paging_model.dart';
 import '../../domain/repositories/order_repository.dart';
@@ -64,8 +63,7 @@ class OrderController extends _$OrderController {
 
       // if refresh token expired
       if (state.hasError) {
-        await authRepository.signOut();
-        context.router.replaceAll([SignInScreenRoute()]);
+        await ref.read(signInControllerProvider.notifier).signOut(context);
       }
     }
 

@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'brand_model.dart';
 import 'kitchen_center_model.dart';
+import '../../../../models/user_token.dart';
 
 class ProfileModel {
   final int storeId;
@@ -10,6 +10,7 @@ class ProfileModel {
   final String logo;
   final String storeManagerEmail;
   final String? rejectedReason;
+  final List<UserDevice> userDevices;
   final KitchenCenterModel? kitchenCenter;
   final BrandModel brand;
 
@@ -20,6 +21,7 @@ class ProfileModel {
     required this.logo,
     required this.storeManagerEmail,
     required this.rejectedReason,
+    required this.userDevices,
     required this.kitchenCenter,
     required this.brand,
   });
@@ -35,6 +37,7 @@ class ProfileModel {
     if (rejectedReason != null) {
       result.addAll({'rejectedReason': rejectedReason});
     }
+    result.addAll({'userDevices': userDevices.map((x) => x.toMap()).toList()});
     if (kitchenCenter != null) {
       result.addAll({'kitchenCenter': kitchenCenter!.toMap()});
     }
@@ -51,6 +54,8 @@ class ProfileModel {
       logo: map['logo'] ?? '',
       storeManagerEmail: map['storeManagerEmail'] ?? '',
       rejectedReason: map['rejectedReason'],
+      userDevices: List<UserDevice>.from(
+          map['userDevices']?.map((x) => UserDevice.fromMap(x))),
       kitchenCenter: map['kitchenCenter'] != null
           ? KitchenCenterModel.fromMap(map['kitchenCenter'])
           : null,

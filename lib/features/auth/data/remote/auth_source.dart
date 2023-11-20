@@ -9,6 +9,7 @@ import '../../domain/models/request/change_first_time_request.dart';
 import '../../domain/models/request/change_password_request.dart';
 import '../../domain/models/request/email_verify_request.dart';
 import '../../domain/models/request/otp_verify_request.dart';
+import '../../domain/models/request/register_token_request.dart';
 import '../../domain/models/request/sign_in_request.dart';
 import '../../domain/models/response/account_reponse.dart';
 
@@ -54,6 +55,20 @@ abstract class AuthSource {
     @Header(APIConstants.contentHeader) String contentType,
     @Header(APIConstants.authHeader) String accessToken,
     @Path('id') int id,
+  );
+
+  @POST(APIConstants.userToken)
+  Future<HttpResponse<SuccessModel>> registerToken(
+    @Body() RegisterTokenRequest request,
+    @Header(APIConstants.contentHeader) String contentType,
+    @Header(APIConstants.authHeader) String accessToken,
+  );
+
+  @DELETE('${APIConstants.userToken}/{id}')
+  Future<HttpResponse<SuccessModel>> deleteToken(
+    @Path('id') int id,
+    @Header(APIConstants.contentHeader) String contentType,
+    @Header(APIConstants.authHeader) String accessToken,
   );
 }
 

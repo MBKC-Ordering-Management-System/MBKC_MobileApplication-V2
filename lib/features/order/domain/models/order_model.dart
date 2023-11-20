@@ -31,7 +31,7 @@ class OrderModel {
   final Partner? partner;
   final List<ShipperPayment>? shipperPayments;
   final List<OrderDetail>? orderDetails;
-  final List<OrderHistory> orderHistories;
+  final List<OrderHistory>? orderHistories;
 
   OrderModel({
     required this.id,
@@ -142,8 +142,10 @@ class OrderModel {
       result.addAll(
           {'orderDetails': orderDetails!.map((x) => x.toMap()).toList()});
     }
-    result.addAll(
-        {'orderHistories': orderHistories.map((x) => x.toMap()).toList()});
+    if (orderHistories != null) {
+      result.addAll(
+          {'orderHistories': orderHistories!.map((x) => x.toMap()).toList()});
+    }
 
     return result;
   }
@@ -181,8 +183,10 @@ class OrderModel {
           ? List<OrderDetail>.from(
               map['orderDetails']?.map((x) => OrderDetail.fromMap(x)))
           : null,
-      orderHistories: List<OrderHistory>.from(
-          map['orderHistories']?.map((x) => OrderHistory.fromMap(x))),
+      orderHistories: map['orderHistories'] != null
+          ? List<OrderHistory>.from(
+              map['orderHistories']?.map((x) => OrderHistory.fromMap(x)))
+          : null,
     );
   }
 

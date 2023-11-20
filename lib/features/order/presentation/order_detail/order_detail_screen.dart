@@ -225,7 +225,10 @@ class OrderDetailScreen extends HookConsumerWidget {
                           ],
                         ),
                         if (order.value!.shipperPayments != null &&
-                            order.value!.shipperPayments!.isNotEmpty)
+                            order.value!.shipperPayments!.isNotEmpty &&
+                            order.value!.systemStatus!
+                                    .toOrderSystemTypeEnum() ==
+                                OrderSystemStatusType.completed)
                           NormalRow(
                             content: [
                               const {'Thanh toán của giao hàng': ''},
@@ -250,17 +253,20 @@ class OrderDetailScreen extends HookConsumerWidget {
                               {'Thanh toán bởi:': order.value!.shipperName},
                               {
                                 'Hình ảnh:':
-                                    order.value!.orderHistories.last.image
+                                    order.value!.orderHistories!.last.image
                               },
                             ],
                           ),
                         if (order.value!.shipperPayments != null &&
-                            order.value!.shipperPayments!.isEmpty)
+                            order.value!.shipperPayments!.isEmpty &&
+                            order.value!.systemStatus!
+                                    .toOrderSystemTypeEnum() ==
+                                OrderSystemStatusType.completed)
                           NormalRow(
                             content: [
                               {
                                 'Hình ảnh:':
-                                    order.value!.orderHistories.last.image
+                                    order.value!.orderHistories!.last.image
                               },
                             ],
                           ),

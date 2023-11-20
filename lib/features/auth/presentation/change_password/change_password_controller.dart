@@ -12,8 +12,10 @@ import '../../../../utils/constants/asset_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
 import '../../../../utils/providers/common_provider.dart';
+import '../../../profile/domain/repositories/profile_repository.dart';
 import '../../domain/models/request/change_first_time_request.dart';
 import '../../domain/models/request/change_password_request.dart';
+import '../../domain/models/request/register_token_request.dart';
 import '../../domain/repositories/auth_repository.dart';
 
 part 'change_password_controller.g.dart';
@@ -35,6 +37,7 @@ class ChangePasswordController extends _$ChangePasswordController {
   }) async {
     state = const AsyncLoading();
     final authRepository = ref.read(authRepositoryProvider);
+    final profileRepository = ref.read(profileRepositoryProvider);
 
     final request = ChangePasswordRequest(
       email: email,
@@ -52,8 +55,27 @@ class ChangePasswordController extends _$ChangePasswordController {
             accessToken: APIConstants.prefixToken + token!.accessToken,
           );
 
-          ref.read(authProvider.notifier).update((state) => user);
-          await SharedPreferencesUtils.setInstance(user, 'user_token');
+          // register FCM token
+          await authRepository.registerToken(
+            request: RegisterTokenRequest(fcmToken: user.fcmToken!),
+            accessToken: APIConstants.prefixToken + user.token.accessToken,
+          );
+
+          final profileWithUserDevice = await profileRepository.getProfile(
+            APIConstants.prefixToken + user.token.accessToken,
+          );
+
+          final userModelWithUserDevice = user.copyWith(
+            userTokens: profileWithUserDevice.userDevices,
+          );
+
+          ref.read(authProvider.notifier).update(
+                (state) => userModelWithUserDevice,
+              );
+          await SharedPreferencesUtils.setInstance(
+            userModelWithUserDevice,
+            'user_token',
+          );
           context.router.replaceAll([const HomeScreenRoute()]);
         } else {
           await authRepository.changePassword(request: request);

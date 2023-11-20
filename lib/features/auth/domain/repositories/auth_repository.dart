@@ -7,6 +7,7 @@ import '../models/request/change_first_time_request.dart';
 import '../models/request/change_password_request.dart';
 import '../models/request/email_verify_request.dart';
 import '../models/request/otp_verify_request.dart';
+import '../models/request/register_token_request.dart';
 import '../models/request/sign_in_request.dart';
 import '../models/response/account_reponse.dart';
 
@@ -30,6 +31,16 @@ abstract class AuthRepository {
   });
 
   Future<void> signOut();
+
+  Future<SuccessModel> registerToken({
+    required RegisterTokenRequest request,
+    required String accessToken,
+  });
+
+  Future<SuccessModel> deleteToken({
+    required int id,
+    required String accessToken,
+  });
 }
 
 @Riverpod(keepAlive: false)

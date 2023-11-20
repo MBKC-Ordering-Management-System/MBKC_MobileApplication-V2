@@ -7,6 +7,7 @@ import '../../domain/models/request/change_first_time_request.dart';
 import '../../domain/models/request/change_password_request.dart';
 import '../../domain/models/request/email_verify_request.dart';
 import '../../domain/models/request/otp_verify_request.dart';
+import '../../domain/models/request/register_token_request.dart';
 import '../../domain/models/request/sign_in_request.dart';
 import '../../domain/models/response/account_reponse.dart';
 import '../../domain/repositories/auth_repository.dart';
@@ -77,5 +78,33 @@ class AuthRepositoryImpl extends RemoteBaseRepository
   @override
   Future<void> signOut() async {
     await SharedPreferencesUtils.clearInstance('user_token');
+  }
+
+  @override
+  Future<SuccessModel> registerToken({
+    required RegisterTokenRequest request,
+    required String accessToken,
+  }) {
+    return getDataOf(
+      request: () => _authSource.registerToken(
+        request,
+        APIConstants.contentType,
+        accessToken,
+      ),
+    );
+  }
+
+  @override
+  Future<SuccessModel> deleteToken({
+    required int id,
+    required String accessToken,
+  }) {
+    return getDataOf(
+      request: () => _authSource.deleteToken(
+        id,
+        APIConstants.contentType,
+        accessToken,
+      ),
+    );
   }
 }

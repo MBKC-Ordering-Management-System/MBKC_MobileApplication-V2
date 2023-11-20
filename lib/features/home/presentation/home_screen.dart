@@ -75,7 +75,7 @@ class HomeScreen extends HookConsumerWidget {
                     ),
                     title: dashboard.value == null
                         ? ''
-                        : dashboard.value!.totalUpcomingOrder.toString(),
+                        : dashboard.value!.totalUpcomingOrders.toString(),
                     subtitle: 'Tổng số đơn hàng sắp tới',
                   ),
                   SizedBox(height: size.height * 0.02),
@@ -91,7 +91,7 @@ class HomeScreen extends HookConsumerWidget {
                     ),
                     title: dashboard.value == null
                         ? ''
-                        : dashboard.value!.totalPreparingOrder.toString(),
+                        : dashboard.value!.totalPreparingOrders.toString(),
                     subtitle: 'Tổng số đơn hàng đang chuẩn bị',
                   ),
                   SizedBox(height: size.height * 0.02),
@@ -107,7 +107,7 @@ class HomeScreen extends HookConsumerWidget {
                     ),
                     title: dashboard.value == null
                         ? ''
-                        : dashboard.value!.totalReadyOrder.toString(),
+                        : dashboard.value!.totalReadyOrders.toString(),
                     subtitle: 'Tổng số đơn hàng sẵn sàng',
                   ),
                   SizedBox(height: size.height * 0.02),
@@ -123,7 +123,7 @@ class HomeScreen extends HookConsumerWidget {
                     ),
                     title: dashboard.value == null
                         ? ''
-                        : dashboard.value!.totalCompletedOrder.toString(),
+                        : dashboard.value!.totalCompletedOrders.toString(),
                     subtitle: 'Tổng số đơn hàng hoàn thành',
                   ),
                   SizedBox(height: size.height * 0.02),
@@ -139,8 +139,9 @@ class HomeScreen extends HookConsumerWidget {
                     ),
                     title: dashboard.value == null
                         ? ''
-                        : getCustomContent(
-                            {'doanh thu:': dashboard.value!.totalRevenueDaily}),
+                        : getCustomContent({
+                            'doanh thu:': dashboard.value!.totalRevenuesDaily
+                          }),
                     subtitle: 'Doanh thu trong ngày',
                   ),
                   SizedBox(height: size.height * 0.02),

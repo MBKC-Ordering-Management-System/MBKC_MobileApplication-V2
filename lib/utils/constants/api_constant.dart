@@ -13,6 +13,9 @@ class APIConstants {
   static const otpVerification = '/verifications/otp-verification';
   static const changeFirstTime = '/accounts';
 
+  // notification
+  static const userToken = '/user-devices';
+
   // dashboard
   static const dashboard = '/dashboards/store';
 
