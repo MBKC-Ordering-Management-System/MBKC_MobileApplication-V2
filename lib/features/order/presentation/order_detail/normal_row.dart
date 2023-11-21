@@ -104,13 +104,20 @@ class NormalRow extends StatelessWidget {
                           ? Container()
                           : e.entries.first.key == 'Hình ảnh:'
                               ? Expanded(
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(5),
-                                    child: FadeInImage(
-                                      placeholder: const AssetImage(
-                                          AssetsConstants.welcomeImage),
-                                      image:
-                                          NetworkImage(e.entries.first.value),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await showAlertDialogImage(
+                                          context: context,
+                                          imageUrl: e.entries.first.value);
+                                    },
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(5),
+                                      child: FadeInImage(
+                                        placeholder: const AssetImage(
+                                            AssetsConstants.welcomeImage),
+                                        image:
+                                            NetworkImage(e.entries.first.value),
+                                      ),
                                     ),
                                   ),
                                 )

@@ -93,15 +93,23 @@ class MoneyExchangeDetailScreen extends StatelessWidget {
                 if (moneyExchange.exchangeType ==
                     MoneyExchangeType.withdraw) ...[
                   SizedBox(height: size.height * 0.01),
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: FadeInImage(
-                      fit: BoxFit.cover,
-                      placeholder: const AssetImage(
-                        AssetsConstants.welcomeImage,
-                      ),
-                      image: NetworkImage(
-                        moneyExchange.exchangeImage!,
+                  InkWell(
+                    onTap: () async {
+                      await showAlertDialogImage(
+                        context: context,
+                        imageUrl: moneyExchange.exchangeImage!,
+                      );
+                    },
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: FadeInImage(
+                        fit: BoxFit.cover,
+                        placeholder: const AssetImage(
+                          AssetsConstants.welcomeImage,
+                        ),
+                        image: NetworkImage(
+                          moneyExchange.exchangeImage!,
+                        ),
                       ),
                     ),
                   ),

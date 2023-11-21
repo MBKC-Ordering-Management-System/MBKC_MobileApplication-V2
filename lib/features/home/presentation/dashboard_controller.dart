@@ -51,7 +51,7 @@ class DashboardController extends _$DashboardController {
             return;
           }
 
-          getStoreDashboard(context);
+          await getStoreDashboard(context);
         },
       );
 

@@ -9,6 +9,7 @@ import '../../../../models/response/error_model.dart';
 import '../../../../models/token_model.dart';
 import '../../../../models/user_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
+import '../../../../utils/commons/widgets/widgets_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/enums/enums_export.dart';
 import '../../../../utils/extensions/extensions_export.dart';
@@ -180,8 +181,11 @@ class SignInController extends _$SignInController {
 
       // if refresh token expired
       if (state.hasError) {
-        await authRepository.signOut();
-        context.router.replaceAll([SignInScreenRoute()]);
+        showExceptionAlertDialog(
+          context: context,
+          title: 'Thông báo',
+          exception: 'Có lỗi rồi không thể đăng xuất.',
+        );
       }
     }
   }

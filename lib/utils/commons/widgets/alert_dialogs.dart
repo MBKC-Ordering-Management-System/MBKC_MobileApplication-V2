@@ -1,8 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 import '../../constants/asset_constant.dart';
 import 'label_text.dart';
 
 const kDialogDefaultKey = Key('dialog-default-key');
+
+/// Generic function to show a platform-aware Material or Cupertino dialog
+Future<bool?> showAlertDialogImage({
+  required BuildContext context,
+  required String imageUrl,
+}) async {
+  final size = MediaQuery.sizeOf(context);
+  return showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) => Dialog(
+      child: SizedBox(
+        width: size.width * 0.8,
+        height: size.height * 0.3,
+        child: PhotoView(
+          imageProvider: NetworkImage(imageUrl),
+        ),
+      ),
+    ),
+  );
+}
 
 /// Generic function to show a platform-aware Material or Cupertino dialog
 Future<bool?> showAlertDialog({
