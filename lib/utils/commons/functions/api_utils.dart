@@ -1,8 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import '../../../models/token_model.dart';
-import '../../../models/user_model.dart';
 import 'functions_common_export.dart';
 import '../../../features/auth/domain/repositories/auth_repository.dart';
 import '../../../models/response/error_model.dart';
@@ -77,14 +75,8 @@ Future<void> reGenerateToken(
       request: user.token,
     );
 
-    final userNew = UserModel(
-      accountId: user.accountId,
-      storeId: user.storeId,
-      email: user.email,
-      token: TokenModel(
-        accessToken: tokenResponse.accessToken,
-        refreshToken: tokenResponse.refreshToken,
-      ),
+    final userNew = user.copyWith(
+      token: tokenResponse,
     );
 
     await SharedPreferencesUtils.clearInstance('user_token');

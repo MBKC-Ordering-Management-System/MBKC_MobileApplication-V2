@@ -140,6 +140,8 @@ class SignInController extends _$SignInController {
   Future<void> signOut(
     BuildContext context,
   ) async {
+    state = const AsyncLoading();
+    ref.read(modifyProfiver.notifier).update((state) => true);
     final authRepository = ref.read(authRepositoryProvider);
     final user = await SharedPreferencesUtils.getInstance('user_token');
 
@@ -155,6 +157,8 @@ class SignInController extends _$SignInController {
           id: userDevice.userDeviceId!,
           accessToken: APIConstants.prefixToken + user.token.accessToken,
         );
+
+        ref.read(modifyProfiver.notifier).update((state) => false);
         context.router.replaceAll([SignInScreenRoute()]);
       },
     );

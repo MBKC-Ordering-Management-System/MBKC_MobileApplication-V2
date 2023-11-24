@@ -19,11 +19,9 @@ class HomeScreen extends HookConsumerWidget {
     required WidgetRef ref,
     required BuildContext context,
   }) async {
-    final response = await ref
+    await ref
         .read(dashboardControllerProvider.notifier)
-        .getStoreDashboard(context);
-
-    dashboard.value = response;
+        .getStoreDashboard(context: context, dashboard: dashboard);
   }
 
   @override
@@ -35,7 +33,7 @@ class HomeScreen extends HookConsumerWidget {
     // first load
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        fetchData(dashboard: dashboard, ref: ref, context: context);
+        await fetchData(dashboard: dashboard, ref: ref, context: context);
       });
 
       () async {
@@ -51,8 +49,8 @@ class HomeScreen extends HookConsumerWidget {
       appBar: CustomAppBar(
         title: 'Trang Chủ',
         iconFirst: Icons.refresh_rounded,
-        onCallBackFirst: () =>
-            fetchData(dashboard: dashboard, ref: ref, context: context),
+        onCallBackFirst: () async =>
+            await fetchData(dashboard: dashboard, ref: ref, context: context),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(

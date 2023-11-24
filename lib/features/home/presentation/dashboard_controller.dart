@@ -19,10 +19,10 @@ class DashboardController extends _$DashboardController {
     // nothing to do
   }
 
-  Future<DashBoardModel?> getStoreDashboard(
-    BuildContext context,
-  ) async {
-    DashBoardModel? dashboard;
+  Future<void> getStoreDashboard({
+    required BuildContext context,
+    required ValueNotifier<DashBoardModel?> dashboard,
+  }) async {
     state = const AsyncLoading();
     final dashboardRepository = ref.read(dashboardRepositoryProvider);
     final authRepository = ref.read(authRepositoryProvider);
@@ -30,7 +30,7 @@ class DashboardController extends _$DashboardController {
 
     state = await AsyncValue.guard(
       () async {
-        dashboard = await dashboardRepository.getStoreDashboard(
+        dashboard.value = await dashboardRepository.getStoreDashboard(
           accessToken: APIConstants.prefixToken + user!.token.accessToken,
         );
       },
@@ -51,7 +51,7 @@ class DashboardController extends _$DashboardController {
             return;
           }
 
-          await getStoreDashboard(context);
+          await getStoreDashboard(context: context, dashboard: dashboard);
         },
       );
 
@@ -60,7 +60,5 @@ class DashboardController extends _$DashboardController {
         await ref.read(signInControllerProvider.notifier).signOut(context);
       }
     }
-
-    return dashboard;
   }
 }
