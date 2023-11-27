@@ -97,13 +97,11 @@ class AuthRepositoryImpl extends RemoteBaseRepository
   @override
   Future<SuccessModel> deleteToken({
     required int id,
-    required String accessToken,
   }) {
     return getDataOf(
       request: () => _authSource.deleteToken(
         id,
         APIConstants.contentType,
-        accessToken,
       ),
     );
   }

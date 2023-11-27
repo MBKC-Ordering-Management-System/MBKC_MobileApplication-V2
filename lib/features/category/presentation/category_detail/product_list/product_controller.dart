@@ -53,14 +53,17 @@ class ProductController extends _$ProductController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+            onCallBackGenerateToken: () async => await reGenerateToken(
+              authRepository,
+              context,
+            ),
           );
 
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
           }
 
-          getProducts(request, context, categoryId);
+          await getProducts(request, context, categoryId);
         },
       );
 

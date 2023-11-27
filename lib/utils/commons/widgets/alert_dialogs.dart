@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import '../../constants/asset_constant.dart';
+import '../functions/functions_common_export.dart';
 import 'label_text.dart';
 
 const kDialogDefaultKey = Key('dialog-default-key');
@@ -22,6 +23,160 @@ Future<bool?> showAlertDialogImage({
           imageProvider: NetworkImage(imageUrl),
         ),
       ),
+    ),
+  );
+}
+
+Future<bool?> showAlertDialogCancelReason({
+  required BuildContext context,
+  required String title,
+  required TextEditingController controller,
+  String? cancelActionText = 'Hủy',
+  String defaultActionText = 'Hủy Đơn',
+}) async {
+  final size = MediaQuery.sizeOf(context);
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  return showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (context) => AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          AssetsConstants.defaultBorder - 5.0,
+        ),
+      ),
+      title: Row(
+        children: [
+          LabelText(
+            content: title,
+            size: AssetsConstants.defaultFontSize - 10.0,
+            fontWeight: FontWeight.bold,
+          ),
+          SizedBox(width: size.width * 0.02),
+          const Icon(
+            Icons.error_outline,
+            size: AssetsConstants.defaultFontSize - 10.0,
+            color: AssetsConstants.blackColor,
+          ),
+        ],
+      ),
+      backgroundColor: AssetsConstants.whiteColor,
+      shadowColor: AssetsConstants.primaryLight,
+      surfaceTintColor: AssetsConstants.whiteColor,
+      content: Container(
+        height: size.height * 0.3,
+        width: size.width * 1,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(AssetsConstants.defaultBorder),
+          border: Border.all(
+            color: AssetsConstants.borderColor,
+          ),
+        ),
+        child: Column(
+          children: [
+            Expanded(
+              child: Form(
+                key: formKey,
+                child: TextFormField(
+                  validator: (val) {
+                    if (val != null && val.isNotEmpty) {
+                      if (val.length > 200) {
+                        return 'Lý do không vượt quá 200 kí tự';
+                      }
+
+                      return null;
+                    }
+
+                    return 'Mục này Không được bỏ trống';
+                  },
+                  controller: controller,
+                  maxLines: 8,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.all(
+                      AssetsConstants.defaultBorder,
+                    ),
+                    hintText: 'Lý do bạn hủy đơn hàng là gì?',
+                    hintStyle: TextStyle(
+                      fontSize: AssetsConstants.defaultFontSize - 12.0,
+                      color: AssetsConstants.textBlur,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              color: AssetsConstants.warningColor,
+              onPressed: () => controller.clear(),
+              icon: const Icon(Icons.cancel_rounded),
+            )
+          ],
+        ),
+      ),
+      actions: <Widget>[
+        Row(
+          mainAxisAlignment: cancelActionText == null
+              ? MainAxisAlignment.end
+              : MainAxisAlignment.spaceBetween,
+          children: [
+            if (cancelActionText != null)
+              SizedBox(
+                width: size.width * 0.3,
+                child: OutlinedButton(
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(
+                      const BorderSide(),
+                    ),
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                          AssetsConstants.defaultBorder - 5.0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  child: LabelText(
+                    content: cancelActionText,
+                    size: AssetsConstants.defaultFontSize - 15.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  onPressed: () => Navigator.of(context).pop(false),
+                ),
+              ),
+            SizedBox(
+              width: size.width * 0.3,
+              child: OutlinedButton(
+                style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all(AssetsConstants.primaryDark),
+                  shape: MaterialStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                        AssetsConstants.defaultBorder - 5.0,
+                      ),
+                    ),
+                  ),
+                ),
+                key: kDialogDefaultKey,
+                child: LabelText(
+                  content: defaultActionText,
+                  size: AssetsConstants.defaultFontSize - 15.0,
+                  color: AssetsConstants.whiteColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                onPressed: () {
+                  if (formKey.currentState!.validate()) {
+                    unfocus(context);
+                    Navigator.of(context).pop(true);
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ],
     ),
   );
 }

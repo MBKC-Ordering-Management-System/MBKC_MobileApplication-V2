@@ -271,14 +271,10 @@ class _AuthSource implements AuthSource {
   Future<HttpResponse<SuccessModel>> deleteToken(
     int id,
     String contentType,
-    String accessToken,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{
-      r'Content-Type': contentType,
-      r'Authorization': accessToken,
-    };
+    final _headers = <String, dynamic>{r'Content-Type': contentType};
     _headers.removeWhere((k, v) => v == null);
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(

@@ -53,12 +53,6 @@ abstract class _$AppRouter extends RootStackRouter {
         child: EnterEmailScreen(key: args.key),
       );
     },
-    ErrorScreenRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const ErrorScreen(),
-      );
-    },
     HomeScreenRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -291,20 +285,6 @@ class EnterEmailScreenRouteArgs {
   String toString() {
     return 'EnterEmailScreenRouteArgs{key: $key}';
   }
-}
-
-/// generated route for
-/// [ErrorScreen]
-class ErrorScreenRoute extends PageRouteInfo<void> {
-  const ErrorScreenRoute({List<PageRouteInfo>? children})
-      : super(
-          ErrorScreenRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'ErrorScreenRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

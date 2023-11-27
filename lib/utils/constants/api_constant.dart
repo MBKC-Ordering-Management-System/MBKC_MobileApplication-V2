@@ -52,5 +52,6 @@ class APIConstants {
         'Email chưa được xác thực bằng mã OTP',
     'You are not allowed to access this function!':
         'Bạn không có quyền truy cập hệ thống',
+    'Rejected Reason is not empty.': 'Lý do hủy đơn không được trống',
   };
 }

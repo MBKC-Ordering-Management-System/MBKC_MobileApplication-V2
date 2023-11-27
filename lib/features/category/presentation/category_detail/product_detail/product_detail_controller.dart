@@ -47,14 +47,17 @@ class ProductDetailController extends _$ProductDetailController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+            onCallBackGenerateToken: () async => await reGenerateToken(
+              authRepository,
+              context,
+            ),
           );
 
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
           }
 
-          getProductDetail(context, productId);
+          await getProductDetail(context, productId);
         },
       );
 

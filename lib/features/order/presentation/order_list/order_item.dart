@@ -1,8 +1,10 @@
 // ignore_for_file: unused_local_variable
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../../configs/routes/app_router.dart';
+import '../../../../utils/providers/common_provider.dart';
 import '../../domain/models/order_model.dart';
 import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/commons/widgets/widgets_common_export.dart';
@@ -11,7 +13,7 @@ import '../../../../utils/enums/order_partner_status_type.dart';
 import '../order_detail/modify_order_controller.dart';
 import 'order_detail_item.dart';
 
-class OrderItem extends ConsumerWidget {
+class OrderItem extends HookConsumerWidget {
   const OrderItem({
     super.key,
     required this.order,
@@ -50,21 +52,36 @@ class OrderItem extends ConsumerWidget {
     required int id,
     required BuildContext context,
     required WidgetRef ref,
+    required TextEditingController controller,
+    required AsyncValue<void> isLoading,
   }) async {
-    final result = await showAlertDialog(
+    final resultConfirm = await showAlertDialog(
       context: context,
       title: 'Xác nhận',
       content:
           'Bạn muốn hủy đơn #${order.id} từ đối tác ${order.partner!.name} không?',
       cancelActionText: 'Hủy',
     );
-    if (result != null && result) {
-      final result = await ref
-          .read(modifyOrderControllerProvider.notifier)
-          .cancelOrder(id, context);
 
-      if (result) {
-        onCallback();
+    if (resultConfirm != null && resultConfirm) {
+      controller.clear();
+      final resultCancel = await showAlertDialogCancelReason(
+        context: context,
+        title: 'Hủy đơn hàng',
+        controller: controller,
+      );
+
+      if (resultCancel != null && resultCancel) {
+        final result =
+            await ref.read(modifyOrderControllerProvider.notifier).cancelOrder(
+                  id: id,
+                  context: context,
+                  reason: controller.text.toString(),
+                );
+
+        if (result) {
+          onCallback();
+        }
       }
     }
   }
@@ -73,7 +90,9 @@ class OrderItem extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // init
     final size = MediaQuery.sizeOf(context);
-    final state = ref.watch(modifyOrderControllerProvider);
+    final cancelReason = useTextEditingController();
+    final state = ref.watch(modifyProfiver);
+    final stateModify = ref.watch(modifyOrderControllerProvider);
 
     return Container(
       padding: const EdgeInsets.all(AssetsConstants.defaultPadding - 12.0),
@@ -87,13 +106,7 @@ class OrderItem extends ConsumerWidget {
         children: [
           InkWell(
             onTap: () {
-              context.router
-                  .push(OrderDetailScreenRoute(orderId: order.id!))
-                  .then((value) {
-                if (value != null && value == true) {
-                  onCallback();
-                }
-              });
+              context.router.push(OrderDetailScreenRoute(orderId: order.id!));
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -182,9 +195,11 @@ class OrderItem extends ConsumerWidget {
                   size: AssetsConstants.defaultFontSize - 14.0,
                   content: 'Hủy đơn'.toUpperCase(),
                   onCallback: () => cancelOrder(
+                    isLoading: stateModify,
                     id: order.id!,
                     context: context,
                     ref: ref,
+                    controller: cancelReason,
                   ),
                   isActive: true,
                   width: size.width * 0.3,
@@ -195,6 +210,25 @@ class OrderItem extends ConsumerWidget {
               ],
             ),
           ],
+          if (order.partnerOrderStatus!.toOrderPartnerTypeEnum() ==
+              OrderPartnerStatusType.upcoming)
+            CustomButton(
+              isOutline: true,
+              size: AssetsConstants.defaultFontSize - 14.0,
+              content: 'Hủy đơn'.toUpperCase(),
+              onCallback: () => cancelOrder(
+                isLoading: stateModify,
+                id: order.id!,
+                context: context,
+                ref: ref,
+                controller: cancelReason,
+              ),
+              isActive: true,
+              width: size.width * 1,
+              height: size.height * 0.04,
+              backgroundColor: AssetsConstants.whiteColor,
+              contentColor: AssetsConstants.warningColor,
+            ),
           SizedBox(height: size.height * 0.005),
         ],
       ),

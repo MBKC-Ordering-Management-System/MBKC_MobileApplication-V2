@@ -1,9 +1,9 @@
 import '../../../../models/response/success_model.dart';
 import '../../../../models/request/paging_model.dart';
-import '../../../../utils/commons/functions/functions_common_export.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/resources/remote_base_repository.dart';
 import '../../domain/models/order_model.dart';
+import '../../domain/models/request/reason.dart';
 import '../../domain/models/response/order_list_response.dart';
 import '../../domain/repositories/order_repository.dart';
 import '../remote/order_source.dart';
@@ -63,12 +63,13 @@ class OrderRepositoryImpl extends RemoteBaseRepository
 
   @override
   Future<SuccessModel> cancelOrder({
+    required Reason reason,
     required int orderId,
     required String accessToken,
   }) async {
-    await delay(addDelay);
     return getDataOf(
       request: () => _orderSource.cancelOrder(
+        reason,
         APIConstants.contentType,
         accessToken,
         orderId,

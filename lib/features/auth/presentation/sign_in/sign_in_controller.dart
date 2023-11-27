@@ -155,7 +155,6 @@ class SignInController extends _$SignInController {
         await authRepository.signOut();
         await authRepository.deleteToken(
           id: userDevice.userDeviceId!,
-          accessToken: APIConstants.prefixToken + user.token.accessToken,
         );
 
         ref.read(modifyProfiver.notifier).update((state) => false);
@@ -172,7 +171,10 @@ class SignInController extends _$SignInController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+            onCallBackGenerateToken: () async => await reGenerateToken(
+              authRepository,
+              context,
+            ),
           );
 
           if (statusCode != StatusCodeType.unauthentication.type) {

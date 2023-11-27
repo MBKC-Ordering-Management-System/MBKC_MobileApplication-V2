@@ -47,7 +47,10 @@ class OrderDetailController extends _$OrderDetailController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+            onCallBackGenerateToken: () async => await reGenerateToken(
+              authRepository,
+              context,
+            ),
           );
 
           if (statusCode != StatusCodeType.unauthentication.type) {

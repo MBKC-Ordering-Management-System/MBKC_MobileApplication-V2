@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../error_screen.dart';
 import '../../features/auth/presentation/change_password/change_password_screen.dart';
 import '../../features/auth/presentation/enter_email/enter_email_screen.dart';
 import '../../features/auth/presentation/otp_verification/otp_verification_screen.dart';
@@ -36,9 +35,6 @@ class AppRouter extends _$AppRouter {
   @override
   List<AutoRoute> get routes => [
         // routes go here
-
-        // common
-        AutoRoute(page: ErrorScreenRoute.page),
 
         // auth
         AutoRoute(

@@ -4,6 +4,7 @@ import '../../../../models/request/paging_model.dart';
 import '../../data/remote/order_source.dart';
 import '../../data/repositories/order_repository_impl.dart';
 import '../models/order_model.dart';
+import '../models/request/reason.dart';
 import '../models/response/order_list_response.dart';
 
 part 'order_repository.g.dart';
@@ -25,6 +26,7 @@ abstract class OrderRepository {
   });
 
   Future<SuccessModel> cancelOrder({
+    required Reason reason,
     required int orderId,
     required String accessToken,
   });

@@ -146,6 +146,7 @@ class _OrderSource implements OrderSource {
 
   @override
   Future<HttpResponse<SuccessModel>> cancelOrder(
+    Reason request,
     String contentType,
     String accessToken,
     int id,
@@ -157,7 +158,8 @@ class _OrderSource implements OrderSource {
       r'Authorization': accessToken,
     };
     _headers.removeWhere((k, v) => v == null);
-    final Map<String, dynamic>? _data = null;
+    final _data = <String, dynamic>{};
+    _data.addAll(request.toMap());
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<HttpResponse<SuccessModel>>(Options(
       method: 'PUT',

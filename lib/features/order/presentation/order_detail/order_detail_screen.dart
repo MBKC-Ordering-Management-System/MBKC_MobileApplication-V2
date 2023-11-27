@@ -44,6 +44,7 @@ class OrderDetailScreen extends HookConsumerWidget {
     required OrderModel order,
     required BuildContext context,
     required WidgetRef ref,
+    required VoidCallback onCallBack,
   }) async {
     final result = await showAlertDialog(
       context: context,
@@ -57,8 +58,9 @@ class OrderDetailScreen extends HookConsumerWidget {
           .read(modifyOrderControllerProvider.notifier)
           .confirmOrder(order.id!, context);
 
+      // context.router.pop(true);
       if (result) {
-        context.router.pop(true);
+        onCallBack();
         ref
             .read(refreshOrderList.notifier)
             .update((state) => !ref.read(refreshOrderList));
@@ -71,24 +73,39 @@ class OrderDetailScreen extends HookConsumerWidget {
     required OrderModel order,
     required BuildContext context,
     required WidgetRef ref,
+    required TextEditingController controller,
+    required VoidCallback onCallBack,
   }) async {
-    final result = await showAlertDialog(
+    final resultConfirm = await showAlertDialog(
       context: context,
       title: 'Xác nhận',
       content:
           'Bạn muốn hủy đơn #${order.id} từ đối tác ${order.partner!.name} không?',
       cancelActionText: 'Hủy',
     );
-    if (result != null && result) {
-      final result = await ref
-          .read(modifyOrderControllerProvider.notifier)
-          .cancelOrder(order.id!, context);
+    if (resultConfirm != null && resultConfirm) {
+      controller.clear();
+      final resultCancel = await showAlertDialogCancelReason(
+        context: context,
+        title: 'Lý do hủy đơn hàng',
+        controller: controller,
+      );
 
-      if (result) {
-        context.router.pop(true);
-        ref
-            .read(refreshOrderList.notifier)
-            .update((state) => !ref.read(refreshOrderList));
+      if (resultCancel != null && resultCancel) {
+        final result =
+            await ref.read(modifyOrderControllerProvider.notifier).cancelOrder(
+                  id: order.id!,
+                  context: context,
+                  reason: controller.text.toString(),
+                );
+        // context.router.pop(true);
+
+        if (result) {
+          onCallBack();
+          ref
+              .read(refreshOrderList.notifier)
+              .update((state) => !ref.read(refreshOrderList));
+        }
       }
     }
   }
@@ -99,6 +116,7 @@ class OrderDetailScreen extends HookConsumerWidget {
     final size = MediaQuery.sizeOf(context);
     final order = useState<OrderModel?>(null);
     final confirmOrderState = ref.watch(modifyProfiver);
+    final cancelReason = useTextEditingController();
     final getOrderDetail = ref.watch(orderDetailControllerProvider);
 
     // fetch data
@@ -160,6 +178,7 @@ class OrderDetailScreen extends HookConsumerWidget {
                               'Mã đối tác:':
                                   order.value!.orderPartnerId.toString()
                             },
+                            {'Mã hiện thị:': order.value!.displayId.toString()},
                             {'Đối tác:': order.value!.partner!.name.toString()},
                           ],
                         ),
@@ -199,6 +218,10 @@ class OrderDetailScreen extends HookConsumerWidget {
                                   order.value!.cutlery == 1 ? 'Có' : 'Không'
                             },
                             {'Ghi chú:': order.value!.note},
+                            if (order.value!.systemStatus!
+                                    .toOrderSystemTypeEnum() ==
+                                OrderSystemStatusType.cancelled)
+                              {'Lí do hủy đơn:': order.value!.rejectedReason},
                           ],
                         ),
                         NormalRow(
@@ -217,6 +240,10 @@ class OrderDetailScreen extends HookConsumerWidget {
                           content: [
                             {'Tạm tính:': order.value!.subTotalPrice},
                             {'Thuế (%):': order.value!.tax},
+                            {
+                              'Hoa hồng (%):':
+                                  order.value!.storePartnerCommission
+                            },
                             {'Giảm giá:': order.value!.totalDiscount},
                             {'Phí giao hàng:': order.value!.deliveryFee},
                             {'Phí đơn hàng:': order.value!.commission},
@@ -277,8 +304,11 @@ class OrderDetailScreen extends HookConsumerWidget {
             ? null
             : order.value == null
                 ? null
-                : order.value!.partnerOrderStatus!.toOrderPartnerTypeEnum() ==
-                        OrderPartnerStatusType.preparing
+                : (order.value!.partnerOrderStatus!.toOrderPartnerTypeEnum() ==
+                            OrderPartnerStatusType.preparing ||
+                        order.value!.partnerOrderStatus!
+                                .toOrderPartnerTypeEnum() ==
+                            OrderPartnerStatusType.upcoming)
                     ? Container(
                         decoration: const BoxDecoration(
                           border: Border(
@@ -292,36 +322,63 @@ class OrderDetailScreen extends HookConsumerWidget {
                           horizontal: AssetsConstants.defaultPadding - 10.0,
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment: order.value!.partnerOrderStatus!
+                                      .toOrderPartnerTypeEnum() ==
+                                  OrderPartnerStatusType.preparing
+                              ? MainAxisAlignment.spaceBetween
+                              : MainAxisAlignment.center,
                           children: [
-                            CustomButton(
-                              isOutline: true,
-                              width: size.width * 0.6,
-                              height: size.height * 0.05,
-                              content: 'Hoàn thành',
-                              onCallback: () => changeStatus(
+                            if (order.value!.partnerOrderStatus!
+                                    .toOrderPartnerTypeEnum() ==
+                                OrderPartnerStatusType.preparing)
+                              CustomButton(
+                                isOutline: true,
+                                width: size.width * 0.6,
+                                height: size.height * 0.05,
+                                content: 'Hoàn thành',
+                                onCallback: () => changeStatus(
                                   order: order.value!,
                                   context: context,
-                                  ref: ref),
-                              isActive: (order.value!.partnerOrderStatus!
-                                      .toOrderPartnerTypeEnum() ==
-                                  OrderPartnerStatusType.preparing),
-                              size: AssetsConstants.defaultFontSize - 10.0,
-                              backgroundColor: AssetsConstants.whiteColor,
-                              contentColor: AssetsConstants.mainColor,
-                            ),
+                                  ref: ref,
+                                  onCallBack: () async => await fetchData(
+                                    ref: ref,
+                                    context: context,
+                                    order: order,
+                                  ),
+                                ),
+                                isActive: (order.value!.partnerOrderStatus!
+                                        .toOrderPartnerTypeEnum() ==
+                                    OrderPartnerStatusType.preparing),
+                                size: AssetsConstants.defaultFontSize - 10.0,
+                                backgroundColor: AssetsConstants.whiteColor,
+                                contentColor: AssetsConstants.mainColor,
+                              ),
                             CustomButton(
                               isOutline: true,
-                              width: size.width * 0.3,
+                              width: order.value!.partnerOrderStatus!
+                                          .toOrderPartnerTypeEnum() ==
+                                      OrderPartnerStatusType.preparing
+                                  ? size.width * 0.3
+                                  : size.width * 0.9,
                               height: size.height * 0.05,
                               content: 'Hủy đơn',
                               onCallback: () => cancelOrder(
-                                  order: order.value!,
+                                order: order.value!,
+                                context: context,
+                                ref: ref,
+                                controller: cancelReason,
+                                onCallBack: () async => await fetchData(
+                                  ref: ref,
                                   context: context,
-                                  ref: ref),
+                                  order: order,
+                                ),
+                              ),
                               isActive: (order.value!.partnerOrderStatus!
-                                      .toOrderPartnerTypeEnum() ==
-                                  OrderPartnerStatusType.preparing),
+                                          .toOrderPartnerTypeEnum() ==
+                                      OrderPartnerStatusType.preparing ||
+                                  order.value!.partnerOrderStatus!
+                                          .toOrderPartnerTypeEnum() ==
+                                      OrderPartnerStatusType.upcoming),
                               size: AssetsConstants.defaultFontSize - 10.0,
                               backgroundColor: AssetsConstants.whiteColor,
                               contentColor: AssetsConstants.warningColor,

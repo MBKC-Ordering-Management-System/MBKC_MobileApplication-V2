@@ -20,8 +20,8 @@ final filterSystemStatus = StateProvider.autoDispose<OrderSystemStatusType>(
 );
 
 final optionsPartnerStatus = [
-  OrderPartnerStatusType.preparing,
   OrderPartnerStatusType.upcoming,
+  OrderPartnerStatusType.preparing,
   OrderPartnerStatusType.ready,
   OrderPartnerStatusType.completed,
   OrderPartnerStatusType.cancelled,
@@ -210,7 +210,7 @@ showCustomBottomSheet({
                       RadioListTile(
                         title: LabelText(
                           content: getTitlePartnerStatus(
-                            OrderPartnerStatusType.preparing,
+                            OrderPartnerStatusType.upcoming,
                           ),
                           size: AssetsConstants.defaultFontSize - 10.0,
                         ),
@@ -226,7 +226,7 @@ showCustomBottomSheet({
                       RadioListTile(
                         title: LabelText(
                           content: getTitlePartnerStatus(
-                            OrderPartnerStatusType.upcoming,
+                            OrderPartnerStatusType.preparing,
                           ),
                           size: AssetsConstants.defaultFontSize - 10.0,
                         ),

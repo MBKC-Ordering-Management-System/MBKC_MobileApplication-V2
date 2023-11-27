@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'order_detail.dart';
 import 'order_history.dart';
 import 'partner.dart';
@@ -27,6 +26,8 @@ class OrderModel {
   final String? address;
   final int? cutlery;
   final int? totalQuantity;
+  final String? rejectedReason;
+  final double? storePartnerCommission;
   final String? partnerOrderStatus;
   final Partner? partner;
   final List<ShipperPayment>? shipperPayments;
@@ -55,6 +56,8 @@ class OrderModel {
     required this.address,
     required this.cutlery,
     required this.totalQuantity,
+    required this.rejectedReason,
+    required this.storePartnerCommission,
     required this.partnerOrderStatus,
     required this.partner,
     required this.shipperPayments,
@@ -128,6 +131,12 @@ class OrderModel {
     if (totalQuantity != null) {
       result.addAll({'totalQuantity': totalQuantity});
     }
+    if (rejectedReason != null) {
+      result.addAll({'rejectedReason': rejectedReason});
+    }
+    if (storePartnerCommission != null) {
+      result.addAll({'storePartnerCommission': storePartnerCommission});
+    }
     if (partnerOrderStatus != null) {
       result.addAll({'partnerOrderStatus': partnerOrderStatus});
     }
@@ -173,6 +182,8 @@ class OrderModel {
       address: map['address'],
       cutlery: map['cutlery']?.toInt(),
       totalQuantity: map['totalQuantity']?.toInt(),
+      rejectedReason: map['rejectedReason'],
+      storePartnerCommission: map['storePartnerCommission']?.toDouble(),
       partnerOrderStatus: map['partnerOrderStatus'],
       partner: map['partner'] != null ? Partner.fromMap(map['partner']) : null,
       shipperPayments: map['shipperPayments'] != null

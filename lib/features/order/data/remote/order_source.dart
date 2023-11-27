@@ -5,6 +5,7 @@ import '../../../../models/response/success_model.dart';
 import '../../../../utils/constants/api_constant.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../domain/models/order_model.dart';
+import '../../domain/models/request/reason.dart';
 import '../../domain/models/response/order_list_response.dart';
 
 part 'order_source.g.dart';
@@ -41,6 +42,7 @@ abstract class OrderSource {
 
   @PUT('${APIConstants.order}/{id}/cancel-order')
   Future<HttpResponse<SuccessModel>> cancelOrder(
+    @Body() Reason request,
     @Header(APIConstants.contentHeader) String contentType,
     @Header(APIConstants.authHeader) String accessToken,
     @Path('id') int id,

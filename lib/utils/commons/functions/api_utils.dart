@@ -12,52 +12,61 @@ Future<void> handleAPIError({
   required Object stateError,
   required BuildContext context,
   required int statusCode,
-  Future<void>? onCallBackGenerateToken,
+  VoidCallback? onCallBackGenerateToken,
 }) async {
-  final error = (stateError as DioException).response!.data;
-  if (error == null) {
+  try {
+    final error = (stateError as DioException).response!.data;
+    if (error == null) {
+      showExceptionAlertDialog(
+        context: context,
+        title: 'Thông báo',
+        exception: 'Có lỗi rồi.',
+      );
+      return;
+    }
+
+    final errorModel = ErrorModel.fromMap(error);
+    switch (statusCode.toStatusCodeTypeEnum()) {
+      case StatusCodeType.conflict:
+      case StatusCodeType.notfound:
+      case StatusCodeType.badrequest:
+      case StatusCodeType.forbidden:
+        showExceptionAlertDialog(
+          context: context,
+          title: 'Thông báo',
+          exception: APIConstants.errorTrans[
+                  errorModel.message.first.descriptionError.first] ??
+              'Có lỗi rồi.',
+        );
+        break;
+
+      case StatusCodeType.unauthentication:
+        onCallBackGenerateToken != null ? onCallBackGenerateToken() : null;
+        break;
+
+      case StatusCodeType.exception:
+        showExceptionAlertDialog(
+          context: context,
+          title: 'Thông báo',
+          exception: 'Máy chủ không phản hồi, vui lòng thử lại.',
+        );
+        break;
+
+      default:
+        showExceptionAlertDialog(
+          context: context,
+          title: 'Thông báo',
+          exception: APIConstants
+                  .errorTrans[error.message.first.descriptionError.first] ??
+              'Có lỗi rồi.',
+        );
+    }
+  } catch (e) {
     showExceptionAlertDialog(
       context: context,
       title: 'Thông báo',
-      exception: 'Có lỗi rồi.',
+      exception: e.toString(),
     );
-    return;
-  }
-  final errorModel = ErrorModel.fromMap(error);
-  switch (statusCode.toStatusCodeTypeEnum()) {
-    case StatusCodeType.conflict:
-    case StatusCodeType.notfound:
-    case StatusCodeType.badrequest:
-    case StatusCodeType.forbidden:
-      showExceptionAlertDialog(
-        context: context,
-        title: 'Thông báo',
-        exception: APIConstants
-                .errorTrans[errorModel.message.first.descriptionError.first] ??
-            'Có lỗi rồi.',
-      );
-      break;
-
-    case StatusCodeType.unauthentication:
-      await onCallBackGenerateToken;
-      break;
-
-    case StatusCodeType.exception:
-      showExceptionAlertDialog(
-        context: context,
-        title: 'Thông báo',
-        exception: 'Máy chủ không phản hồi, vui lòng thử lại.',
-      );
-      break;
-
-    default:
-      showExceptionAlertDialog(
-        context: context,
-        title: 'Thông báo',
-        exception: APIConstants
-                .errorTrans[error.message.first.descriptionError.first] ??
-            'Có lỗi rồi.',
-      );
   }
 }
 

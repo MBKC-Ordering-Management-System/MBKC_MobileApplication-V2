@@ -10,6 +10,7 @@ import '../../../../utils/extensions/extensions_export.dart';
 import '../../../../utils/providers/common_provider.dart';
 import '../../../auth/domain/repositories/auth_repository.dart';
 import '../../../auth/presentation/sign_in/sign_in_controller.dart';
+import '../../domain/models/request/reason.dart';
 import '../../domain/repositories/order_repository.dart';
 
 part 'modify_order_controller.g.dart';
@@ -26,6 +27,7 @@ class ModifyOrderController extends _$ModifyOrderController {
     int id,
     BuildContext context,
   ) async {
+    bool result = true;
     state = const AsyncLoading();
     ref.read(modifyProfiver.notifier).update((state) => true);
     final orderRepository = ref.read(orderRepositoryProvider);
@@ -57,31 +59,40 @@ class ModifyOrderController extends _$ModifyOrderController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+            onCallBackGenerateToken: () async => await reGenerateToken(
+              authRepository,
+              context,
+            ),
           );
 
           if (statusCode != StatusCodeType.unauthentication.type) {
+            ref.read(modifyProfiver.notifier).update((state) => false);
+            result = false;
             return;
           }
 
-          confirmOrder(id, context);
+          await confirmOrder(id, context);
         },
       );
 
       // if refresh token expired
       if (state.hasError) {
+        ref.read(modifyProfiver.notifier).update((state) => false);
         await ref.read(signInControllerProvider.notifier).signOut(context);
+        result = false;
       }
     }
 
-    return true;
+    return result;
   }
 
   // cancel orders
-  Future<bool> cancelOrder(
-    int id,
-    BuildContext context,
-  ) async {
+  Future<bool> cancelOrder({
+    required int id,
+    required BuildContext context,
+    required String reason,
+  }) async {
+    bool result = true;
     state = const AsyncLoading();
     ref.read(modifyProfiver.notifier).update((state) => true);
     final orderRepository = ref.read(orderRepositoryProvider);
@@ -91,6 +102,7 @@ class ModifyOrderController extends _$ModifyOrderController {
     state = await AsyncValue.guard(
       () async {
         await orderRepository.cancelOrder(
+          reason: Reason(rejectedReason: reason),
           orderId: id,
           accessToken: APIConstants.prefixToken + user!.token.accessToken,
         );
@@ -113,23 +125,30 @@ class ModifyOrderController extends _$ModifyOrderController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+            onCallBackGenerateToken: () async => await reGenerateToken(
+              authRepository,
+              context,
+            ),
           );
 
           if (statusCode != StatusCodeType.unauthentication.type) {
+            ref.read(modifyProfiver.notifier).update((state) => false);
+            result = false;
             return;
           }
 
-          cancelOrder(id, context);
+          await cancelOrder(id: id, context: context, reason: reason);
         },
       );
 
       // if refresh token expired
       if (state.hasError) {
+        ref.read(modifyProfiver.notifier).update((state) => false);
         await ref.read(signInControllerProvider.notifier).signOut(context);
+        result = false;
       }
     }
 
-    return true;
+    return result;
   }
 }

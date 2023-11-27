@@ -68,7 +68,6 @@ abstract class AuthSource {
   Future<HttpResponse<SuccessModel>> deleteToken(
     @Path('id') int id,
     @Header(APIConstants.contentHeader) String contentType,
-    @Header(APIConstants.authHeader) String accessToken,
   );
 }
 

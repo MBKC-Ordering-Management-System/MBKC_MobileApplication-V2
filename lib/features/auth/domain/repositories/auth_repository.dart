@@ -39,7 +39,6 @@ abstract class AuthRepository {
 
   Future<SuccessModel> deleteToken({
     required int id,
-    required String accessToken,
   });
 }
 

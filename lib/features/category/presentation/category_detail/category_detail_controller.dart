@@ -47,14 +47,17 @@ class CategoryDetailController extends _$CategoryDetailController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: reGenerateToken(authRepository, context),
+            onCallBackGenerateToken: () async => await reGenerateToken(
+              authRepository,
+              context,
+            ),
           );
 
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
           }
 
-          getCategoryDetail(context, categoryId);
+          await getCategoryDetail(context, categoryId);
         },
       );
 
