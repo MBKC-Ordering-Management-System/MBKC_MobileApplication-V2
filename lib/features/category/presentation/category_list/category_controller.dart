@@ -50,24 +50,25 @@ class CategoryController extends _$CategoryController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: () async => await reGenerateToken(
+            onCallBackGenerateToken: () => reGenerateToken(
               authRepository,
               context,
             ),
           );
 
+          // if refresh token expired
+          if (state.hasError) {
+            await ref.read(signInControllerProvider.notifier).signOut(context);
+            return;
+          }
+
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
           }
 
-          getCategories(request, context);
+          await getCategories(request, context);
         },
       );
-
-      // if refresh token expired
-      if (state.hasError) {
-        await ref.read(signInControllerProvider.notifier).signOut(context);
-      }
     }
 
     return categories;

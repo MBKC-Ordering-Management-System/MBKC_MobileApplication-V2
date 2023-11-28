@@ -65,6 +65,14 @@ class ModifyOrderController extends _$ModifyOrderController {
             ),
           );
 
+          // if refresh token expired
+          if (state.hasError) {
+            ref.read(modifyProfiver.notifier).update((state) => false);
+            await ref.read(signInControllerProvider.notifier).signOut(context);
+            result = false;
+            return;
+          }
+
           if (statusCode != StatusCodeType.unauthentication.type) {
             ref.read(modifyProfiver.notifier).update((state) => false);
             result = false;
@@ -74,13 +82,6 @@ class ModifyOrderController extends _$ModifyOrderController {
           await confirmOrder(id, context);
         },
       );
-
-      // if refresh token expired
-      if (state.hasError) {
-        ref.read(modifyProfiver.notifier).update((state) => false);
-        await ref.read(signInControllerProvider.notifier).signOut(context);
-        result = false;
-      }
     }
 
     return result;
@@ -131,6 +132,14 @@ class ModifyOrderController extends _$ModifyOrderController {
             ),
           );
 
+          // if refresh token expired
+          if (state.hasError) {
+            ref.read(modifyProfiver.notifier).update((state) => false);
+            await ref.read(signInControllerProvider.notifier).signOut(context);
+            result = false;
+            return;
+          }
+
           if (statusCode != StatusCodeType.unauthentication.type) {
             ref.read(modifyProfiver.notifier).update((state) => false);
             result = false;
@@ -140,13 +149,6 @@ class ModifyOrderController extends _$ModifyOrderController {
           await cancelOrder(id: id, context: context, reason: reason);
         },
       );
-
-      // if refresh token expired
-      if (state.hasError) {
-        ref.read(modifyProfiver.notifier).update((state) => false);
-        await ref.read(signInControllerProvider.notifier).signOut(context);
-        result = false;
-      }
     }
 
     return result;

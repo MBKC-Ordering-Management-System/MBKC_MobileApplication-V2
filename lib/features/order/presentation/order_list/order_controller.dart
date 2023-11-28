@@ -56,18 +56,19 @@ class OrderController extends _$OrderController {
             ),
           );
 
+          // if refresh token expired
+          if (state.hasError) {
+            await ref.read(signInControllerProvider.notifier).signOut(context);
+            return;
+          }
+
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
           }
 
-          getOrders(request, context);
+          await getOrders(request, context);
         },
       );
-
-      // if refresh token expired
-      if (state.hasError) {
-        await ref.read(signInControllerProvider.notifier).signOut(context);
-      }
     }
 
     return orders;

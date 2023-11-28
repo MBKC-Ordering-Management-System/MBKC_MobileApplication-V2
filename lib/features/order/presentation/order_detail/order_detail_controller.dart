@@ -53,18 +53,19 @@ class OrderDetailController extends _$OrderDetailController {
             ),
           );
 
+          // if refresh token expired
+          if (state.hasError) {
+            await ref.read(signInControllerProvider.notifier).signOut(context);
+            return;
+          }
+
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
           }
 
-          getOrderDetail(context, orderId);
+          await getOrderDetail(context, orderId);
         },
       );
-
-      // if refresh token expired
-      if (state.hasError) {
-        await ref.read(signInControllerProvider.notifier).signOut(context);
-      }
     }
 
     return order;

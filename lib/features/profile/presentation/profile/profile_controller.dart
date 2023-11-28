@@ -52,6 +52,12 @@ class ProfileController extends _$ProfileController {
             ),
           );
 
+          // if refresh token expired
+          if (state.hasError) {
+            await ref.read(signInControllerProvider.notifier).signOut(context);
+            return;
+          }
+
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
           }
@@ -59,11 +65,6 @@ class ProfileController extends _$ProfileController {
           await getProfile(context: context, profile: profile);
         },
       );
-
-      // if refresh token expired
-      if (state.hasError) {
-        await ref.read(signInControllerProvider.notifier).signOut(context);
-      }
     }
   }
 }

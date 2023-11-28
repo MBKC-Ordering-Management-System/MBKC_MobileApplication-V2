@@ -171,11 +171,22 @@ class SignInController extends _$SignInController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: () async => await reGenerateToken(
+            onCallBackGenerateToken: () => reGenerateToken(
               authRepository,
               context,
             ),
           );
+
+          // if refresh token expired
+          if (state.hasError) {
+            ref.read(modifyProfiver.notifier).update((state) => false);
+            showExceptionAlertDialog(
+              context: context,
+              title: 'Thông báo',
+              exception: 'Có lỗi rồi không thể đăng xuất.',
+            );
+            return;
+          }
 
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
@@ -184,15 +195,6 @@ class SignInController extends _$SignInController {
           await signOut(context);
         },
       );
-
-      // if refresh token expired
-      if (state.hasError) {
-        showExceptionAlertDialog(
-          context: context,
-          title: 'Thông báo',
-          exception: 'Có lỗi rồi không thể đăng xuất.',
-        );
-      }
     }
   }
 }

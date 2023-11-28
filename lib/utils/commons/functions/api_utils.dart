@@ -12,7 +12,7 @@ Future<void> handleAPIError({
   required Object stateError,
   required BuildContext context,
   required int statusCode,
-  VoidCallback? onCallBackGenerateToken,
+  AsyncValueGetter<void>? onCallBackGenerateToken,
 }) async {
   try {
     final error = (stateError as DioException).response!.data;
@@ -41,7 +41,7 @@ Future<void> handleAPIError({
         break;
 
       case StatusCodeType.unauthentication:
-        onCallBackGenerateToken != null ? onCallBackGenerateToken() : null;
+        await onCallBackGenerateToken!.call();
         break;
 
       case StatusCodeType.exception:
@@ -78,17 +78,22 @@ Future<void> reGenerateToken(
     print('re-authen');
   }
 
-  final user = await SharedPreferencesUtils.getInstance('user_token');
-  if (user != null) {
-    final tokenResponse = await authRepository.generateToken(
-      request: user.token,
-    );
+  try {
+    final user = await SharedPreferencesUtils.getInstance('user_token');
+    if (user != null) {
+      final tokenResponse = await authRepository.generateToken(
+        request: user.token,
+      );
 
-    final userNew = user.copyWith(
-      token: tokenResponse,
-    );
+      final userNew = user.copyWith(
+        token: tokenResponse,
+      );
 
-    await SharedPreferencesUtils.clearInstance('user_token');
-    await SharedPreferencesUtils.setInstance(userNew, 'user_token');
+      await SharedPreferencesUtils.clearInstance('user_token');
+      await SharedPreferencesUtils.setInstance(userNew, 'user_token');
+    }
+  } catch (e) {
+    print(e.toString());
+    rethrow;
   }
 }

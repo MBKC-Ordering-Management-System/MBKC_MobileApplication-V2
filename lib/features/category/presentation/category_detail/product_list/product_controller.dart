@@ -53,11 +53,17 @@ class ProductController extends _$ProductController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: () async => await reGenerateToken(
+            onCallBackGenerateToken: () => reGenerateToken(
               authRepository,
               context,
             ),
           );
+
+          // if refresh token expired
+          if (state.hasError) {
+            await ref.read(signInControllerProvider.notifier).signOut(context);
+            return;
+          }
 
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
@@ -66,11 +72,6 @@ class ProductController extends _$ProductController {
           await getProducts(request, context, categoryId);
         },
       );
-
-      // if refresh token expired
-      if (state.hasError) {
-        await ref.read(signInControllerProvider.notifier).signOut(context);
-      }
     }
 
     return products;

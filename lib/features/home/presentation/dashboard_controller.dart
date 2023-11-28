@@ -44,11 +44,17 @@ class DashboardController extends _$DashboardController {
             statusCode: statusCode,
             stateError: state.error!,
             context: context,
-            onCallBackGenerateToken: () async => await reGenerateToken(
+            onCallBackGenerateToken: () => reGenerateToken(
               authRepository,
               context,
             ),
           );
+
+          // if refresh token expired
+          if (state.hasError) {
+            await ref.read(signInControllerProvider.notifier).signOut(context);
+            return;
+          }
 
           if (statusCode != StatusCodeType.unauthentication.type) {
             return;
@@ -57,11 +63,6 @@ class DashboardController extends _$DashboardController {
           await getStoreDashboard(context: context, dashboard: dashboard);
         },
       );
-
-      // if refresh token expired
-      if (state.hasError) {
-        await ref.read(signInControllerProvider.notifier).signOut(context);
-      }
     }
   }
 }
