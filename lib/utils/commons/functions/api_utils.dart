@@ -93,7 +93,9 @@ Future<void> reGenerateToken(
       await SharedPreferencesUtils.setInstance(userNew, 'user_token');
     }
   } catch (e) {
-    print(e.toString());
+    if (kDebugMode) {
+      print(e.toString());
+    }
     rethrow;
   }
 }
