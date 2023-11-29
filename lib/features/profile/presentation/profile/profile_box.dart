@@ -53,10 +53,14 @@ class ProfileBox extends StatelessWidget {
                   ),
                 ),
               ),
-              LabelText(
-                content: profile.name,
-                size: AssetsConstants.defaultFontSize - 10.0,
-                fontWeight: FontWeight.bold,
+              SizedBox(width: size.width * 0.025),
+              Expanded(
+                child: LabelText(
+                  content: profile.name,
+                  size: AssetsConstants.defaultFontSize - 10.0,
+                  fontWeight: FontWeight.bold,
+                  maxLine: 1,
+                ),
               ),
               const Icon(
                 Icons.arrow_forward_ios_rounded,
