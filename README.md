@@ -1,8 +1,14 @@
-# haha
+# MBKC Mobile Application
 
-A new Flutter project.
+MBKC Mobile Application with Flutter, Firebase & Riverpod 2.0!
 
-## Getting Started
+## Tech Used
+**Server**: C#, Firebase Storage, Fibase Cloud Messaging
+**Client**: Flutter, Riverpod
+
+<p align="center">
+  <img width="600" src="https://firebasestorage.googleapis.com/v0/b/mbkc-image-e6026.appspot.com/o/system-images%2FMBKC-logo.png?alt=media&token=12392b1d-ff4f-4db2-9c48-a4d545adeb83" alt="MBKC Logo">
+</p>
 
 This project is a starting point for a Flutter application.
 
