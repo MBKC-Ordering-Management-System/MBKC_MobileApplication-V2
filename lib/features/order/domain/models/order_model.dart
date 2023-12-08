@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'order_detail.dart';
 import 'order_history.dart';
 import 'partner.dart';
@@ -15,8 +16,10 @@ class OrderModel {
   final String? paymentMethod;
   final int? deliveryFee;
   final int? subTotalPrice;
-  final int? totalDiscount;
+  final int? totalStoreDiscount;
   final int? finalTotalPrice;
+  final int? promotionPrice;
+  final double? taxPartnerCommission;
   final double? collectedPrice;
   final bool? isPaid;
   final double? commission;
@@ -45,8 +48,10 @@ class OrderModel {
     required this.paymentMethod,
     required this.deliveryFee,
     required this.subTotalPrice,
-    required this.totalDiscount,
+    required this.totalStoreDiscount,
     required this.finalTotalPrice,
+    required this.promotionPrice,
+    required this.taxPartnerCommission,
     required this.collectedPrice,
     required this.isPaid,
     required this.commission,
@@ -98,11 +103,17 @@ class OrderModel {
     if (subTotalPrice != null) {
       result.addAll({'subTotalPrice': subTotalPrice});
     }
-    if (totalDiscount != null) {
-      result.addAll({'totalDiscount': totalDiscount});
+    if (totalStoreDiscount != null) {
+      result.addAll({'totalStoreDiscount': totalStoreDiscount});
     }
     if (finalTotalPrice != null) {
       result.addAll({'finalTotalPrice': finalTotalPrice});
+    }
+    if (promotionPrice != null) {
+      result.addAll({'promotionPrice': promotionPrice});
+    }
+    if (taxPartnerCommission != null) {
+      result.addAll({'taxPartnerCommission': taxPartnerCommission});
     }
     if (collectedPrice != null) {
       result.addAll({'collectedPrice': collectedPrice});
@@ -171,8 +182,10 @@ class OrderModel {
       paymentMethod: map['paymentMethod'],
       deliveryFee: map['deliveryFee']?.toInt(),
       subTotalPrice: map['subTotalPrice']?.toInt(),
-      totalDiscount: map['totalDiscount']?.toInt(),
+      totalStoreDiscount: map['totalStoreDiscount']?.toInt(),
       finalTotalPrice: map['finalTotalPrice']?.toInt(),
+      promotionPrice: map['promotionPrice']?.toInt(),
+      taxPartnerCommission: map['taxPartnerCommission']?.toDouble(),
       collectedPrice: map['collectedPrice']?.toDouble(),
       isPaid: map['isPaid'],
       commission: map['commission']?.toDouble(),

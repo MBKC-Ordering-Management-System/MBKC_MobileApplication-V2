@@ -130,7 +130,10 @@ class NormalRow extends StatelessWidget {
                                           13.0,
                                       fontWeight: (e.entries.first.key ==
                                                   'Tổng cộng:' ||
-                                              e.entries.first.key == 'Số tiền:')
+                                              e.entries.first.key ==
+                                                  'Số tiền:' ||
+                                              e.entries.first.key ==
+                                                  'Tiền thu hộ:')
                                           ? FontWeight.bold
                                           : FontWeight.w600,
                                       maxLine: 10,

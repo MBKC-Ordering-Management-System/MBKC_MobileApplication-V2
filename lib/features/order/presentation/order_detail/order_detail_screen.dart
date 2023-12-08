@@ -239,14 +239,23 @@ class OrderDetailScreen extends HookConsumerWidget {
                         NormalRow(
                           content: [
                             {'Tạm tính:': order.value!.subTotalPrice},
-                            {'Thuế (%):': order.value!.tax},
+                            {'Thuế:': order.value!.tax},
                             {
-                              'Hoa hồng (%):':
+                              'Hoa hồng của đối tác:':
                                   order.value!.storePartnerCommission
                             },
-                            {'Giảm giá:': order.value!.totalDiscount},
+                            {
+                              'Thuế hoa hồng của đối tác:':
+                                  order.value!.taxPartnerCommission
+                            },
+                            {
+                              'Ưu đãi từ cửa hàng:':
+                                  order.value!.totalStoreDiscount,
+                            },
+                            {
+                              'Ưu đãi từ đối tác:': order.value!.promotionPrice,
+                            },
                             {'Phí giao hàng:': order.value!.deliveryFee},
-                            {'Phí đơn hàng:': order.value!.commission},
                             {'Tổng cộng:': order.value!.finalTotalPrice},
                             {'Tiền thu hộ:': order.value!.collectedPrice},
                           ],

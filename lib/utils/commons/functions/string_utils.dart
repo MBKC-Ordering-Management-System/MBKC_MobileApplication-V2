@@ -20,7 +20,8 @@ String getCustomContent(Map<String, dynamic> content) {
       return '+ $numberđ';
 
     case 'Tiền rút:':
-    case 'Giảm giá:':
+    case 'Ưu đãi từ cửa hàng:':
+    case 'Ưu đãi từ đối tác:':
       if (content.entries.first.value == 0) {
         final number =
             NumberFormat.decimalPattern().format(content.entries.first.value);
@@ -46,6 +47,11 @@ String getCustomContent(Map<String, dynamic> content) {
       final number =
           NumberFormat.decimalPattern().format(content.entries.first.value);
       return '$numberđ';
+
+    case 'Thuế:':
+    case 'Thuế hoa hồng của đối tác:':
+    case 'Hoa hồng của đối tác:':
+      return '${content.entries.first.value}%';
 
     default:
       return content.entries.first.value.toString();

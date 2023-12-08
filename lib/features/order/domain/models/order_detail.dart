@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'product.dart';
 
 class OrderDetail {
@@ -8,6 +9,7 @@ class OrderDetail {
   final String? note;
   final int? orderId;
   final int? masterOrderDetail;
+  final int? discountPrice;
   final List<OrderDetail>? extraOrderDetails;
   final Product? product;
 
@@ -18,6 +20,7 @@ class OrderDetail {
     required this.note,
     required this.orderId,
     required this.masterOrderDetail,
+    required this.discountPrice,
     required this.extraOrderDetails,
     required this.product,
   });
@@ -43,6 +46,9 @@ class OrderDetail {
     if (masterOrderDetail != null) {
       result.addAll({'masterOrderDetail': masterOrderDetail});
     }
+    if (discountPrice != null) {
+      result.addAll({'discountPrice': discountPrice});
+    }
     if (extraOrderDetails != null) {
       result.addAll({
         'extraOrderDetails': extraOrderDetails!.map((x) => x.toMap()).toList()
@@ -63,6 +69,7 @@ class OrderDetail {
       note: map['note'],
       orderId: map['orderId']?.toInt(),
       masterOrderDetail: map['masterOrderDetail']?.toInt(),
+      discountPrice: map['discountPrice']?.toInt(),
       extraOrderDetails: map['extraOrderDetails'] != null
           ? List<OrderDetail>.from(
               map['extraOrderDetails']?.map((x) => OrderDetail.fromMap(x)))
