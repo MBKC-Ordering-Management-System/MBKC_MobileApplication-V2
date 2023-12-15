@@ -124,7 +124,7 @@ String getTitleSortType(SortType type) {
 String getTitleSystemStatus(OrderSystemStatusType type) {
   switch (type) {
     case OrderSystemStatusType.instore:
-      return 'Trong bếp';
+      return 'Trong cửa hàng';
     case OrderSystemStatusType.readydelivery:
       return 'Sẵn sàng giao';
     case OrderSystemStatusType.completed:
